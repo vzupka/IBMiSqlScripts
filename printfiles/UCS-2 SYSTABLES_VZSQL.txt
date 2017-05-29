@@ -1,0 +1,23 @@
+
+Seznam tabulek/souborů ve schematu
+
+Sobota, 5. prosince 2015 14:54:50
+
+Schema       Tabulka      Typ tabulky                    Textový popis                                        Typ souboru          Poč.         Délka   
+                                                                                                                                   sl.          zázn.   
+VZTOOL       CENY         P = Physical file                                                                   D = DATA                3            60   
+VZTOOL       CENYPGM.RP   P = Physical file                                                                   S = SOURCE              3           112   
+VZTOOL       ITEMS1       P = Physical file              ITEMS1                                               D = DATA                4            64   
+VZTOOL       CLOB01       T = Table                                                                           D = DATA                2            32   
+VZTOOL       CENY2        P = Physical file              CENY2                                                D = DATA                6           261   
+VZTOOL       CENY4        T = Table                                                                           D = DATA                3            62   
+VZTOOL       EMPLOYEE     T = Table                                                                           D = DATA                3            14   
+VZTOOL       ZBOZI_BIN    T = Table                                                                           D = DATA                4            18   
+VZTOOL       CLOBTABLE    T = Table                                                                           D = DATA                4           112   
+VZTOOL       TABULKA      T = Table                                                                           D = DATA                4            70   
+VZTOOL       CENYL        L = Logical file                                                                    D = DATA                2            10   
+VZTOOL       CENY2L       L = Logical file                                                                    D = DATA                4           225   
+VZTOOL       BINARY01     T = Table                                                                           D = DATA                3            59   
+VZTOOL       BLOBTABLE    T = Table                                                                           D = DATA                3            80   
+VZTOOL       FILE01       P = Physical file              Output file for DSPOBJD                              D = DATA              113           690   
+VZTOOL       BLOBCLOB     T = Table                                                                           D = DATA                6           160   

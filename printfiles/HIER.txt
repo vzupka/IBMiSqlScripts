@@ -1,0 +1,88 @@
+
+--Hierarchical query: Reports-to chain
+
+SET SCHEMA CORPDATA 
+Příkaz se provedl.
+
+DROP corpdata.TABLE MY_EMP 
+Chyba v příkazu:
+42601  [SQL0104] Token CORPDATA was not valid. Valid tokens: DATA VIEW ALIAS INDEX TABLE SCHEMA PACKAGE PROGRAM ROUTINE.
+
+CREATE TABLE corpdata.MY_EMP
+  (
+   EMPID INTEGER NOT NULL PRIMARY KEY, 
+   NAME VARCHAR(10),
+   SALARY DECIMAL(9, 2),
+   MGRID INTEGER   
+  )
+ 
+Chyba v příkazu:
+42710  [SQL0601] MY_EMP in CORPDATA type *FILE already exists.
+
+INSERT INTO MY_EMP VALUES ( 1, 'Jones', 30000, 10) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 2, 'Hall', 35000, 10) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 3, 'Kim', 40000, 10) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 4, 'Lindsay', 38000, 10) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 5, 'McKeough', 42000, 11) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 6, 'Barnes', 41000, 11) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 7, 'O''Neil', 36000, 12) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 8, 'Smith', 34000, 12) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES ( 9, 'Shoeman', 33000, 12) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (10, 'Monroe', 50000, 15) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (11, 'Zander', 52000, 16) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (12, 'Henry', 51000, 16) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (13, 'Aaron', 54000, 15) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (14, 'Scott', 53000, 16) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (15, 'Mills', 70000, 17) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (16, 'Goyal', 80000, 17) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+INSERT INTO MY_EMP VALUES (17, 'Urbassek', 95000, NULL) 
+Chyba v příkazu:
+23505  [SQL0803] Duplicate key value specified.
+
+
+Sobota, 5. prosince 2015 9:42:35
+
+NAME               LEVEL        SALARY   ROOT         CHAIN                                                                                                                                                                                                      
+Goyal                  1      80000,00   Goyal        :Goyal                                                                                                                                                                                                     
+Henry                  2      51000,00   Goyal        :Goyal:Henry                                                                                                                                                                                               
+Shoeman                3      33000,00   Goyal        :Goyal:Henry:Shoeman                                                                                                                                                                                       
+Smith                  3      34000,00   Goyal        :Goyal:Henry:Smith                                                                                                                                                                                         
+O'Neil                 3      36000,00   Goyal        :Goyal:Henry:O'Neil                                                                                                                                                                                        
+Zander                 2      52000,00   Goyal        :Goyal:Zander                                                                                                                                                                                              
+Barnes                 3      41000,00   Goyal        :Goyal:Zander:Barnes                                                                                                                                                                                       
+McKeough               3      42000,00   Goyal        :Goyal:Zander:McKeough                                                                                                                                                                                     
+Scott                  2      53000,00   Goyal        :Goyal:Scott                                                                                                                                                                                               
+SET SCHEMA DEFAULT 
+Příkaz se provedl.

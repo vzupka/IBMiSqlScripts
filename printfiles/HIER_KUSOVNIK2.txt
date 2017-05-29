@@ -1,0 +1,17 @@
+
+Kusovník hierarchickým dotazem jednoduchý
+
+Sobota, 5. prosince 2015 9:41:42
+
+Souč.   Pods.    Počet   
+                 pods.   
+A       B            3   
+B       E            2   
+E       C            2   
+C       D            4   
+C       F            4   
+E       D            3   
+E       F            5   
+A       C            3   
+C       D            4   
+C       F            4   

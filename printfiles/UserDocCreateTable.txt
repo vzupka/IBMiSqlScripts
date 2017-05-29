@@ -1,0 +1,31 @@
+
+
+CREATE TABLE VZTOOL.STAVY_S_CENAMI
+   AS 
+( 
+SELECT S.ZAVOD, S.SKLAD,     
+      DECIMAL( SUM(C.CENAJ*S.MNOZSTVI), 9, 2 ) AS SOUCET,
+      INT( AVG(C.CENAJ*S.MNOZSTVI) ) as PRUMER,
+      INT( MIN( C.CENAJ*S.MNOZSTVI) ) as MIN,
+      INT( MAX( C.CENAJ*S.MNOZSTVI) ) as MAXIMUM
+FROM STAVY AS S
+   JOIN CENY AS C ON S.CZBOZI = C.CZBOZI
+   GROUP BY ROLLUP( S.ZAVOD, S.SKLAD )
+   ORDER BY S.ZAVOD, S.SKLAD
+)
+WITH DATA 
+Chyba v příkazu:
+42710  [SQL0601] STAVY_S_CENAMI in VZTOOL type *FILE already exists.
+
+
+Sobota, 16. ledna 2016 14:59:39
+
+ZAVOD SKLAD      SOUCET      PRUMER         MIN     MAXIMUM 
+01    01        6967,99        2322           8        6500 
+01    02        6751,25        2250           1        6500 
+01    03           1,25           1           1           1 
+01    -        13720,49        1960           1        6500 
+02    01        3661,10        1220          21        3400 
+02    02        7930,00        1982         112        7000 
+02    -        11591,10        1655          21        7000 
+-     -        25311,59        1807           1        7000 

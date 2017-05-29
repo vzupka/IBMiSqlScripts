@@ -1,0 +1,96 @@
+
+Sumarizace zboží (CENY) podle skladů a závodů
+
+Sobota, 29. dubna 2017 19:01:24
+
+  >>> Závod 4x:    01, 01, 01, 01.              <<< 
+  >>> Název zboží: PIŠKOTY OPAVIA ,  Sklad: 01. <<< 
+ 
+    Skl  Č.zboží  Název zboží             Cena/j.     Množství     Cena celkem  
+    ===  =======  ===========             =======     ========     ===========  
+                                                                                
+    01   00001    PIŠKOTY OPAVIA             8,99      1579,44        14199,20  
+         00002    Zubní pasta Kal          459,00         1,00          459,00  
+         00010    Koňak Gruzínský         6500,00        -7,00       -45500,00  
+
+   .Sklad -----01--01------ 
+ Součet                                                1573,44       -30841,80  
+ Průměr                                                 524,48       -10280,60  
+Maximum  00010    Zubní pasta Kal                      1579,44        14199,20  
+Minimum  00001    Koňak Gruzínský                        -7,00       -45500,00  
+  Počet  3        3                                          3               3  
+
+    02   00003    Prádelní šňůra             1,25        19,00           23,75  
+         00009    Whisky Balantin          250,00         1,08          270,00  
+         00010    Koňak Gruzínský         6500,00         3,00        19500,00  
+
+   .Sklad -----01--02------ 
+ Součet                                                  23,08        19793,75  
+ Průměr                                                   7,69         6597,92  
+Maximum  00010    Whisky Balantin                        19,00        19500,00  
+Minimum  00003    Koňak Gruzínský                         1,08           23,75  
+  Počet  3        3                                          3               3  
+
+    03   00003    Prádelní šňůra             1,25         1,00            1,25  
+
+   .Sklad -----01--03------ 
+ Součet                                                   1,00            1,25  
+ Průměr                                                   1,00            1,25  
+Maximum  00003    Prádelní šňůra                          1,00            1,25  
+Minimum  00003    Prádelní šňůra                          1,00            1,25  
+  Počet  1        1                                          1               1  
+
+   .Závod =====01========== 
+ Součet                                                1597,52       -11046,80  
+ Průměr                                                 228,22        -1578,11  
+Maximum  00010    Zubní pasta Kal                      1579,44        19500,00  
+Minimum  00001    Koňak Gruzínský                        -7,00       -45500,00  
+  Počet  7        7                                          7               7  
+
+    01   00005    Tričko bílé              120,00         2,00          240,00  
+         00006    Ponožky pánské            10,55         2,00           21,10  
+         00008    Kalhoty džínové         1700,00         2,00         3400,00  
+         00019    -                             -         2,00               -  
+
+   .Sklad -----02--01------ 
+ Součet                                                   8,00         3661,10  
+ Průměr                                                   2,00         1220,37  
+Maximum  00019    Tričko bílé                             2,00         3400,00  
+Minimum  00005    Kalhoty džínové                         2,00           21,10  
+  Počet  4        3                                          4               3  
+
+    02   00009    Whisky Balantin          250,00         2,00          500,00  
+         00011    Taška sportovní          159,00         2,00          318,00  
+         00014    Sako tvídové, n         3500,00         2,00         7000,00  
+         00018    Husí sádlo v ko           56,00         2,00          112,00  
+         00019    -                             -         2,00               -  
+    -    -        Ponožky pánské            10,50            -               -  
+         -        Kalhoty manšest         1510,00            -               -  
+         -        Pálka pingpongo           45,00            -               -  
+         -        Míč                      360,00            -               -  
+         -        Motorové koště         12500,00            -               -  
+         -        Slepičí peří na          380,00            -               -  
+         -        Hrábě dřevěné,           130,00            -               -  
+         -        Tiskárna barevn          874,00            -               -  
+         -        AAAA+%BBB%_CCC          9999,99            -               -  
+
+   .Sklad -----02--02------ 
+ Součet                                                  10,00         7930,00  
+ Průměr                                                   2,00         1982,50  
+Maximum  00019    Whisky Balantin                         2,00         7000,00  
+Minimum  00009    AAAA+%BBB%_CCC                          2,00          112,00  
+  Počet  5        13                                         5               4  
+
+   .Závod =====02========== 
+ Součet                                                  18,00        11591,10  
+ Průměr                                                   2,00         1655,87  
+Maximum  00019    Whisky Balantin                         2,00         7000,00  
+Minimum  00005    AAAA+%BBB%_CCC                          2,00           21,10  
+  Počet  9        16                                         9               7  
+
+   .Celkem ****************
+ Součet                                                1615,52          544,30  
+ Průměr                                                 100,97           38,88  
+Maximum  00019    Zubní pasta Kal                      1579,44        19500,00  
+Minimum  00001    AAAA+%BBB%_CCC                         -7,00       -45500,00  
+  Počet  16       23                                        16              14  

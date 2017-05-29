@@ -1,0 +1,33 @@
+
+Zboží podle skladů a závodů right join
+
+Úterý, 1. prosince 2015 18:49:52
+
+Zav   Skl   Č.zboží   Název zboží              Cena/j.      Množství      Cena celkem   
+===   ===   =======   ===========              =======      ========      ===========   
+                                                                                        
+01    01    00001     PIŠKOTY OPAVIA              8,99         1,000          8,99000   
+            00002     Zubní pasta Kal           459,00         1,000        459,00000   
+            00010     Koňak Gruzínský          6500,00         1,000       6500,00000   
+      02    00003     Prádelní šňůra              1,25         1,000          1,25000   
+            00009     Whisky Balantin           250,00         1,000        250,00000   
+            00010     Koňak Gruzínský          6500,00         1,000       6500,00000   
+      03    00003     Prádelní šňůra              1,25         1,000          1,25000   
+02    01    00005     Tričko bílé               120,00         2,000        240,00000   
+            00006     Ponožky pánské             10,55         2,000         21,10000   
+            00008     Kalhoty džínové          1700,00         2,000       3400,00000   
+            00019     -                              -         2,000                -   
+      02    00009     Whisky Balantin           250,00         2,000        500,00000   
+            00011     Taška sportovní           159,00         2,000        318,00000   
+            00014     Sako tvídové, n          3500,00         2,000       7000,00000   
+            00018     Husí sádlo v ko            56,00         2,000        112,00000   
+            00019     -                              -         2,000                -   
+-     -     -         Ponožky pánské             10,50             -                -   
+            -         Kalhoty manšest          1510,00             -                -   
+            -         Tiskárna barevn           874,00             -                -   
+            -         AAAA+%BBB%_CCC           9999,99             -                -   
+            -         Pálka pingpongo            45,00             -                -   
+            -         Míč                       360,00             -                -   
+            -         Motorové koště          12500,00             -                -   
+            -         Slepičí peří na           380,00             -                -   
+            -         Hrábě dřevěné,            130,00             -                -   

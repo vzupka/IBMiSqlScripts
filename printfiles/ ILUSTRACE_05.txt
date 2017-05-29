@@ -1,0 +1,58 @@
+
+Sumarizace zboží (CENY) podle skladů a závodů, závod na nové stránce
+
+Středa, 20. ledna 2016 19:56:08
+
+Zav  Skl  Č.zboží  Název zboží             Cena/j.     Množství     Cena celkem  
+===  ===  =======  ===========             =======     ========     ===========  
+                                                                                 
+01   01   00001    PIŠKOTY OPAVIA             8,99         1,00            8,99  
+          00002    Zubní pasta Kal          459,00         1,00          459,00  
+          00010    Koňak Gruzínský         6500,00         1,00         6500,00  
+
+   .Sklad  01 01 
+                                                     Součet             6967,99  
+                                                      Počet                   3  
+
+     02   00003    Prádelní šňůra             1,25         1,00            1,25  
+          00009    Whisky Balantin          250,00         1,00          250,00  
+          00010    Koňak Gruzínský         6500,00         1,00         6500,00  
+
+   .Sklad  01 02 
+                                                     Součet             6751,25  
+                                                      Počet                   3  
+
+     03   00003    Prádelní šňůra             1,25         1,00            1,25  
+
+   .Sklad  01 03 
+                                                     Součet                1,25  
+                                                      Počet                   1  
+
+   .Závod  01 
+                                                     Součet            13720,49  
+                                                      Počet                   7  
+
+02   01   00005    Tričko bílé              120,00         2,00          240,00  
+          00006    Ponožky pánské            10,55         2,00           21,10  
+          00008    Kalhoty džínové         1700,00         2,00         3400,00  
+
+   .Sklad  02 01 
+                                                     Součet             3661,10  
+                                                      Počet                   3  
+
+     02   00009    Whisky Balantin          250,00         2,00          500,00  
+          00011    Taška sportovní          159,00         2,00          318,00  
+          00014    Sako tvídové, n         3500,00         2,00         7000,00  
+          00018    Husí sádlo v ko           56,00         2,00          112,00  
+
+   .Sklad  02 02 
+                                                     Součet             7930,00  
+                                                      Počet                   4  
+
+   .Závod  02 
+                                                     Součet            11591,10  
+                                                      Počet                   7  
+
+   .CELKEM ZA PODNIK
+                                                     Součet            25311,59  
+                                                      Počet                  14  

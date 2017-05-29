@@ -1,0 +1,21 @@
+
+EMPLOYEE selected list with title headers and omitted columns
+
+Thursday, December 10, 2015 2:25:55 PM
+
+Employee number: 000130, Bonus: 500.00
+Birthdate: 1925-09-15
+ 
+FIRSTNME       LASTNAME               SALARY          COMM   
+DELORES        QUINTANA             23800.00       1904.00   
+JAMES          JEFFERSON            22180.00       1774.00   
+DANIEL         SMITH                19180.00       1534.00   
+SYBIL          JOHNSON              17250.00       1380.00   
+ETHEL          SCHNEIDER            26250.00       2100.00   
+PHILIP         SMITH                17750.00       1420.00   
+MAUDE          SETRIGHT             15900.00       1272.00   
+RAMLAL         MEHTA                19950.00       1596.00   
+JASON          GOUNOT               23840.00       1907.00   
+EILEEN         SCHWARTZ             26250.00       2100.00   
+MICHELLE       SPRINGER             15900.00       1272.00   
+ROY            ALONZO               23840.00       1907.00   

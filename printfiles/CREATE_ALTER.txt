@@ -1,0 +1,60 @@
+
+Drop, Create, Alter
+
+Středa, 25. března 2015 11:21:38
+
+--Drop, Create, Alter
+DROP TABLE VZTOOL.TABULKA 
+ 
+Příkaz se provedl.
+
+Create table
+
+Středa, 25. března 2015 11:21:38
+
+--Create table
+CREATE TABLE VZTOOL.TABULKA ( CZBOZI CHAR (5) NOT NULL WITH DEFAULT,
+   CENAJ NUMERIC (9, 2) NOT NULL WITH DEFAULT,
+   NAZZBO CHAR (30) NOT NULL WITH DEFAULT ) 
+ 
+Příkaz se provedl.
+
+Alter table - add column
+
+Středa, 25. března 2015 11:21:38
+
+--Alter table - add column
+ALTER TABLE TABULKA ADD COLUMN RAZITKO TIMESTAMP 
+ 
+Příkaz se provedl.
+
+Update table
+
+Středa, 25. března 2015 11:21:38
+
+--Update table
+UPDATE TABULKA SET RAZITKO = CURRENT_TIMESTAMP
+ 
+Příkaz se provedl.
+
+query
+
+Středa, 25. března 2015 11:21:39
+
+CZBOZI       CENAJ NAZZBO                         RAZITKO                    
+
+/*** 
+
+Středa, 25. března 2015 11:21:42
+
+
+/*** 
+  Příkaz ALTER TABLE DROP COLUMN se neprovede!
+  Nelze zrušit sloupec - Příkaz generuje dotazovou zprávu, kterou
+  systém odpoví automaticky zrušením přikazu (Cancel). 
+***/
+ALTER TABLE TABULKA 
+   DROP COLUMN NAZZBO 
+
+Chyba v příkazu:
+57014  [SQL0952] Processing of the SQL statement ended.  Reason code 10.

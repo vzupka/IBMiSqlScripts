@@ -1,0 +1,7 @@
+
+Select all
+
+Středa, 20. ledna 2016 20:00:42
+
+         ID BINARKA VARBINARKA                                         
+          1 aabbcc  aabbccddeeff                                       

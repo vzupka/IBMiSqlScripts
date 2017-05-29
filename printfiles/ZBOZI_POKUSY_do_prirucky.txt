@@ -1,0 +1,18 @@
+
+Zboží podle skladů a závodů - vynechané sloupce a titulní řádky s proměnnými
+
+Neděle, 10. ledna 2016 20:41:11
+
+   Závod z prvního řádku: 01, Celková cena z prvního řádku: 1,25 
+   ~~~~~~~~~~~~~~~~~~~~~~     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+   Celková cena znovu: 1,25 
+ 
+Skl Č.zboží Název zboží                           Cena/j.    Množství 
+=== ======= ===========                           =======    ======== 
+                                                                      
+03  00003   Prádelní šňůra                           1,25        1,00 
+02  00003   Prádelní šňůra                           1,25        1,00 
+02  00009   Whisky Balantine                       250,00        1,00 
+02  00010   Koňak Gruzínský                       6500,00        1,00 
+01  00001   PIŠKOTY OPAVIA                           8,99        1,00 
+01  00010   Koňak Gruzínský                       6500,00        1,00 

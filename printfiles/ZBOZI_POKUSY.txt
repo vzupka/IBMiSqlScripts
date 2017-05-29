@@ -1,0 +1,28 @@
+
+Zboží podle skladů a závodů - vzorový příklad
+
+Středa, 20. ledna 2016 19:05:32
+
+   Závod: 01, Celková cena: 8,99000
+   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+   Celková cena znovu: 8,99000 
+ 
+Skl   Č.zboží   Název zboží                             Cena/j.      Množství   
+===   =======   ===========                             =======      ========   
+                                                                                
+01    00001     PIŠKOTY OPAVIA                             8,99          1,00   
+01    00002     Zubní pasta Kalodont                     459,00          1,00   
+01    00010     Koňak Gruzínský                         6500,00          1,00   
+02    00003     Prádelní šňůra                             1,25          1,00   
+02    00009     Whisky Balantine                         250,00          1,00   
+02    00010     Koňak Gruzínský                         6500,00          1,00   
+03    00003     Prádelní šňůra                             1,25          1,00   
+01    00005     Tričko bílé                              120,00          2,00   
+01    00006     Ponožky pánské bílé, nové                 10,55          2,00   
+01    00008     Kalhoty džínové                         1700,00          2,00   
+02    00009     Whisky Balantine                         250,00          2,00   
+02    00011     Taška sportovní                          159,00          2,00   
+02    00014     Sako tvídové, nadměr                    3500,00          2,00   
+02    00018     Husí sádlo v konzervě                     56,00          2,00   
+
+                                                                                

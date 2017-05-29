@@ -1,0 +1,28 @@
+
+--Copy table CENY2 to CENY3
+
+DROP TABLE VZTOOL.CENY3 
+Chyba v příkazu:
+42704  [SQL0204] CENY3 in VZTOOL type *FILE not found.
+
+CREATE TABLE VZTOOL.CENY3 LIKE CENY2 
+Příkaz se provedl.
+
+/* Příkaz měnící CCSID ve sloupci se neprovede! Odpovídá automaticky 
+   na výzvu k potvrzení či zamítnutí zamítnutím. */
+ALTER TABLE CENY3 ALTER COLUMN NAZZBO SET DATA TYPE CHAR(100) CCSID 870 
+Chyba v příkazu:
+57014  [SQL0952] Processing of the SQL statement ended.  Reason code 10.
+
+ALTER TABLE CENY3 ADD PRIMARY KEY (CZBOZI) 
+Příkaz se provedl.
+
+INSERT INTO CENY3 
+   SELECT * FROM CENY2 
+Příkaz se provedl.
+Výpis nově vytvořené tabulky
+
+Sobota, 11. března 2017 9:56:46
+
+č.zboží     cena/j. název zboží                                                                                          
+00006          1,00 Zboží ěščřďťňó ĚŠČŘŽÝÁÍÉĎŤŇÓ                                                                         

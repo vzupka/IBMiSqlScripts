@@ -1,0 +1,9 @@
+
+
+
+Pondělí, 23. března 2015 18:50:52
+
+
+
+Chyba v příkazu:
+43617  A string parameter value with zero length was detected.

@@ -1,0 +1,20 @@
+
+EMPLOYEE selected list with title headers and omitted columns
+
+Sunday, December 13, 2015 6:50:12 PM
+
+    Employee number from the first line: 000130, Birth date: 1925-09-15 
+ 
+EMPNO    FIRSTNME       MIDINIT   LASTNAME          WORKDEPT   PHONENO   HIREDATE     JOB        EDLEVEL   SEX   BIRTHDATE         SALARY         BONUS          COMM   
+000130   DELORES        M         QUINTANA          C01        4578      1971-07-28   ANALYST         16   F     1925-09-15      23800.00        500.00       1904.00   
+000230   JAMES          J         JEFFERSON         D21        2094      1966-11-21   CLERK           14   M     1935-05-30      22180.00        400.00       1774.00   
+000250   DANIEL         S         SMITH             D21        0961      1969-10-30   CLERK           15   M     1939-11-12      19180.00        400.00       1534.00   
+000260   SYBIL          P         JOHNSON           D21        8953      1975-09-11   CLERK           16   F     1936-10-05      17250.00        300.00       1380.00   
+000280   ETHEL          R         SCHNEIDER         E11        8997      1967-03-24   OPERATOR        17   F     1936-03-28      26250.00        500.00       2100.00   
+000300   PHILIP         X         SMITH             E11        2095      1972-06-19   OPERATOR        14   M     1936-10-27      17750.00        400.00       1420.00   
+000310   MAUDE          F         SETRIGHT          E11        3332      1964-09-12   OPERATOR        12   F     1931-04-21      15900.00        300.00       1272.00   
+000320   RAMLAL         V         MEHTA             E21        9990      1965-07-07   FIELDREP        16   M     1932-08-11      19950.00        400.00       1596.00   
+000340   JASON          R         GOUNOT            E21        5698      1947-05-05   FIELDREP        16   M     1926-05-17      23840.00        500.00       1907.00   
+200280   EILEEN         R         SCHWARTZ          E11        8997      1967-03-24   OPERATOR        17   F     1936-03-28      26250.00        500.00       2100.00   
+200310   MICHELLE       F         SPRINGER          E11        3332      1964-09-12   OPERATOR        12   F     1931-04-21      15900.00        300.00       1272.00   
+200340   ROY            R         ALONZO            E21        5698      1947-05-05   FIELDREP        16   M     1926-05-17      23840.00        500.00       1907.00   

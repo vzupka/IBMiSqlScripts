@@ -1,0 +1,13 @@
+--Zboží v závodech a skladech - přehled
+/* SQL příkaz */
+SELECT 
+   S.ZAVOD, 
+   S.SKLAD, 
+   S.CZBOZI, 
+   SUBSTR(C.NAZZBO, 1, 15) AS NAZ, 
+   DEC(C.CENAJ, 12, 2) AS CJ, 
+   S.MNOZSTVI,
+   DECIMAL ( C.CENAJ*S.MNOZSTVI, 12, 5 ) AS CELKEM
+FROM STAVY AS S
+   FULL JOIN CENY AS C ON S.CZBOZI = C.CZBOZI
+ORDER BY S.ZAVOD, S.SKLAD, C.CZBOZI

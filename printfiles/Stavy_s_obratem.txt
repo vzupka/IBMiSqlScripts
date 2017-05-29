@@ -1,0 +1,10 @@
+
+Seznam zboží ve stavech, které mělo nějaký obrat
+
+Středa, 16. prosince 2015 9:58:37
+
+CZBOZI   NAZZBO                           CZBOZI   Z_OBRATU   
+00003    Prádelní šňůra                   00003    00003      
+00001    PIŠKOTY OPAVIA                   00001    00001      
+00009    Whisky Balantine                 00009    00009      
+00010    Koňak Gruzínský                  00010    00010      

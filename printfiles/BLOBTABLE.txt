@@ -1,0 +1,11 @@
+
+--Drop, Create, Alter
+DROP TABLE VZTOOL.BLOBTABLE  
+Statement executed.
+--Create table
+CREATE TABLE VZTOOL.BLOBTABLE ( 
+   COL0 DECIMAL (7, 0),
+   BLOB1 BLOB (10000000),
+   BLOB2 BLOB 
+)
+Statement executed.

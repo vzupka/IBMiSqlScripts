@@ -1,0 +1,16 @@
+
+--Update - parameters
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; INT; Číslo ID; 1;
+update BINARY01 set BINARKA = ? where ID = ?  
+Statement executed.
+
+
+Wednesday, August 19, 2015 3:46:47 PM
+
+         ID BINARKA VARBINARKA                                         
+
+          1 aabbcc  aabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff 
+          2 020202  00                                                 
+          3 030303  01                                                 
+          4 040404  02                                                 

@@ -1,0 +1,16 @@
+
+Kusovník rozpad
+
+Sobota, 5. prosince 2015 21:39:32
+
+SOUCAST   PODSOUCAST    POCET   
+A         B                 3   
+A         C                 3   
+B         E                 2   
+C         D                 4   
+C         D                 4   
+C         F                 4   
+C         F                 4   
+E         C                 2   
+E         D                 3   
+E         F                 5   

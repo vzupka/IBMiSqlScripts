@@ -1,0 +1,57 @@
+
+--Vytvořit tabulku CENY5 s kódováním textu UTF-8
+
+DROP TABLE VZTOOL.CENY5  
+Příkaz se provedl.
+
+CREATE TABLE VZTOOL.CENY5 
+   ( CZBOZI CHAR(5), 
+     CENAJ DEC(12, 2),
+     NAZZBO CHAR(50) CCSID 1208
+   )  
+Příkaz se provedl.
+
+/* Následující CL příkazy vytvoří prostor pro 12 členů
+   a přidá tři členy. 
+   CHGPF FILE(VZTOOL/CENY5) MAXMBRS(12)                             
+   ADDPFM FILE(VZTOOL/CENY5) MBR(CENY5_01)
+   ADDPFM FILE(VZTOOL/CENY5) MBR(CENY5_02)
+   ADDPFM FILE(VZTOOL/CENY5) MBR(CENY5_03) 
+*/
+
+CREATE ALIAS CENY5_01 for VZTOOL.CENY5(CENY_01)  
+Chyba v příkazu:
+42710  [SQL0601] CENY5_01 in VZTOOL type *FILE already exists.
+CREATE ALIAS CENY5_02 for VZTOOL.CENY5(CENY_02)  
+Chyba v příkazu:
+42710  [SQL0601] CENY5_02 in VZTOOL type *FILE already exists.
+CREATE ALIAS CENY5_03 for VZTOOL.CENY5(CENY_03)  
+Chyba v příkazu:
+42710  [SQL0601] CENY5_03 in VZTOOL type *FILE already exists.
+
+INSERT INTO CENY5_01 values ('00001', 8,99, 'PIŠKOTY OPAVIA')                               
+Chyba v příkazu:
+42704  [SQL0204] CENY_01 in *N type *MEM not found.
+INSERT INTO CENY5_01 values ('00002', 459,00, 'Zubní pasta Kalodont')             
+Chyba v příkazu:
+42704  [SQL0204] CENY_01 in *N type *MEM not found.
+
+INSERT INTO CENY5_02 values ('00003', 1,25, 'Prádelní šňůra')                               
+Chyba v příkazu:
+42704  [SQL0204] CENY_02 in *N type *MEM not found.
+INSERT INTO CENY5_02 values ('00004', 10,50, 'Ponožky pánské tmavé')                         
+Chyba v příkazu:
+42704  [SQL0204] CENY_02 in *N type *MEM not found.
+
+select * from CENY5_01 
+Chyba v příkazu:
+42704  [SQL0204] CENY_01 in *N type *MEM not found.
+select * from CENY5_02 
+Chyba v příkazu:
+42704  [SQL0204] CENY_02 in *N type *MEM not found.
+select * from CENY5_03 
+Chyba v příkazu:
+42704  [SQL0204] CENY_03 in *N type *MEM not found.
+
+SET SCHEMA DEFAULT
+Příkaz se provedl.

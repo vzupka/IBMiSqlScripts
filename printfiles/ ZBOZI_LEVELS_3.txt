@@ -1,0 +1,56 @@
+
+--Sumarizace zboží (CENY2) podle skladů a závodů - DATE, TIME, TIMESTAMP - test
+
+--;t  >>> Závod 4x:    &ZAVOD , &ZAVOD , &ZAVOD , &ZAVOD . <<<
+--;t  >>> Název zboží: &NAZZBO ,  Sklad: &SKLAD . <<<
+--;t
+
+ --;HZav;Skl;Č.zboží;Název zboží;Cena/j.;Množství;   Cena celkem;Datum;Čas;Razítko
+ --;H===;===;=======;===========;=======;========;   ===========;=====;===;=======
+ --;H
+
+--;T 1; 1; ### ; 2; ZAVOD; SKLAD
+
+--;O ZAVOD
+--;O SKLAD;
+ --;O CZBOZI;
+
+--;S CZBOZI   ; M ; m ; C
+--;S CJ ; S ; A ; M ; m ; C
+--;S MNOZSTVI ; S ; A ; M ; m ; C
+--;S CELKEM   ; S ; A ; M ; m ; C
+--;S DATUM    ;   ;   ; M ; m ; C
+--;S CAS      ;   ;   ; M ; m ; C
+--;S RAZITKO  ;   ;   ; M ; m ; C
+--;S NAZZBO   ; M ; m ; C
+
+--;s Součet: ; Průměr: ; Maximum: ; Minimum: ;  Počet: 
+
+--;L0;   .Celkem ****************
+--;L1;   .Závod =====&ZAVOD ==========; ZAVOD
+--;L2;   .Sklad -----&zavod --&sklad ------; SKLAD
+
+  --;L3;  .Číslo zboží &czbozi ^^^^^^^; CZBOZI
+
+--;P A4; fs12; LANDSCAPE; lm5; rm5; tm1; bm1
+
+SELECT 
+   S.ZAVOD, 
+   S.SKLAD, 
+   S.CZBOZI,
+
+   DEC(C.CENAJ, 12, 2) AS CJ, 
+   S.MNOZSTVI,
+ --;D #0.000; Mnozstvi
+   DECIMAL ( C.CENAJ*S.MNOZSTVI, 12, 5 ) AS CELKEM,
+   DATUM,
+   CAS,
+   RAZITKO,
+   NAZZBO 
+
+FROM STAVY AS S   
+   full JOIN CENY2 AS C ON S.CZBOZI = C.CZBOZI
+   ORDER BY S.ZAVOD, S.SKLAD , C.CZBOZI desc
+
+Chyba v příkazu:
+42703  [SQL0206] Column or global variable RAZITKO not found.

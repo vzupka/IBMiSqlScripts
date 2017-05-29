@@ -1,0 +1,6 @@
+
+Array select
+
+Středa, 30. září 2015 20:37:12
+
+         ID    PRIORITY  PHONENUMBER 

@@ -1,0 +1,64 @@
+
+Seznam schemat
+
+Sobota, 5. prosince 2015 14:55:26
+
+SCHEMA_NAME   OWNER        CREATOR      CREATION_TIMESTAMP                        SIZE   SCHEMA_TEXT            SYS_NAME        ISP   
+#CGULIB       QSYS         QLPINSTALL   2014-02-10 15:45:18.0                 73728,00   -                      #CGULIB           0   
+#COBLIB       QSYS         QSECOFR      2014-02-11 09:01:27.0                122880,00   -                      #COBLIB           0   
+#DFULIB       QSYS         QLPINSTALL   2014-02-10 15:45:18.0                 73728,00   -                      #DFULIB           0   
+#DSULIB       QSYS         QLPINSTALL   2014-02-10 15:45:18.0                 73728,00   -                      #DSULIB           0   
+#LIBRARY      QSYS         QLPINSTALL   2014-02-10 15:45:34.0                 98304,00   -                      #LIBRARY          0   
+#RPGLIB       QSYS         QSECOFR      2014-02-11 09:01:16.0                106496,00   -                      #RPGLIB           0   
+#SDALIB       QSYS         QLPINSTALL   2014-02-10 15:45:18.0                 73728,00   -                      #SDALIB           0   
+#SEULIB       QSYS         QLPINSTALL   2014-02-10 15:45:18.0                 73728,00   -                      #SEULIB           0   
+AKADEMIE01    QSECOFR      QSECOFR      2015-11-02 16:30:37.0                 98304,00   -                      AKADEMIE01        0   
+CL400SKO      QSECOFR      QSECOFR      1994-02-17 13:56:33.0                180224,00   -                      CL400SKO          0   
+COBAS400      QSECOFR      QSECOFR      2015-09-07 17:34:20.0                344064,00   -                      COBAS400          0   
+CORPDATA      VZUPKA       VZUPKA       2014-02-21 08:47:13.0                352256,00   COLLECTION - created   CORPDATA          0   
+CVICENI       QSECOFR      QSECOFR      1999-01-29 14:09:17.0                114688,00   knihovna pro cviåení   CVICENI           0   
+CVICENI1      QSECOFR      QSECOFR      2015-07-01 09:19:08.0                360448,00   nová knihovna pro cv   CVICENI1          0   
+DATACV        QSECOFR      QSECOFR      2015-07-13 10:35:59.0                147456,00   datová knihovna pro    DATACV            0   
+HOME          VZUPKA       VZUPKA       2015-01-24 20:35:09.0                 98304,00   -                      HOME              0   
+INGANAL       QSECOFR      QSECOFR      2015-03-29 13:08:22.0                114688,00   -                      INGANAL           0   
+KOLEKCE       VZUPKA       VZUPKA       2014-02-01 18:06:35.0                303104,00   COLLECTION - created   KOLEKCE           0   
+PC00066       PC00066      XSECOFR      2015-04-30 21:02:54.0                 98304,00   Jiri Raboch library    PC00066           0   
+PC00144       XSECOFR      XSECOFR      2015-04-01 19:56:42.0                 98304,00   Testovaci knihovna R   PC00144           0   
+PRAC          QSECOFR      QSECOFR      2015-08-20 15:27:38.0                163840,00   Pracovní knihovna pr   PRAC              0   
+PRIKLADY      QSECOFR      QSECOFR      1993-06-27 13:40:35.0                114688,00   pþíklady programè a    PRIKLADY          0   
+PROSTREDI     QSECOFR      QSECOFR      2015-09-15 12:07:01.0                114688,00   -                      PROSTREDI         0   
+SALESFORCE    PEPAG        PEPAG        2014-12-15 08:52:33.0                 98304,00   -                      SALESFORCE        0   
+SKOLSQL       QSECOFR      QSECOFR      2014-07-31 18:59:28.0                229376,00   Skoleni SQL            SKOLSQL           0   
+SPOOLCS       QSECOFR      QSECOFR      1994-11-04 10:58:11.0                212992,00   åeský spool verze 2.   SPOOLCS           0   
+TEMPSAVE      QSECOFR      QSECOFR      2014-08-06 07:54:04.0                 98304,00   -                      TEMPSAVE          0   
+TEMP0001      QSECOFR      QSECOFR      2004-04-14 07:32:06.0                638976,00   -                      TEMP0001          0   
+USER0LIB      QSECOFR      QSECOFR      2014-04-07 14:14:55.0                114688,00   -                      USER0LIB          0   
+USER1L        QSECOFR      QSECOFR      2015-07-13 16:40:01.0                 98304,00   -                      USER1L            0   
+USER1LIB      USER1        USER1        2014-03-10 09:57:41.0                 98304,00   Skoleni - user1        USER1LIB          0   
+USER1X        QSECOFR      QSECOFR      2015-07-13 15:57:41.0                 98304,00   -                      USER1X            0   
+USER2LIB      USER2        USER2        2014-03-10 09:58:51.0                114688,00   Skoleni - user2        USER2LIB          0   
+USER3LIB      USER3        USER3        2014-03-10 09:59:42.0                114688,00   Skoleni - user3        USER3LIB          0   
+USER4LIB      USER4        USER4        2014-03-10 10:00:15.0                180224,00   Skoleni - user4        USER4LIB          0   
+USER5         USER5        USER5        2015-11-26 14:37:26.0                 98304,00   -                      USER5             0   
+USER5LIB      USER5        USER5        2014-03-10 10:00:50.0                163840,00   Skoleni - user5        USER5LIB          0   
+USER6LIB      USER6        USER6        2014-03-10 10:01:22.0                180224,00   Skoleni - user6        USER6LIB          0   
+USER6L2       USER6        USER6        2015-11-26 14:37:29.0                 98304,00   -                      USER6L2           0   
+VYS           QSECOFR      QSECOFR      2000-02-24 12:11:38.0               2850816,00   e-Vysocina - data -    VYS               0   
+VZ_DTAARA     QSECOFR      CZ50257      2014-03-17 10:07:56.0                131072,00   -                      VZ_DTAARA         0   
+VZ_HSTLG      QDFTOWN      CZ50257HST   2015-10-07 11:31:18.0                 98304,00   VZ filtering           VZ_HSTLG          0   
+VZAPI         VZUPKA       VZUPKA       2014-10-23 17:35:05.0                 98304,00   -                      VZAPI             0   
+VZCOBOL       VZUPKA       VZUPKA       2014-03-24 15:59:39.0                180224,00   -                      VZCOBOL           0   
+VZCPY         VZUPKA       VZUPKA       2014-05-09 17:51:43.0                 98304,00   -                      VZCPY             0   
+VZKALA        VZUPKA       VZUPKA       2015-05-02 21:42:23.0                458752,00   -                      VZKALA            0   
+VZKALAB       VZUPKA       VZUPKA       2014-10-14 11:41:13.0                458752,00   -                      VZKALAB           0   
+VZRPG         VZUPKA       VZUPKA       2014-12-17 10:49:28.0                319488,00   -                      VZRPG             0   
+VZRPGIV       VZUPKA       VZUPKA       2014-04-15 18:10:15.0                352256,00   -                      VZRPGIV           0   
+VZRPGPOKR     VZUPKA       VZUPKA       2014-04-19 11:31:40.0                352256,00   -                      VZRPGPOKR         0   
+VZRPG72       VZUPKA       VZUPKA       2014-05-14 09:08:23.0                163840,00   -                      VZRPG72           0   
+VZSQL         QSECOFR      QSECOFR      2014-01-26 09:39:34.0                303104,00   COLLECTION - created   VZSQL             0   
+VZSQLPGM      VZUPKA       VZUPKA       2014-01-25 18:07:40.0                114688,00   -                      VZSQLPGM          0   
+VZTOOL        VZUPKA       VZUPKA       2014-01-20 13:32:16.0                196608,00   -                      VZTOOL            0   
+ZAKAS400      QSECOFR      QSECOFR      2015-07-20 09:25:56.0                344064,00   Základy AS400  cviåe   ZAKAS400          0   
+ZPFILE4       QPGMR        PEPA         1993-06-04 08:47:02.0                163840,00   IM - PF, LF (verze 4   ZPFILE4           0   
+ZPOBJ4        QPGMR        QSECOFR      1993-04-29 10:24:59.0                630784,00   IM - objekty (verze    ZPOBJ4            0   
+ZPSRC4        QPGMR        ASSIST       2001-01-23 10:14:50.0                147456,00   IM - zdroje            ZPSRC4            0   

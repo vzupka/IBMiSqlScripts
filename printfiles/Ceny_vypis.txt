@@ -1,0 +1,29 @@
+
+Výps ceníku zboží
+
+Středa, 9. prosince 2015 17:49:07
+
+Číslo   Cena za jednotku   Název zboží                                
+zboží                                                                 
+=====   ================   ========================================   
+                                                                      
+00001               8,99   PIŠKOTY OPAVIA                             
+00002             459,00   Zubní pasta Kalodont                       
+00003               1,25   Prádelní šňůra                             
+00004              10,50   Ponožky pánské tmavé                       
+00005             120,00   Tričko bílé                                
+00006              10,55   Ponožky pánské bílé, nové                  
+00007            1510,00   Kalhoty manšestrové                        
+00008            1700,00   Kalhoty džínové                            
+00009             250,00   Whisky Balantine                           
+00010            6500,00   Koňak Gruzínský                            
+00011             159,00   Taška sportovní                            
+00012              45,00   Pálka pingpongová                          
+00013             360,00   Míč                                        
+00014            3500,00   Sako tvídové, nadměr                       
+00015           12500,00   Motorové koště                             
+00016             380,00   Slepičí peří na polštáře                   
+00017             130,00   Hrábě dřevěné, kolíky plastové             
+00018              56,00   Husí sádlo v konzervě                      
+00452             874,00   Tiskárna barevná laserová                  
+99999            9999,99   AAAA+%BBB%_CCC                             

@@ -1,0 +1,8 @@
+
+Select all
+
+Čtvrtek, 24. září 2015 13:53:27
+
+     ID CHARLOB                                                                                                                                                                                                                                                                                                      
+
+   1,00 com.ibm.as400.access.AS400JDBCClob@30728d78                                                                                                                                                                                                                                                                  

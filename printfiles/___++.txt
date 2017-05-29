@@ -1,0 +1,5 @@
+
+
+
+Chyba v příkazu:
+43617  A string parameter value with zero length was detected.

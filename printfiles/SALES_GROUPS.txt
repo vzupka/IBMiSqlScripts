@@ -1,0 +1,22 @@
+
+Sales by day-of-week, week, and grand-total
+
+Thursday, December 17, 2015 12:17:30 PM
+
+       WEEK      DAY_WEEK    UNITS_SOLD   
+         13             6            27   
+                        7            46   
+
+                                     73   
+
+         14             1            31   
+                        2            43   
+
+                                     74   
+
+         53             1             8   
+
+                                      8   
+
+
+                                    155   

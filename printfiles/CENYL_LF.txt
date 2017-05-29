@@ -1,0 +1,20 @@
+
+Výpis z logického souboru CENYL se členy
+
+Pátek, 25. prosince 2015 11:20:12
+
+CZBOZI         CENAJ   NAZZBO                                               
+00001           8,99   PIŠKOTY OPAVIA                                       
+00002         459,00   Zubní pasta Kalodont                                 
+00003           1,25   Prádelní šňůra                                       
+
+
+Pátek, 25. prosince 2015 11:20:14
+
+CZBOZI         CENAJ   NAZZBO                                               
+00004          10,50   Ponožky pánské tmavé                                 
+00005         120,00   Tričko bílé                                          
+00006          10,55   Ponožky pánské bílé, nové                            
+
+
+Pátek, 25. prosince 2015 11:20:18

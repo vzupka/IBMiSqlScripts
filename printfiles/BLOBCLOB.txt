@@ -1,0 +1,15 @@
+
+--Drop, Create, Alter
+DROP TABLE VZTOOL.BLOBCLOB  
+Chyba v příkazu:
+42704  [SQL0204] BLOBCLOB in VZTOOL type *FILE not found.
+--Create table
+CREATE TABLE VZTOOL.BLOBCLOB ( 
+   COL0 DECIMAL (7, 0),
+   CLOB1 CLOB (1000),
+   COL2 CHAR (5),
+   CLOB2 CLOB (500),
+   BLOB1 BLOB (10000000),
+   BLOB2 BLOB 
+)
+Příkaz se provedl.

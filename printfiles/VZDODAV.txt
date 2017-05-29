@@ -1,0 +1,14 @@
+
+Výpis DODAV_T
+
+Sobota, 11. března 2017 9:05:04
+
+CDOD   NAZDOD                         ADRDOD               
+000006 Hračky v.o.s.                  Ostrava              
+000003 Laktos mlékárna                Praha                
+000002 Liberta kočárky                Liberec              
+000007 Likérka a.s.                   Plzeň Božkov         
+000005 Obleky s.r.o.                  Hradec Králové       
+000004 Olma mlékárna                  Olomouc              
+000008 Vitana potraviny               Byšice               
+000001 Zbrojovka Brno                 Brno Zábrdovice      

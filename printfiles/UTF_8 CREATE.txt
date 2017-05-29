@@ -1,0 +1,17 @@
+
+--Vytvořit tabulku CENY4 s kódováním textu UTF-8
+
+DROP TABLE VZTOOL.CENY4
+ 
+Příkaz se provedl.
+
+CREATE TABLE VZTOOL.CENY4 
+   ( CZBOZI CHAR(5), 
+     CENAJ DEC(12, 2),
+     NAZZBO CHAR(50) CCSID 1208
+   )
+ 
+Příkaz se provedl.
+
+SET SCHEMA DEFAULT
+Příkaz se provedl.
