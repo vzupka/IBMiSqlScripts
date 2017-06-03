@@ -1,7 +1,7 @@
 
 Ceny objednávek mezi limity od určitého data - zkouška na datum
 
-Saturday, June 3, 2017 9:55:21 AM
+Saturday, June 3, 2017 10:13:13 AM
 
       00001 DTOBJ      CZBOZID          CENA_CELKEM 
       10000 2014-02-27 00023                 23,920 

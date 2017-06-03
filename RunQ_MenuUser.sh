@@ -17,8 +17,8 @@ echo cd $script_dir
 echo -------------------------------------------------------------------
 echo The following command creates the Jar file in the current directory
 
-echo jar cvfm  Q_MenuUser.jar  manifestMenuUser.txt  -C build/classes  queries.user/Q_MenuUser.class  -C build/classes  queries -C build/classes  locales
-jar cvfm  Q_MenuUser.jar  manifestMenuUser.txt  -C build/classes  queries.user/Q_MenuUser.class  -C build/classes  queries -C build/classes  locales
+echo jar cvfm  Q_MenuUser.jar  manifestMenuUser.txt  -C build/classes  queries/Q_MenuUser.class  -C build/classes  queries -C build/classes  locales
+jar cvfm  Q_MenuUser.jar  manifestMenuUser.txt  -C build/classes  queries/Q_MenuUser.class  -C build/classes  queries -C build/classes  locales
 
 echo -------------------------------------------
 echo The following command executes the Jar file

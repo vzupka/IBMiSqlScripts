@@ -12,12 +12,12 @@
 
     select 
         10000,
-	DTOBJ, 
+    DTOBJ, 
 --      H.COBJ, 
 --      H.CDOD, 
 
         D.CZBOZID, 
-	(CENAJ * MNOBJ) as CENA_CELKEM 
+    (CENAJ * MNOBJ) as CENA_CELKEM 
      from OBJHLA as H                                               
      join OBJDET as D on  H.COBJ = D.COBJ                           
                      and  H.CDOD = D.CDOD                           
