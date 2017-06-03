@@ -1,8 +1,0 @@
-Drop table VZSQL.DATE02A
-
-Neděle, 29. března 2015 15:10:31
-
-
---Drop table VZSQL.DATE02A
-DROP TABLE VZSQL.DATE02A 
-Příkaz se provedl.

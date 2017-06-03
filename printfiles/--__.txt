@@ -1,6 +1,0 @@
-
-
-Není spojení se serverem.
-
-Není spojení se serverem.
-Jiná chyba skriptu nebo programu: class java.lang.NullPointerException, null
