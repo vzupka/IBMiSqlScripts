@@ -10,7 +10,7 @@ This is a NetBeans project. The project is not installed, it is ready to use as 
 User documentation can be found in the subdirectory "documents".
 
 Creation of this application was motivated by the fact that the popular utility Query/400 (later called Query for i) is unable to display and print all characters coded in character sets UCS-2 (CCSID 13488), UTF-16 (CCSID 1200), or UTF-8 (CCSID 1208).
-This application enables creating, saving and running scripts of SQL statements for the IBM DB2 for i. 
+This application enables creating, saving and running scripts of SQL statements for the IBM DB2 for i as well as flexible formating and printing of the results.
 
 Script is defined here as a text of SQL statements written in a text file with the suffix .sql. One or more SQL statements delimited by a semicolon can be written in the script. The SQL statements may be of any kind (DDL or DML) and can contain parameters designated by question marks. Most of the time the script will be a query, i. e. a single SELECT statement. That means that the creator of the script must know the SQL language at least at the level of the SELECT statement.
 Scripts are usually amended by specially structured comment lines which enable flexible formatting of the script result when displayed on the screen or printed on paper.
