@@ -1,8 +1,6 @@
-package queries.user;
+package queries;
 
 import javax.swing.UIManager;
-
-import queries.Q_Menu;
 
 /**
  * User menu for the application calls Q_Menu with "false" parameter.
@@ -12,7 +10,7 @@ import queries.Q_Menu;
  */
 public class Q_MenuUser {
     /**
-     * Main method calls JE_Utilities menu with "false" parameter
+     * Main method to create Q_Menu with "false" parameter
      * in order to omit unnecessary functions of it.
      * 
      * @param strings not used

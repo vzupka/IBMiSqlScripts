@@ -542,7 +542,7 @@ public class Q_ScriptRunCall extends JFrame {
         msgText = readInputFiles();
         scriptListMsg.setText(msgText);
         scriptListMsgPanel.add(scriptListMsg);
-        
+
         if (msgText.isEmpty()) {
 //            scriptListMsg.setText(curDir + System.getProperty("user.dir"));
             scriptListMsg.setForeground(DIM_BLUE);
@@ -551,7 +551,7 @@ public class Q_ScriptRunCall extends JFrame {
             scriptListMsg.setForeground(DIM_RED);
         }
         scriptListMsgPanel.add(scriptListMsg);
-        
+
         // Prepare scriptList table for display
         // ------------------------------------
         // Read all records from the input file and put its data into
@@ -724,15 +724,14 @@ public class Q_ScriptRunCall extends JFrame {
         scriptIn = Paths.get(System.getProperty("user.dir"), "scriptfiles", fileName);
         // Create paths to text files
         Path workfilesTxt = Paths.get(System.getProperty("user.dir"), "workfiles", "Print.txt");
-        Path printfilesTxt = Paths.get(System.getProperty("user.dir"), "printfiles",
-                scriptName + ".txt");
+        Path printfilesTxt = Paths.get(System.getProperty("user.dir"), "printfiles", scriptName + ".txt");
+
         // Count of "UPDATE" statements
         int numberOfUpdates = 0;
 
-        // Process the script file
-        // -----------------------
         try {
-
+            // Process the script file
+            // -----------------------
             /*
           * // Prepend title lines to the result and the text files //
           * ---------------------------------------------------- // - script

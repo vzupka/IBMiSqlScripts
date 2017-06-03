@@ -21,77 +21,77 @@ import javax.swing.*;
  */
 public class Q_Menu extends JFrame {
 
-   static final long serialVersionUID = 1L;
+    static final long serialVersionUID = 1L;
 
-   ResourceBundle titles;
-   String selRun, parApp, crtEdit, expScr, impScr, titMenu;
+    ResourceBundle titles;
+    String selRun, parApp, crtEdit, expScr, impScr, titMenu;
 
-   ResourceBundle buttons;
-   String run, param, edit, exp, imp;
+    ResourceBundle buttons;
+    String run, param, edit, exp, imp;
 
-   ResourceBundle locMessages;
-   String curDir, wait;
+    ResourceBundle locMessages;
+    String curDir, wait;
 
-   int windowWidth = 700;
-   int windowHeight = 550;
-   int windowHeightUser = 300;
+    int windowWidth = 700;
+    int windowHeight = 550;
+    int windowHeightUser = 300;
 
-   Container cont = getContentPane();
-   GridBagLayout gridBagLayout = new GridBagLayout();
-   BorderLayout borderLayout = new BorderLayout();
+    Container cont = getContentPane();
+    GridBagLayout gridBagLayout = new GridBagLayout();
+    BorderLayout borderLayout = new BorderLayout();
 
-   // Object with limiting conditions
-   GridBagConstraints gbc = new GridBagConstraints();
+    // Object with limiting conditions
+    GridBagConstraints gbc = new GridBagConstraints();
 
-   JPanel titlePanel = new JPanel();
-   JPanel buttonPanel = new JPanel();
-   JPanel messagePanel = new JPanel();
-   JPanel globalPanel = new JPanel();
+    JPanel titlePanel = new JPanel();
+    JPanel buttonPanel = new JPanel();
+    JPanel messagePanel = new JPanel();
+    JPanel globalPanel = new JPanel();
 
-   JTextArea title;
+    JTextArea title;
 
-   JButton selectQueryButton;
-   JButton parametersButton;
-   JButton editScriptButton;
-   JButton toAS400Button;
-   JButton fromAS400Button;
+    JButton selectQueryButton;
+    JButton parametersButton;
+    JButton editScriptButton;
+    JButton toAS400Button;
+    JButton fromAS400Button;
 
-   JTextArea selectQueryLbl;
-   JTextArea parametersLbl;
-   JTextArea editScriptLbl;
-   JTextArea viewLbl;
-   JTextArea toAS400Lbl;
-   JTextArea fromAS400Lbl;
+    JTextArea selectQueryLbl;
+    JTextArea parametersLbl;
+    JTextArea editScriptLbl;
+    JTextArea viewLbl;
+    JTextArea toAS400Lbl;
+    JTextArea fromAS400Lbl;
 
-   // Empty array list with elements of type String
-   ArrayList<String> msgArrList = new ArrayList();
-   //    JList<String> msgList = new JList();
-   //    JScrollPane scrollPane = new JScrollPane(msgList);
+    // Empty array list with elements of type String
+    ArrayList<String> msgArrList = new ArrayList();
+    //    JList<String> msgList = new JList();
+    //    JScrollPane scrollPane = new JScrollPane(msgList);
 
-   // Text area for messages placed in a scroll pane
-   JTextArea msgTextArea = new JTextArea();
-   JScrollPane scrollPane = new JScrollPane(msgTextArea);
-   Q_ExportAllToAS400 exportAll;
-   Q_ImportAllFromAS400 importAll;
+    // Text area for messages placed in a scroll pane
+    JTextArea msgTextArea = new JTextArea();
+    JScrollPane scrollPane = new JScrollPane(msgTextArea);
+    Q_ExportAllToAS400 exportAll;
+    Q_ImportAllFromAS400 importAll;
 
-   int printLineLen;
+    int printLineLen;
 
-   Path inPath = Paths.get(System.getProperty("user.dir"), "paramfiles", "Q_Parameters.txt");
-   Path errPath = Paths.get(System.getProperty("user.dir"), "logfiles", "err.txt");
-   Path outPath = Paths.get(System.getProperty("user.dir"), "logfiles", "out.txt");
-   OutputStream errStream;
-   OutputStream outStream;
+    Path inPath = Paths.get(System.getProperty("user.dir"), "paramfiles", "Q_Parameters.txt");
+    Path errPath = Paths.get(System.getProperty("user.dir"), "logfiles", "err.txt");
+    Path outPath = Paths.get(System.getProperty("user.dir"), "logfiles", "out.txt");
+    OutputStream errStream;
+    OutputStream outStream;
 
-   final Color DIM_BLUE = new Color(50, 60, 160);
-   final Color DIM_RED = new Color(190, 60, 50);
+    final Color DIM_BLUE = new Color(50, 60, 160);
+    final Color DIM_RED = new Color(190, 60, 50);
 
-   /**
-    * Creates window with all functions of the application
-    *
-    * @param fullMenu
-    */
-   public void createQ_Menu(boolean fullMenu) {
-      /*
+    /**
+     * Creates window with all functions of the application
+     *
+     * @param fullMenu
+     */
+    public void createQ_Menu(boolean fullMenu) {
+        /*
        * try { // Set System L&F
        * System.out.println(UIManager.getSystemLookAndFeelClassName());
        * UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
@@ -99,245 +99,272 @@ public class Q_Menu extends JFrame {
        * } catch (UnsupportedLookAndFeelException | ClassNotFoundException |
        * InstantiationException | IllegalAccessException e) {
        * e.printStackTrace(); }
-       */
-      // Redirect System.err, System.out to log files err.txt, out.txt
-      // in directory "logfiles"
-      try {
-         errStream = Files.newOutputStream(errPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-         outStream = Files.newOutputStream(outPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      PrintStream errPrintStream = new PrintStream(errStream);
-      PrintStream outPrintStream = new PrintStream(outStream);
-      // PrintStream console = System.out;
-      System.setErr(errPrintStream);
-      System.setOut(outPrintStream);
-      // System.setOut(console);
+         */
+        try {
+            // If "paramfiles" directory doesn't exist, create one
+            Path paramfilesPath = Paths.get(System.getProperty("user.dir"), "paramfiles");
+            if (!Files.exists(paramfilesPath)) {
+                Files.createDirectory(paramfilesPath);
+            }
+            // If "logfiles" directory doesn't exist, create one
+            Path logfilesPath = Paths.get(System.getProperty("user.dir"), "logfiles");
+            if (!Files.exists(logfilesPath)) {
+                Files.createDirectory(logfilesPath);
+            }
+            // If "scriptfiles" directory doesn't exist, create one
+            Path scriptfilesPath = Paths.get(System.getProperty("user.dir"), "scriptfiles");
+            if (!Files.exists(scriptfilesPath)) {
+                Files.createDirectory(scriptfilesPath);
+            }
+            // If "printfiles" directory doesn't exist, create one
+            Path printfilesPath = Paths.get(System.getProperty("user.dir"), "printfiles");
+            if (!Files.exists(printfilesPath)) {
+                Files.createDirectory(printfilesPath);
+            }
+            // If "workfiles" directory doesn't exist, create one
+            Path workfilesPath = Paths.get(System.getProperty("user.dir"), "workfiles");
+            if (!Files.exists(workfilesPath)) {
+                Files.createDirectory(workfilesPath);
+            }
 
-      // Check existence of application parameters.
-      // In case Parameters.txt does not exist, create default one.
-      if (!Files.exists(inPath)) {
-         Q_ParametersCreate.main();
-      }
+            // Redirect System.err, System.out to log files err.txt, out.txt in directory "logfiles"
+            errStream = Files.newOutputStream(errPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            outStream = Files.newOutputStream(outPath, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        PrintStream errPrintStream = new PrintStream(errStream);
+        PrintStream outPrintStream = new PrintStream(outStream);
+        // PrintStream console = System.out;
+        System.setErr(errPrintStream);
+        System.setOut(outPrintStream);
+        // System.setOut(console);
 
-      // Get necessary properties
-      Q_Properties prop = new Q_Properties();
-      String language = prop.getProperty("LANGUAGE");
-      Locale currentLocale = Locale.forLanguageTag(language);
+        // Check existence of application parameters.
+        // In case Parameters.txt does not exist, create default one.
+        if (!Files.exists(inPath)) {
+            Q_ParametersCreate.main();
+        }
 
-      titles = ResourceBundle.getBundle("locales.L_TitleLabelBundle", currentLocale);
-      buttons = ResourceBundle.getBundle("locales.L_ButtonBundle", currentLocale);
-      locMessages = ResourceBundle.getBundle("locales.L_MessageBundle", currentLocale);
+        // Get necessary properties
+        Q_Properties prop = new Q_Properties();
+        String language = prop.getProperty("LANGUAGE");
+        Locale currentLocale = Locale.forLanguageTag(language);
 
-      // Localized titles and labels
-      titMenu = titles.getString("TitMenu");
-      selRun = titles.getString("SelRun");
-      parApp = titles.getString("ParApp");
-      crtEdit = titles.getString("CrtEdit");
-      expScr = titles.getString("ExpScr");
-      impScr = titles.getString("ImpScr");
+        titles = ResourceBundle.getBundle("locales.L_TitleLabelBundle", currentLocale);
+        buttons = ResourceBundle.getBundle("locales.L_ButtonBundle", currentLocale);
+        locMessages = ResourceBundle.getBundle("locales.L_MessageBundle", currentLocale);
 
-      title = new JTextArea(titMenu);
+        // Localized titles and labels
+        titMenu = titles.getString("TitMenu");
+        selRun = titles.getString("SelRun");
+        parApp = titles.getString("ParApp");
+        crtEdit = titles.getString("CrtEdit");
+        expScr = titles.getString("ExpScr");
+        impScr = titles.getString("ImpScr");
 
-      selectQueryLbl = new JTextArea(selRun);
-      parametersLbl = new JTextArea(parApp);
-      editScriptLbl = new JTextArea(crtEdit);
-      toAS400Lbl = new JTextArea(expScr);
-      fromAS400Lbl = new JTextArea(impScr);
+        title = new JTextArea(titMenu);
 
-      // Localized button labels
-      run = buttons.getString("Run");
-      param = buttons.getString("Param");
-      edit = buttons.getString("Edit");
-      exp = buttons.getString("Exp");
-      imp = buttons.getString("Imp");
+        selectQueryLbl = new JTextArea(selRun);
+        parametersLbl = new JTextArea(parApp);
+        editScriptLbl = new JTextArea(crtEdit);
+        toAS400Lbl = new JTextArea(expScr);
+        fromAS400Lbl = new JTextArea(impScr);
 
-      // Create buttons
-      selectQueryButton = new JButton(run);
-      parametersButton = new JButton(param);
-      editScriptButton = new JButton(edit);
-      toAS400Button = new JButton(exp);
-      fromAS400Button = new JButton(imp);
+        // Localized button labels
+        run = buttons.getString("Run");
+        param = buttons.getString("Param");
+        edit = buttons.getString("Edit");
+        exp = buttons.getString("Exp");
+        imp = buttons.getString("Imp");
 
-      // Title in the window - color the same as panel color
-      title.setBackground(titlePanel.getBackground());
-      title.setEditable(false);
+        // Create buttons
+        selectQueryButton = new JButton(run);
+        parametersButton = new JButton(param);
+        editScriptButton = new JButton(edit);
+        toAS400Button = new JButton(exp);
+        fromAS400Button = new JButton(imp);
 
-      // Colors of labels at buttons same as panel color
-      selectQueryLbl.setBackground(buttonPanel.getBackground());
-      parametersLbl.setBackground(buttonPanel.getBackground());
-      editScriptLbl.setBackground(buttonPanel.getBackground());
-      toAS400Lbl.setBackground(buttonPanel.getBackground());
-      fromAS400Lbl.setBackground(buttonPanel.getBackground());
-      
-      selectQueryLbl.setFont(selectQueryButton.getFont());
-      parametersLbl.setFont(selectQueryButton.getFont());
-      editScriptLbl.setFont(selectQueryButton.getFont());
-      toAS400Lbl.setFont(selectQueryButton.getFont());
-      fromAS400Lbl.setFont(selectQueryButton.getFont());
+        // Title in the window - color the same as panel color
+        title.setBackground(titlePanel.getBackground());
+        title.setEditable(false);
 
-      // Localized messages
-      curDir = locMessages.getString("CurDir");
-      wait = locMessages.getString("Wait");
+        // Colors of labels at buttons same as panel color
+        selectQueryLbl.setBackground(buttonPanel.getBackground());
+        parametersLbl.setBackground(buttonPanel.getBackground());
+        editScriptLbl.setBackground(buttonPanel.getBackground());
+        toAS400Lbl.setBackground(buttonPanel.getBackground());
+        fromAS400Lbl.setBackground(buttonPanel.getBackground());
 
-      // Message list background color
-      //        msgList.setBackground(buttonPanel.getBackground());
-      msgTextArea.setBackground(buttonPanel.getBackground());
-      msgTextArea.setFont(selectQueryButton.getFont());
+        selectQueryLbl.setFont(selectQueryButton.getFont());
+        parametersLbl.setFont(selectQueryButton.getFont());
+        editScriptLbl.setFont(selectQueryButton.getFont());
+        toAS400Lbl.setFont(selectQueryButton.getFont());
+        fromAS400Lbl.setFont(selectQueryButton.getFont());
 
-      msgTextArea.setEditable(false);
+        // Localized messages
+        curDir = locMessages.getString("CurDir");
+        wait = locMessages.getString("Wait");
 
-      // No border line around scroll pane
-      scrollPane.setBorder(null);
+        // Message list background color
+        //        msgList.setBackground(buttonPanel.getBackground());
+        msgTextArea.setBackground(buttonPanel.getBackground());
+        msgTextArea.setFont(selectQueryButton.getFont());
 
-      // Place title in label panel
-      titlePanel.add(title);
-      title.setFont(new Font("Helvetica", Font.PLAIN, 20));
-      titlePanel.setBorder(BorderFactory.createLineBorder(DIM_BLUE)); // Dim blue
+        msgTextArea.setEditable(false);
 
-      // Build button panel
-      buttonPanel.setLayout(gridBagLayout);
-      // Insets around components (top, left, bottom, right)
-      gbc.insets = new Insets(5, 5, 5, 5);
+        // No border line around scroll pane
+        scrollPane.setBorder(null);
 
-      // Padding between components
-      gbc.ipadx = 0; // horizontal
-      gbc.ipady = 5; // vertical
+        // Place title in label panel
+        titlePanel.add(title);
+        title.setFont(new Font("Helvetica", Font.PLAIN, 20));
+        titlePanel.setBorder(BorderFactory.createLineBorder(DIM_BLUE)); // Dim blue
 
-      // gridx = -1, gridy = -1 at the beginning
-      gbc.gridx = 0;
-      gbc.gridy = 0;
+        // Build button panel
+        buttonPanel.setLayout(gridBagLayout);
+        // Insets around components (top, left, bottom, right)
+        gbc.insets = new Insets(5, 5, 5, 5);
 
-      // Place buttons in window
-      gbc.anchor = GridBagConstraints.WEST;
+        // Padding between components
+        gbc.ipadx = 0; // horizontal
+        gbc.ipady = 5; // vertical
 
-      gbc.gridy = 1; // column 0, line 1
-      buttonPanel.add(selectQueryButton, gbc);
-      gbc.gridy++;
-      buttonPanel.add(parametersButton, gbc);
-      if (fullMenu) {
-         gbc.gridy++;
-         buttonPanel.add(editScriptButton, gbc);
-         gbc.gridy++;
-         buttonPanel.add(toAS400Button, gbc);
-         gbc.gridy++;
-         buttonPanel.add(fromAS400Button, gbc);
-      }
-      // Button actions
-      // --------------
-      // Create list of queries from script files and process queries
-      selectQueryButton.addActionListener(ctb -> {
-         Q_ScriptRunCall scriptRun = new Q_ScriptRunCall();
-         scriptRun.buildScriptList(this);
-      });
-      // Edit parameters for application
-      parametersButton.addActionListener(mb -> {
-         if (fullMenu) {
-            Q_ParametersEdit.main(null);
-         } else {
-            queries.user.Q_ParametersEdit.main(null);
-         }
-      });
-      // Edit query SQL script
-      editScriptButton.addActionListener(tb -> {
-         Q_ScriptEditCall scriptEdit = new Q_ScriptEditCall();
-         scriptEdit.buildScriptList(this);
-      });
-      // Export to AS/400
-      toAS400Button.addActionListener(sb -> {
-         String msgText = wait + "\n";
-         msgTextArea.setText(msgText);
-         exportAll = new Q_ExportAllToAS400(this);
-         // Invoke the background worker task
-         exportAll.execute();
-         repaint();
-      });
-      // Import from AS/400
-      fromAS400Button.addActionListener(sb -> {
-         String msgText = wait + "\n";
-         msgTextArea.setText(msgText);
-         importAll = new Q_ImportAllFromAS400(this);
-         // Invoke the background worker task
-         importAll.execute();
-         repaint();
-      });
+        // gridx = -1, gridy = -1 at the beginning
+        gbc.gridx = 0;
+        gbc.gridy = 0;
 
-      // Place labels in window
-      gbc.anchor = GridBagConstraints.WEST;
+        // Place buttons in window
+        gbc.anchor = GridBagConstraints.WEST;
 
-      gbc.gridx = 1;
-      gbc.gridy = 1;
-      buttonPanel.add(selectQueryLbl, gbc);
-      gbc.gridy++;
-      buttonPanel.add(parametersLbl, gbc);
-      if (fullMenu) {
-         gbc.gridy++;
-         buttonPanel.add(editScriptLbl, gbc);
-         gbc.gridy++;
-         buttonPanel.add(toAS400Lbl, gbc);
-         gbc.gridy++;
-         buttonPanel.add(fromAS400Lbl, gbc);
-      }
-      // Place message area in message panel
-      messagePanel.setBorder(BorderFactory.createLineBorder(DIM_BLUE)); // Dim blue
-      scrollPane.setPreferredSize(new Dimension(670, 150));
-      messagePanel.add(scrollPane);
-      messagePanel.setPreferredSize(new Dimension(680, 170));
+        gbc.gridy = 1; // column 0, line 1
+        buttonPanel.add(selectQueryButton, gbc);
+        gbc.gridy++;
+        buttonPanel.add(parametersButton, gbc);
+        if (fullMenu) {
+            gbc.gridy++;
+            buttonPanel.add(editScriptButton, gbc);
+            gbc.gridy++;
+            buttonPanel.add(toAS400Button, gbc);
+            gbc.gridy++;
+            buttonPanel.add(fromAS400Button, gbc);
+        }
+        // Button actions
+        // --------------
+        // Create list of queries from script files and process queries
+        selectQueryButton.addActionListener(ctb -> {
+            Q_ScriptRunCall scriptRun = new Q_ScriptRunCall();
+            scriptRun.buildScriptList(this);
+        });
+        // Edit parameters for application
+        parametersButton.addActionListener(mb -> {
+            if (fullMenu) {
+                // Parameters for the Administrator
+                new Q_ParametersEdit(fullMenu);
+            } else {
+                // Parameters for the User
+                new Q_ParametersEdit(false);
+            }
+        });
+        // Edit query SQL script
+        editScriptButton.addActionListener(tb -> {
+            Q_ScriptEditCall scriptEdit = new Q_ScriptEditCall();
+            scriptEdit.buildScriptList(this);
+        });
+        // Export to AS/400
+        toAS400Button.addActionListener(sb -> {
+            String msgText = wait + "\n";
+            msgTextArea.setText(msgText);
+            exportAll = new Q_ExportAllToAS400(this);
+            // Invoke the background worker task
+            exportAll.execute();
+            repaint();
+        });
+        // Import from AS/400
+        fromAS400Button.addActionListener(sb -> {
+            String msgText = wait + "\n";
+            msgTextArea.setText(msgText);
+            importAll = new Q_ImportAllFromAS400(this);
+            // Invoke the background worker task
+            importAll.execute();
+            repaint();
+        });
 
-      // Send initial message: Current directory is ...
-      msgTextArea.setText(curDir + System.getProperty("user.dir"));
+        // Place labels in window
+        gbc.anchor = GridBagConstraints.WEST;
 
-      // Build global panel and container
-      globalPanel.setLayout(borderLayout);
-      globalPanel.add(titlePanel, BorderLayout.NORTH);
-      globalPanel.add(buttonPanel, BorderLayout.CENTER);
-      if (fullMenu) {
-         globalPanel.add(messagePanel, BorderLayout.SOUTH);
-      }
-      globalPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-      cont.add(globalPanel);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        buttonPanel.add(selectQueryLbl, gbc);
+        gbc.gridy++;
+        buttonPanel.add(parametersLbl, gbc);
+        if (fullMenu) {
+            gbc.gridy++;
+            buttonPanel.add(editScriptLbl, gbc);
+            gbc.gridy++;
+            buttonPanel.add(toAS400Lbl, gbc);
+            gbc.gridy++;
+            buttonPanel.add(fromAS400Lbl, gbc);
+        }
+        // Place message area in message panel
+        messagePanel.setBorder(BorderFactory.createLineBorder(DIM_BLUE)); // Dim blue
+        scrollPane.setPreferredSize(new Dimension(670, 150));
+        messagePanel.add(scrollPane);
+        messagePanel.setPreferredSize(new Dimension(680, 170));
 
-      if (fullMenu) {
-         setSize(700, windowHeight);
-      } else {
-         setSize(700, windowHeightUser);
-      }
-      setLocation(20, 40);
-      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-      //pack();
-      setVisible(true);
-   } // createQ_Menu
+        // Send initial message: Current directory is ...
+        msgTextArea.setText(curDir + System.getProperty("user.dir"));
 
-   private static Q_Menu reference = null;
+        // Build global panel and container
+        globalPanel.setLayout(borderLayout);
+        globalPanel.add(titlePanel, BorderLayout.NORTH);
+        globalPanel.add(buttonPanel, BorderLayout.CENTER);
+        if (fullMenu) {
+            globalPanel.add(messagePanel, BorderLayout.SOUTH);
+        }
+        globalPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        cont.add(globalPanel);
 
-   /**
-    * Obtains and returns single object of this class by calling private
-    * constructor.
-    *
-    * @return reference to the object of this class
-    */
-   public static synchronized Q_Menu getQ_Menu() {
-      if (reference == null) {
-         reference = new Q_Menu();
-      }
-      return reference;
-   }
+        if (fullMenu) {
+            setSize(700, windowHeight);
+        } else {
+            setSize(700, windowHeightUser);
+        }
+        setLocation(20, 40);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //pack();
+        setVisible(true);
+    } // createQ_Menu
 
-   /**
-    * Main class creates the object of this class and calls method to create the
-    * window.
-    *
-    * @param strings
-    *           not used
-    */
-   public static void main(String... strings) {
-      Q_Menu cmn = new Q_Menu();
-      try {
-         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      } catch (Exception exc) {
-         exc.printStackTrace();
-      }
-      cmn.createQ_Menu(true);
-   }
+    private static Q_Menu reference = null;
+
+    /**
+     * Obtains and returns single object of this class by calling private
+     * constructor.
+     *
+     * @return reference to the object of this class
+     */
+    public static synchronized Q_Menu getQ_Menu() {
+        if (reference == null) {
+            reference = new Q_Menu();
+        }
+        return reference;
+    }
+
+    /**
+     * Main class creates the object of this class and calls method to create the
+     * window.
+     *
+     * @param strings
+     * not used
+     */
+    public static void main(String... strings) {
+        Q_Menu cmn = new Q_Menu();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception exc) {
+            exc.printStackTrace();
+        }
+        cmn.createQ_Menu(true);
+    }
 }

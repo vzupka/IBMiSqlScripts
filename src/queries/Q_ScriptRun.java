@@ -329,8 +329,7 @@ public class Q_ScriptRun {
 
         try {
             // Create path to the script file
-            printfilesTxt = Paths.get(System.getProperty("user.dir"), "printfiles",
-                    scriptName + ".txt");
+            printfilesTxt = Paths.get(System.getProperty("user.dir"), "printfiles", scriptName + ".txt");
             // No error message initially
             retCode[1] = "";
 
