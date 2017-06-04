@@ -5,7 +5,7 @@ Created by Vladimír Župka, 2017
 
 vzupka@gmail.com
 
-This is a NetBeans project. The project is not installed, it is ready to use as a Java application in the directory of the project. The application requires Java SE 8 installed in PC.
+This project is not installed, it is ready to use as a Java application in the directory of the project. The application requires Java SE 8 installed in PC.
 
 User documentation can be found in the subdirectory "documents".
 
@@ -21,7 +21,7 @@ Start the application by double click on either Q_Menu.jar or Q_MenuUser.jar fil
 
 - - - - - - - - - - 
 
-Toto je NetBeans projekt. Projekt se neinstaluje, je okamžitě použitelný jako Java aplikace v adresáři projektu. Aplikace vyžaduje instalaci Javy SE 8 v PC.
+Tento projekt se neinstaluje, je okamžitě použitelný jako Java aplikace v adresáři projektu. Aplikace vyžaduje instalaci Javy SE 8 v PC.
 
 Uživatelská dokumentace je k dispozici v podadresáři "documents".
 
