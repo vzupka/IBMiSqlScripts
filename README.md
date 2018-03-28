@@ -19,6 +19,10 @@ Programs are written in Java language and require version Java SE 8 or higher. T
 
 Start the application by double click on either Q_Menu.jar or Q_MenuUser.jar file.
 
+Version 01.01
+
+- Sources of user documentation in Pages added to "documents" directory.
+
 - - - - - - - - - - 
 
 Tento projekt se neinstaluje, je okamžitě použitelný jako Java aplikace v adresáři projektu. Aplikace vyžaduje instalaci Javy SE 8 v PC.
@@ -34,3 +38,8 @@ Do skriptů se kromě SQL příkazů obyčejně doplňují ještě další pří
 Programy jsou napsány v jazyku Java a vyžadují verzi Java SE 8 nebo vyšší. Spolupracují s programy soustavy IBM i Toolbox for Java (nebo JTOpen). Programy byly vytvořeny a testovány v systémech Mac OS X, macOS a Windows 7, Windows 10 se vzdáleným internetovým připojením k systému IBM i.
 
 Aplikace se spouští poklepáním na soubor Q_Menu.jar nebo Q_MenuUser.jar.
+
+Version 01.01
+
+- Zdroje uživatelské dokumentace v Pages přidány do adresáře "documents".
+
