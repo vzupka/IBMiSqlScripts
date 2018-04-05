@@ -1,1 +1,0 @@
-I/O error: com.ibm.as400.access.ExtendedIOException: /home/vzupka/Olma1208/UCS-2 SYSCOLS CENY3.SQL: Access to request was denied. rc=5

@@ -22,6 +22,7 @@ Start the application by double click on either Q_Menu.jar or Q_MenuUser.jar fil
 Version 01.01
 
 - Sources of user documentation in Pages added to "documents" directory.
+- Export and import - bug fixed, script files in IFS have CCSID 1208.
 
 - - - - - - - - - - 
 
@@ -42,5 +43,6 @@ Aplikace se spouští poklepáním na soubor Q_Menu.jar nebo Q_MenuUser.jar.
 Version 01.01
 
 - Zdroje uživatelské dokumentace v Pages přidány do adresáře "documents".
+- Export and import - opravena chyba, soubory skriptů v IFS mají CCSID 1208.
 
 

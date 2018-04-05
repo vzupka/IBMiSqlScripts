@@ -1,0 +1,6 @@
+--Výpis z logického souboru CENYL se členy
+
+SELECT * FROM CENYL_01;
+SELECT * FROM CENYL_02;
+SELECT * FROM CENYL_03;
+SELECT * FROM CENYL
