@@ -7,13 +7,10 @@ import java.util.ResourceBundle;
 
 import com.ibm.as400.access.AS400;
 
+import com.ibm.as400.access.AS400FTP;
+import com.ibm.as400.access.FTP;
 import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileWriter;
-import java.io.BufferedWriter;
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.util.List;
+
 
 /**
  * Transfers ONE file from the IBM i (IFS directory) to local directory "scriptfiles".
@@ -32,13 +29,14 @@ public class Q_ExportOneToAS400 {
     static String password;
     static String ifsDirectory;
     static AS400 as400Host;
+    static AS400FTP client;
     static IFSFile ifsFile;
     static String file, wasExported, directory, notFound;
     static String messageText;
 
     /**
-     * Obtains connection to IBM i and creates an FTP client. Then it transfers the script file from
-     * local directory "scriptfiles" to the IFS directory given in parameters.
+     * Obtains connection to IBM i and transfers the script file from
+     * local directory "scriptfiles" to the IFS directory named in parameters.
      *
      * @param scriptFileName name of the file to transfer
      * @return messageText text of a message
@@ -72,32 +70,22 @@ public class Q_ExportOneToAS400 {
         // Get access to AS400
         as400Host = new AS400(host, userName);
 
-        try {
-
             // Path to input script file
             Path filePath = Paths.get(System.getProperty("user.dir"), "scriptfiles", scriptFileName);
-            List<String> lines;
-            // Read all bytes from the scriptfiles file scriptFileName
-            lines = Files.readAllLines(filePath, Charset.forName("UTF-8"));
-            // Open IFS output stream file in the IFS directory
-            ifsFile = new IFSFile(as400Host, ifsDirectory + scriptFileName);
-            ifsFile.createNewFile();
-            // Write data to the IFS file
-            PrintWriter writer = new PrintWriter(new BufferedWriter(new IFSFileWriter(ifsFile)));            
-            writer.println(lines);
-            // Close the IFS file if it does not exist
-            writer.close();
-            
-            messageText = file + scriptFileName + wasExported + ifsDirectory + ".";
-            return messageText;
-            
-        } catch (Exception ioe) {
-            ioe.printStackTrace();
-            System.out.println("IFSOutput error: " + ioe.getLocalizedMessage());
-            messageText = "IFSOutput error: " + ioe.getLocalizedMessage();
+            // Create an FTP client
+            client = new AS400FTP(as400Host);
 
-            return messageText;
+            // Transfer script file from the local directory to IFS directory using FTP
+            try {
+                client.setDataTransferType(FTP.BINARY);
+                // FTP put
+                client.put(filePath.toString(), ifsDirectory + scriptFileName);
+                messageText = file + scriptFileName + wasExported + ifsDirectory + ".";
+                return messageText;
+            } catch (Exception exc) {
+                messageText = directory + ifsDirectory + notFound + exc.getClass() + ", " + exc.toString();
+                System.out.println(messageText);
+                return messageText;
+            }
         }
-
     }
-}

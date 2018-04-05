@@ -617,8 +617,7 @@ public class Q_ScriptEditCall extends JFrame {
                     String selectedScript = (String) records[scriptListIndexSel][0];
                     scriptDescription = (String) records[scriptListIndexSel][1];
                     // Import script whose name is known. Method importScript
-                    // makes use of
-                    // class ImportOneFromAS400.
+                    // makes use of class ImportOneFromAS400.
                     String[] retCode = importScript(selectedScript, scriptDescription);
                     // Handle messages
                     if (retCode[0].equals("runScript") && !retCode[1].isEmpty()) {
@@ -626,11 +625,9 @@ public class Q_ScriptEditCall extends JFrame {
                         messagePanel.add(scriptListMsgPanel);
                         setVisible(true);
                     }
-                } // Row index of table line is negative - Prompt for script name
-                // to import
+                } // Row index of table line is negative - Prompt for script name to import
                 else {
-                    // Script file name is not known - the user must enter a name
-                    // in a dialog.
+                    // Script file name is not known - the user must enter a name in a dialog.
                     Q_PromptForScriptName prompt = new Q_PromptForScriptName();
                     prompt.runPrompt();
                 }

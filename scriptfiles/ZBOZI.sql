@@ -1,5 +1,5 @@
---Zboží podle skladů a závodů
- --;HZav;Skl;Č.zboží;Název zboží;Cena/j.;Množství;   Cena celkem;
+--Zboží podle skladů a závodů
+ --;HZav;Skl;.zboží;Název zboží;Cena/j.;Množství;   Cena celkem;
  --;H===;===;=======;===========;=======;========;   ===========;
  --;H
 

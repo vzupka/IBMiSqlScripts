@@ -7,16 +7,14 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400FTP;
+import com.ibm.as400.access.FTP;
 import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileReader;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.List;
+
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
-import static queries.Q_ExportAllToAS400.msgValue;
 
 /**
  * Import all scripts from IBM i (IFS directory) to local directory "scriptfiles".
@@ -34,6 +32,7 @@ public class Q_ImportAllFromAS400 extends SwingWorker<String, String> {
     static String password;
     static String ifsDirectory;
     static AS400 as400Host;
+    static AS400FTP client;
     static String file, wasImported, transferEnd, dir, notFoundInDir, ioError;
     static String fileName;
     static String msgValue;
@@ -82,8 +81,9 @@ public class Q_ImportAllFromAS400 extends SwingWorker<String, String> {
     }
 
     /**
-     * Obtains connection to IBM i and creates an FTP client. Program reads files from the IFS
-     * directory given in parameters one after another and puts them to the directory "scriptfiles".
+     * Obtains connection to IBM i and creates an FTP client. Program reads files
+     * from the IFS directory given in parameters one after another and puts them
+     * to the directory "scriptfiles".
      *
      * @param menu
      * @return
@@ -119,12 +119,16 @@ public class Q_ImportAllFromAS400 extends SwingWorker<String, String> {
         // Get access to AS400
         as400Host = new AS400(host, userName);
 
-        // Read files from the IFS directory and get them using FTP
-        // to local directory "scriptfiles"
+        // Create an FTP client
+        client = new AS400FTP(as400Host);
+
+        // Read files from the IFS directory and write them to local directory "scriptfiles"
         IFSFile directory = new IFSFile(as400Host, ifsDirectory);
         try {
             IFSFile[] files = directory.listFiles();
+            System.out.println("files[0]: " + files[0]);
             int nbrFiles = 0;
+            // Transfer all files from IFS directory to the local directory
             for (IFSFile ifsFile : files) {
                 String ifsFileName = ifsFile.getPath();
                 if (ifsFile.isFile()) {
@@ -132,28 +136,14 @@ public class Q_ImportAllFromAS400 extends SwingWorker<String, String> {
                     fileName = ifsFileName.substring(ifsFileName.lastIndexOf("/") + 1);
                     // Files beginning with . in its name are ignored
                     if (!ifsFileName.substring(0, 1).equals(".")) {
-                        // Transfer all files from IFS directory to the local
-                        // directory
-                        Path filePath = Paths
-                                .get(System.getProperty("user.dir"), "scriptfiles", fileName);
-                        ifsFile = new IFSFile(as400Host, ifsDirectory + fileName);
-                        try {
-                            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath.toString()));
-                            BufferedReader reader = new BufferedReader(new IFSFileReader(ifsFile));
-                            // Read the first line of the file, converting characters.
-                            String line = reader.readLine();
-                            while (line != null) {
-                                // Write the line to the PC file in directory scriptfiles
-                                writer.write(line + "\n");
-                                line = reader.readLine();
-                            }
-                            // Close the writer and reader.
-                            reader.close();
-                            writer.close();
-                        } catch (Exception exc) {
-                            exc.printStackTrace();
-                        }
-                        menu.msgTextArea.append(file + fileName + wasImported + ifsDirectory + ".\n");
+                        // Path to output script file
+                        Path filePath = Paths.get(System.getProperty("user.dir"), "scriptfiles", fileName);
+
+                        client.setDataTransferType(FTP.BINARY);
+                        // FTP get
+                        client.get(ifsFileName, filePath.toString());
+                        msgValue = file + fileName + wasImported + ifsDirectory + ".";
+                        menu.msgTextArea.append(msgValue + "\n");
 
                         nbrFiles++;
                     }

@@ -7,18 +7,14 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.ibm.as400.access.AS400;
+import com.ibm.as400.access.AS400FTP;
+import com.ibm.as400.access.FTP;
 import com.ibm.as400.access.IFSFile;
-import com.ibm.as400.access.IFSFileReader;
-import com.ibm.as400.access.IFSFileWriter;
 import java.awt.Toolkit;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.nio.charset.Charset;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
-import static queries.Q_ExportOneToAS400.ifsFile;
 
 /**
  * Transfers ALL files from the directory "scriptfiles" to IBM i.
@@ -38,6 +34,8 @@ public class Q_ExportAllToAS400 extends SwingWorker<String, String> {
     static String password;
     static String ifsDirectory;
     static AS400 as400Host;
+    static AS400FTP client;
+    //static ArrayList<String> messages = new ArrayList<>();
     static String ioError, file, wasExported, transferEnd, noFiles;
     static String msgValue;
 
@@ -121,7 +119,11 @@ public class Q_ExportAllToAS400 extends SwingWorker<String, String> {
         // Get access to AS400
         as400Host = new AS400(host, userName);
 
-        // Read files from the directory "scriptfiles" and put them to an AS400 directory
+        // Create an FTP client
+        client = new AS400FTP(as400Host);
+
+        // Read files from the directory "scriptfiles" and put them
+        // to an AS400 directory using FTP
         if (Files.isDirectory(inPath)) {
             String[] fileNames = inPath.toFile().list();
             int nbrFiles = 0;
@@ -130,42 +132,30 @@ public class Q_ExportAllToAS400 extends SwingWorker<String, String> {
                 if (!fileName.substring(0, 1).equals(".")) {
                     // Transfer all files from the local directory to IFS directory
                     try {
-                        // Path to PC file
+                        // Path to input script file
                         Path filePath = Paths.get(System.getProperty("user.dir"), "scriptfiles", fileName);
-                        // Path to IFS input script file
-                        ifsFile = new IFSFile(as400Host, ifsDirectory + fileName);
-                        // Create file in the IFS directory if it does not exixt
-                        ifsFile.createNewFile();
-                        try {
-                            BufferedWriter writer = new BufferedWriter(new IFSFileWriter(ifsFile));
-                            BufferedReader reader = new BufferedReader(new FileReader(filePath.toString()));
-                            // Read the first line of the IFS file, converting characters.
-                            String line = reader.readLine();
-                            while (line != null) {
-                                // Write the line to the IFS file in directory scriptfiles
-                                writer.write(line + "\n");
-                                line = reader.readLine();
-                            }
-                            // Close the writer and reader.
-                            reader.close();
-                            writer.close();
-                        } catch (Exception exc) {
-                            //exc.printStackTrace();
+                        // Path to output IFS script file
+                        IFSFile ifsFile = new IFSFile(as400Host, ifsDirectory + fileName);
+                        // Create new empty file if it doesn't exist
+                        if (!ifsFile.exists()) {
+                            ifsFile.createNewFile();
                         }
+                        // Set CCSID 1208 (UTF-8)
+                        ifsFile.setCCSID(1208);
 
-                        msgValue = file + fileName + wasExported
-                                + ifsDirectory + ".\n";
+                        client.setDataTransferType(FTP.BINARY);
+                        // FTP put
+                        client.put(filePath.toString(), ifsDirectory + fileName);
+                        msgValue = file + fileName + wasExported + ifsDirectory + ".\n";
                         menu.msgTextArea.append(msgValue);
-
-                    } catch (Exception ioe) {
-                        ioe.printStackTrace();
-                        System.out.println(ioError + ioe.getLocalizedMessage());
-                        msgValue = ioError + ioe.getLocalizedMessage() + "\n";
+                        nbrFiles++;
+                    } catch (IOException ioe) {
+                        System.out.println(ioError + ioe.toString());
+                        msgValue = ioError + ioe.toString() + "\n";
                         menu.msgTextArea.append(msgValue);
-                        return "";
+                        return msgValue;
                     }
                 }
-                nbrFiles++;
             }
             if (nbrFiles == 0) {
                 msgValue = noFiles + inPath + "\n";
@@ -176,5 +166,4 @@ public class Q_ExportAllToAS400 extends SwingWorker<String, String> {
         }
         return msgValue;
     }
-
 }

@@ -1,5 +1,5 @@
---Zboží v závodech a skladech - přehled
-/* SQL příkaz */
+--Zboí v závodech a skladech - pehled
+/* SQL píkaz */
 SELECT 
    S.ZAVOD, 
    S.SKLAD, 

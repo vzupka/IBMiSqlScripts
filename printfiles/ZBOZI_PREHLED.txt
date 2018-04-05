@@ -1,0 +1,31 @@
+
+Zboží v závodech a skladech - přehled
+
+Tuesday, April 3, 2018 5:42:55 PM
+
+ZAVOD SKLAD CZBOZI NAZ                         CJ    MNOZSTVI         CELKEM 
+01    01    00001  PIŠKOTY OPAVIA            8.99   1,579.444     14,199.202 
+01    01    00002  Zubní pasta Kal            459           1            459 
+01    01    00010  Koňak Gruzínský          6,500          -7        -45,500 
+01    02    00003  Prádelní šňůra            1.25          19          23.75 
+01    02    00009  Whisky Balantin            250        1.08            270 
+01    02    00010  Koňak Gruzínský          6,500           3         19,500 
+01    03    00003  Prádelní šňůra            1.25           1           1.25 
+02    01    00005  Tričko bílé                120           2            240 
+02    01    00006  Ponožky pánské           10.55           2           21.1 
+02    01    00008  Kalhoty džínové          1,700           2          3,400 
+02    01    00019  -                            -           2              - 
+02    02    00009  Whisky Balantin            250           2            500 
+02    02    00011  Taška sportovní            159           2            318 
+02    02    00014  Sako tvídové, n          3,500           2          7,000 
+02    02    00018  Husí sádlo v ko             56           2            112 
+02    02    00019  -                            -           2              - 
+-     -     -      Ponožky pánské            10.5           -              - 
+-     -     -      Kalhoty manšest          1,510           -              - 
+-     -     -      Pálka pingpongo             45           -              - 
+-     -     -      Míč                        360           -              - 
+-     -     -      Motorové koště          12,500           -              - 
+-     -     -      Slepičí peří na            380           -              - 
+-     -     -      Hrábě dřevěné,             130           -              - 
+-     -     -      Tiskárna barevn            874           -              - 
+-     -     -      AAAA+%BBB%_CCC        9,999.99           -              - 
