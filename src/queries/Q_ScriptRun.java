@@ -402,8 +402,7 @@ public class Q_ScriptRun {
                 // No --;? definitions.
                 // --------------------
                 // If marker array list is empty make decision if STATEMENT is QUERY or UPDATE
-                stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
                 boolean isQuery = stmt.execute(statement);
                 if (isQuery) {
                     rs = stmt.getResultSet();
