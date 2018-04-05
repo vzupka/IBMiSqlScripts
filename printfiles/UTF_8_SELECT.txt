@@ -1,0 +1,7 @@
+
+--Select from CENY2
+
+select * from CENY2_01
+
+Error in the statement:
+42704  [SQL0204] CENY2_01 in *LIBL type *FILE not found.

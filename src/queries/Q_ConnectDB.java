@@ -126,11 +126,11 @@ public class Q_ConnectDB {
 
       } catch (SQLException exc2) {
          System.out.println(msg);
-         msg = connErr + exc2.getLocalizedMessage();
+         msg = connErr + exc2.toString();
          System.out.println(msg);
          return null;
       } catch (ClassNotFoundException exc) {
-         msg = driver + host + ": " + exc.getLocalizedMessage();
+         msg = driver + host + ": " + exc.toString();
          System.out.println(msg);
          return null;
       }
