@@ -692,6 +692,7 @@ public class Q_ScriptRunCall extends JFrame {
     public String[] performScript(String selectedScript, String scriptDescription) {
 
         conn = getConnectionDB2();
+        System.out.println("conn VVVV: "+conn);
         // Obtain object for connection to database DB2
         if (conn == null) {
             String messageText;
