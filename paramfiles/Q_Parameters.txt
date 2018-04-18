@@ -1,5 +1,5 @@
 #Copy files between IBM i and PC, edit and compile.
-#Wed Apr 18 16:08:04 CEST 2018
+#Wed Apr 18 16:33:32 CEST 2018
 CARET=Long caret
 COLUMN_SEPARATING_SPACES=1
 LIBRARY=KOLEKCE, VZSQL, VZTOOL, CORPDATA

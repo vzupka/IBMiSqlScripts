@@ -520,9 +520,9 @@ public final class Q_ScriptEdit extends JFrame {
         // Set selection mode as the button text
         selectionModeButton.setText(selectionMode);
 
-        runScriptButton.setPreferredSize(new Dimension(80, 20));
-        runScriptButton.setMinimumSize(new Dimension(80, 20));
-        runScriptButton.setMaximumSize(new Dimension(80, 20));
+        runScriptButton.setPreferredSize(new Dimension(100, 20));
+        runScriptButton.setMinimumSize(new Dimension(100, 20));
+        runScriptButton.setMaximumSize(new Dimension(100, 20));
         runScriptButton.setFont(runScriptButton.getFont().deriveFont(Font.BOLD, 12));
         runScriptButton.setToolTipText("Run script.");
 
