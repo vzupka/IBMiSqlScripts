@@ -34,6 +34,8 @@ public class L_ButtonBundle_cs_CZ extends ListResourceBundle{
        {"Cancel", "Končit"}, 
        {"Save", "Uložit skript"},      
        {"RunScript", "Spustit skript"},      
+       {"ShortCaretText", "Krátký ukazatel"},      
+       {"LongCaretText", "Dlouhý ukazatel"},      
        // Q_ScriptEditCall
        {"New_script", "Vytvořit nový skript"},       
        {"Edit_sel", "Upravit vybraný"},       
@@ -44,6 +46,5 @@ public class L_ButtonBundle_cs_CZ extends ListResourceBundle{
        // Q_ScriptRunCall
        {"Run_sel", "Spustit vybraný"},       
        {"Imp_script", "Importovat skript"},  
-
     };
 }

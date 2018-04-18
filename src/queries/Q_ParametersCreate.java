@@ -38,8 +38,14 @@ public class Q_ParametersCreate {
       properties.setProperty("NULL_PRINT_MARK", "-");
       properties.setProperty("COLUMN_SEPARATING_SPACES", "1");
       properties.setProperty("FONT_SIZE", "9");
-      properties.setProperty("EDIT_FONT_SIZE", "14");
+      properties.setProperty("EDITOR_FONT_SIZE", "12");
+      properties.setProperty("EDITOR_FONT", "Monospaced");
       properties.setProperty("DECIMAL_PATTERN", "");
+      properties.setProperty("HIGHLIGHT", "SQL");
+      properties.setProperty("CARET", "Short caret");
+      properties.setProperty("MATCH_CASE", "CASE_INSENSITIVE");
+      properties.setProperty("SELECTION_MODE", "Horizontal selection");
+      properties.setProperty("HIGHLIGHT_BLOCKS", "*NONE");
 
       try {
          // If the Parameters.txt file does not exist, create one

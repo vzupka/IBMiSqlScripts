@@ -410,7 +410,7 @@ public class Q_PrintOneFile extends JDialog {
         // Set "Return" button activity
         // ----------------------------
         returnButton.addActionListener(a -> {
-            dispose();
+            this.dispose();
         });
 
         // Set Print button activity
@@ -418,7 +418,7 @@ public class Q_PrintOneFile extends JDialog {
         printButton.addActionListener(a -> {
             printResult();
             // Hide the window
-            dispose();
+            this.dispose();
             // Call itself again
             new Q_PrintOneFile(scriptName, resultTextArea, nbrHdrLines, headerArrayList, printArrayList, columnHeaders);
         });

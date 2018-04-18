@@ -254,7 +254,7 @@ public class Q_Menu extends JFrame {
         // Create list of queries from script files and process queries
         selectQueryButton.addActionListener(ctb -> {
             Q_ScriptRunCall scriptRun = new Q_ScriptRunCall();
-            scriptRun.buildScriptList(this);
+            scriptRun.buildScriptList();
         });
         // Edit parameters for application
         parametersButton.addActionListener(mb -> {
@@ -269,7 +269,7 @@ public class Q_Menu extends JFrame {
         // Edit query SQL script
         editScriptButton.addActionListener(tb -> {
             Q_ScriptEditCall scriptEdit = new Q_ScriptEditCall();
-            scriptEdit.buildScriptList(this);
+            scriptEdit.buildScriptList();
         });
         // Export to AS/400
         toAS400Button.addActionListener(sb -> {
@@ -330,7 +330,7 @@ public class Q_Menu extends JFrame {
         } else {
             setSize(700, windowHeightUser);
         }
-        setLocation(20, 40);
+        setLocation(40, 50);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //pack();
         setVisible(true);

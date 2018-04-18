@@ -1,2 +1,2 @@
 --Select all
-select * from BINARY01
+ select * from BINARY01

@@ -1,0 +1,9 @@
+
+
+select * from BINARY01
+Není spojení se serverem.
+
+select * from BINARY01
+Není spojení se serverem.
+select * from BINARY01
+Jiná chyba skriptu nebo programu: class java.lang.NullPointerException, null

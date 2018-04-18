@@ -40,5 +40,5 @@ FROM STAVY AS S
 where S.CZBOZI >= ?
    ORDER BY S.ZAVOD, S.SKLAD , C.CZBOZI asc
 
-Error in the statement:
+Chyba v příkazu:
 42703  [SQL0206] Column or global variable RAZITKO not found.

@@ -1,13 +1,9 @@
 package queries;
 
-import static javax.swing.GroupLayout.Alignment.LEADING;
-
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -22,7 +18,6 @@ import java.util.TreeMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,9 +29,12 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import com.ibm.as400.access.AS400;
-import com.ibm.as400.access.AS400FTP;
-import com.ibm.as400.access.IFSFile;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.Properties;
+import javax.swing.JTextArea;
 
 /**
  * Edit and maintain SQL query scripts
@@ -59,7 +57,7 @@ public class Q_ScriptEditCall extends JFrame {
     String curDir, noRowUpd, noRowDel, noRowSav, file, wasDelLoc, wasDel, notInDir, script,
             wasSavedTo, ioError, inputError;
     // Object of calling class
-    static Q_Menu menu = Q_Menu.getQ_Menu();
+    //static Q_Menu menu = Q_Menu.getQ_Menu();
 
     String scriptName;
     String scriptDescription;
@@ -77,11 +75,7 @@ public class Q_ScriptEditCall extends JFrame {
     static String host;
     static String userName;
     static String password;
-    static String ifsDirectory;
-    static AS400 as400Host;
-    static AS400FTP client;
 
-    
     // Components for scriptListGlobalPanel
     JPanel scriptListTitlePanel;
     JPanel scriptListPanel;
@@ -90,7 +84,7 @@ public class Q_ScriptEditCall extends JFrame {
     JPanel scriptListButtonPanel;
 
     JLabel scriptListTitle;
-    JLabel scriptListMsgPanel;
+    JLabel scriptListMsgLabel;
     String msgText;
 
     JButton scriptListExitButton;
@@ -103,6 +97,9 @@ public class Q_ScriptEditCall extends JFrame {
 
     JTextField searchField;
     JLabel searchLabel;
+    String searchText;
+    String searchPattern;
+    String searchWildCard;
 
     // Dimensions of different stage views
     final Integer scriptListGlobalWidth = 1050;
@@ -113,7 +110,7 @@ public class Q_ScriptEditCall extends JFrame {
     final Integer scriptListWidth = scriptListPanelWidth;
     final Integer scriptListHeight = scriptListPanelHeight;
     final Integer xLocation = 400;
-    final Integer yLocation = 40;
+    final Integer yLocation = 50;
 
     final Integer tableRowHeight = 24;
     final Integer firstTableColumnWidth = 200;
@@ -121,6 +118,7 @@ public class Q_ScriptEditCall extends JFrame {
 
     // List (table) of records
     JTable scriptList;
+    ScriptTableMouseAdapter scriptTableMouseAdapter;
 
     // Data model for the table
     DefaultTableModel tableModel;
@@ -146,26 +144,53 @@ public class Q_ScriptEditCall extends JFrame {
     Container listContentPane;
     Container dataContentPane;
 
-    boolean addNewRecord = true;
     ListSelectionModel selModel;
-    
+
     // Table columns for the list
     TableColumn colscriptName;
     TableColumn colQueryDesc;
-    
+
     final Color DIM_BLUE = new Color(50, 60, 160);
     final Color DIM_RED = new Color(190, 60, 50);
+
+    Properties sysProp;
+    String operatingSystem;
+    final String WINDOWS = "WINDOWS";
+    final String UNIX = "UNIX";
+    String pcFileSep; // PC file separator ( / in unix, \ in Windows )
+
+    Q_ScriptEdit scriptEdit;
+    WindowScriptEditCallAdapter windowScriptEditCallAdapter;
 
     /**
      * Constructor
      */
     public Q_ScriptEditCall() {
 
+        // Get or set application properties
+        // ---------------------------------
+        sysProp = System.getProperties();
+
+        // Root symbols for local host are different in Windows and unix
+        //
+        if (sysProp.get("os.name").toString().contains("Windows")) {
+            operatingSystem = WINDOWS;
+            // Windows:
+            pcFileSep = "\\"; // single \
+        } else {
+            // Unix systems:
+            operatingSystem = UNIX;
+            pcFileSep = "/";
+        }
+        // Menu bar in Mac operating system will be in the system menu bar
+        if (sysProp.get("os.name").toString().toUpperCase().contains("MAC")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
+
         prop = new Q_Properties();
         language = prop.getProperty("LANGUAGE");
         host = prop.getProperty("HOST");
         userName = prop.getProperty("USER_NAME");
-        ifsDirectory = prop.getProperty("IFS_DIRECTORY");
 
         tableModel = new Q_TableModel();
 
@@ -174,20 +199,22 @@ public class Q_ScriptEditCall extends JFrame {
         // Files for storing and reading records
         scriptOutPath = Paths.get(System.getProperty("user.dir"), "scriptfiles", scriptName + ".sql");
         scriptIn = Paths.get(System.getProperty("user.dir"), "scriptfiles", scriptName + ".sql");
-        
+
         Locale currentLocale = Locale.forLanguageTag(language);
         // Get resource bundle classes
         titles = ResourceBundle.getBundle("locales.L_TitleLabelBundle", currentLocale);
         buttons = ResourceBundle.getBundle("locales.L_ButtonBundle", currentLocale);
-        locMessages = ResourceBundle.getBundle("locales.L_MessageBundle", currentLocale);        
+        locMessages = ResourceBundle.getBundle("locales.L_MessageBundle", currentLocale);
+
+        scriptTableMouseAdapter = new ScriptTableMouseAdapter();
     }
 
 
     /**
      * Builds query script list in scriptListPanel
-     * @param menu
+     *
      */
-    public void buildScriptList(Q_Menu menu) {
+    public void buildScriptList() {
 
         // Localized titles
         titEdit = titles.getString("TitEdit");
@@ -203,7 +230,7 @@ public class Q_ScriptEditCall extends JFrame {
         refresh = buttons.getString("Refresh");
         sav_to_svr = buttons.getString("Sav_to_svr");
         read_from_svr = buttons.getString("Read_from_svr");
-        
+
         scriptListTitlePanel = new JPanel();
         scriptListPanel = new JPanel();
         scrollPane = new JScrollPane();
@@ -215,7 +242,7 @@ public class Q_ScriptEditCall extends JFrame {
         searchLabel = new JLabel(searchScript);
         searchLabel.setForeground(DIM_BLUE); // Dim blue
 
-        scriptListMsgPanel = new JLabel();
+        scriptListMsgLabel = new JLabel();
 
         scriptListExitButton = new JButton(exit);
         scriptListExitButton.setMinimumSize(new Dimension(70, 35));
@@ -254,6 +281,7 @@ public class Q_ScriptEditCall extends JFrame {
 
         // Empty table scriptList with data model
         scriptList = new JTable(tableModel);
+        scriptList.addMouseListener(scriptTableMouseAdapter);
 
         // Attributes of the list table
         scriptList.setFont(new Font("Helvetica", Font.PLAIN, 13));
@@ -373,9 +401,9 @@ public class Q_ScriptEditCall extends JFrame {
         colQueryDesc = scriptList.getColumnModel().getColumn(1);
         colQueryDesc.setPreferredWidth(secondTableColumnWidth);
         // Initial message indicating current directory
-        scriptListMsgPanel.setForeground(Color.BLACK);
-        scriptListMsgPanel.setText(curDir + System.getProperty("user.dir"));
-        messagePanel.add(scriptListMsgPanel);
+        scriptListMsgLabel.setForeground(Color.BLACK);
+        scriptListMsgLabel.setText(curDir + System.getProperty("user.dir"));
+        messagePanel.add(scriptListMsgLabel);
 
         // Row selection model (selection of single row)
         selModel = scriptList.getSelectionModel();
@@ -393,30 +421,98 @@ public class Q_ScriptEditCall extends JFrame {
                 scriptListIndexSel = -1;
             }
         });
+
+        // Register window listener
+        // ------------------------
+        windowScriptEditCallAdapter = new WindowScriptEditCallAdapter();
+        this.addWindowListener(windowScriptEditCallAdapter);
+
+        // Set Search field activity
+        // -------------------------
+        searchField.addActionListener(a -> {
+            // Read records from database and put it into a list
+            readInputFiles();
+            readLinesForScriptList();
+            scriptListMsgLabel.setText("");
+            messagePanel.add(scriptListMsgLabel);
+            this.setVisible(true);
+        });
+
         // Set Return button activity (return to type code list)
         // -----------------------------------------------------
         scriptListExitButton.addActionListener(a -> {
-            setVisible(false);
-            dispose();
+            //setVisible(false);
+            //this.dispose();
+            if (scriptEdit != null) {
+                scriptEdit.dispose();
+                scriptEdit = null;
+            }
+            Q_ScriptEditCall.this.dispose();
         });
 
         // Set Add button activity (on mouse click)
         // ----------------------------------------
         scriptListAddButton.addActionListener(a -> {
-            addNewRecord = true;
-            // Create a new script file -
-            // - call script editing program
-            Q_ScriptEdit se = new Q_ScriptEdit();
-            se.scriptEdit(null);
-            readInputFiles();
-            readLinesForScriptList();
-            this.setVisible(true);
+            String scriptFileName;
+            messagePanel.removeAll();
+            messagePanel.repaint();
+
+            if (rowIndexList != null) { // row index not empty
+                if (scriptListIndexSel >= 0) {
+                    // If a row was selected get its index
+                    scriptListIndexSel = rowIndexList.getLeadSelectionIndex();
+                    // Get file name from the selected row
+                    selScriptFileName = (String) records[scriptListIndexSel][0];
+                } else {
+                    selScriptFileName = "_New_script.sql";
+                }
+            } else {
+                selScriptFileName = "_New_script.sql";
+            }
+
+            // Prompt for a new script name in a dialog
+            fileName = new Q_GetTextFromDialog("CREATE NEW SCRIPT FILE")
+                    .getTextFromDialog("Enter a file name with suffix  .sql  for the new script.", "New script: ",
+                            " ", selScriptFileName, xLocation + 700, yLocation + 100);
+            // If the dialog was canceled - report a message
+            if (fileName == null) {
+                scriptListMsgLabel.setText("No script file was created. Dialog was canceled.");
+                scriptListMsgLabel.setForeground(DIM_RED); // red
+                messagePanel.add(scriptListMsgLabel);
+                this.setVisible(true);
+                return;
+            }
+            // If the dialog was entered - continue in creating a new file
+            scriptFileName = fileName;
+
+            // Create a new empty file with the script name entered in the dialog
+            try {
+                Files.createFile(Paths.get("scriptfiles" + "/" + fileName));
+                // The search field is set so that the only new script will be selected in the list.
+                searchField.setText(fileName);
+                readInputFiles();
+                readLinesForScriptList();
+                scriptListMsgLabel.setText("New script file  " + scriptFileName + "  was created.");
+                scriptListMsgLabel.setForeground(DIM_BLUE); // blue
+                messagePanel.add(scriptListMsgLabel);
+                this.setVisible(true);
+
+            } catch (Exception exc) {
+                // File already exists.
+                //exc.printStackTrace();
+                searchField.setText(fileName);
+                readInputFiles();
+                readLinesForScriptList();
+                scriptListMsgLabel.setText("Error: File  " + scriptFileName + "   already exists. - " + exc.toString());
+                scriptListMsgLabel.setForeground(DIM_RED); // red
+                messagePanel.add(scriptListMsgLabel);
+                this.setVisible(true);
+            }
         });
 
         // Set Update button activity (on mouse click)
         // -------------------------------------------
         scriptListUpdButton.addActionListener(a -> {
-            addNewRecord = false;
             messagePanel.removeAll();
             messagePanel.repaint();
             if (rowIndexList != null) { // row index not empty
@@ -427,23 +523,19 @@ public class Q_ScriptEditCall extends JFrame {
                     selScriptFileName = (String) records[scriptListIndexSel][0];
 
                     // Call script editing program
-                    Q_ScriptEdit se = new Q_ScriptEdit();
-                    se.scriptEdit(selScriptFileName);
-                    // Read the files again for refresh
-                    readInputFiles();
-                    // and refresh the table view
-                    readLinesForScriptList();
-                    this.setVisible(true);
+                    JTextArea textArea = new JTextArea();
+                    JTextArea textArea2 = new JTextArea();
+                    scriptEdit = new Q_ScriptEdit(Q_ScriptEditCall.this, textArea, textArea2, selScriptFileName, "rewritePcFile");
                 } else {
-                    scriptListMsgPanel.setText(noRowUpd);
-                    scriptListMsgPanel.setForeground(DIM_RED); // red
-                    messagePanel.add(scriptListMsgPanel);
+                    scriptListMsgLabel.setText(noRowUpd);
+                    scriptListMsgLabel.setForeground(DIM_RED); // red
+                    messagePanel.add(scriptListMsgLabel);
                     this.setVisible(true);
                 }
             } else {
-                scriptListMsgPanel.setText(noRowUpd);
-                scriptListMsgPanel.setForeground(DIM_RED); // red
-                messagePanel.add(scriptListMsgPanel);
+                scriptListMsgLabel.setText(noRowUpd);
+                scriptListMsgLabel.setForeground(DIM_RED); // red
+                messagePanel.add(scriptListMsgLabel);
                 this.setVisible(true);
             }
         });
@@ -478,66 +570,32 @@ public class Q_ScriptEditCall extends JFrame {
                         readLinesForScriptList();
 
                         messageText = file + selScriptFileName + wasDelLoc;
-                        scriptListMsgPanel.setText(messageText);
-                        scriptListMsgPanel.setForeground(DIM_BLUE); // blue
-                        messagePanel.add(scriptListMsgPanel);
+                        scriptListMsgLabel.setText(messageText);
+                        scriptListMsgLabel.setForeground(DIM_BLUE); // blue
+                        messagePanel.add(scriptListMsgLabel);
                         //System.out.println(messageText);
                     } catch (IOException ioe) {
                         messageText = ioError + ioe.getLocalizedMessage();
-                        scriptListMsgPanel.setText(messageText);
-                        scriptListMsgPanel.setForeground(DIM_RED); // red
+                        scriptListMsgLabel.setText(messageText);
+                        scriptListMsgLabel.setForeground(DIM_RED); // red
                         System.out.println(messageText);
                     }
 
-                    // Get access to AS400 and delete the file from IFS directory
-                    as400Host = new AS400(host, userName);
-                    // Append forward slash if not not present at the end of the path
-                    int len = ifsDirectory.length();
-                    if (len == 0) {
-                        ifsDirectory = "/";
-                        len = 1;
-                    }
-                    if (!ifsDirectory.substring(len - 1, len).equals("/")) {
-                        ifsDirectory += "/";
-                    }
-                    IFSFile ifsFile = new IFSFile(as400Host, ifsDirectory + selScriptFileName);
-                    try {
-                        JLabel jl = new JLabel();
-
-                        if (ifsFile.delete() == true) {
-                            messageText = file + selScriptFileName + wasDel + ifsDirectory + ".";
-                            jl.setText(messageText);
-                            jl.setForeground(DIM_BLUE); // blue
-                            messagePanel.add(jl);
-                            //System.out.println(messageText);
-                        } else {
-                            messageText = file + selScriptFileName + notInDir + ifsDirectory + ".";
-                            jl.setText(messageText);
-                            jl.setForeground(DIM_RED); // red
-                            messagePanel.add(jl);
-                            //System.out.println(messageText);
-                        }
-                    } catch (IOException ioe) {
-                        messageText = ioError + ioe.getLocalizedMessage();
-                        scriptListMsgPanel.setText(messageText);
-                        scriptListMsgPanel.setForeground(DIM_RED); // red
-                        System.out.println(messageText);
-                    }
                     // Read the files again for refresh
                     readInputFiles();
                     // and refresh the table view
                     readLinesForScriptList();
                     this.setVisible(true);
                 } else {
-                    scriptListMsgPanel.setText(noRowDel);
-                    scriptListMsgPanel.setForeground(DIM_RED); // red
-                    messagePanel.add(scriptListMsgPanel);
+                    scriptListMsgLabel.setText(noRowDel);
+                    scriptListMsgLabel.setForeground(DIM_RED); // red
+                    messagePanel.add(scriptListMsgLabel);
                     this.setVisible(true);
                 }
             } else {
-                scriptListMsgPanel.setText(noRowDel);
-                scriptListMsgPanel.setForeground(DIM_RED); // red
-                messagePanel.add(scriptListMsgPanel);
+                scriptListMsgLabel.setText(noRowDel);
+                scriptListMsgLabel.setForeground(DIM_RED); // red
+                messagePanel.add(scriptListMsgLabel);
                 this.setVisible(true);
             }
         });
@@ -545,11 +603,11 @@ public class Q_ScriptEditCall extends JFrame {
         // Set Refresh button activity
         // ---------------------------
         scriptListRefreshButton.addActionListener(a -> {
-            // Read records from database and put it into a list
+            // Read records from script files placed in directory "scriptfiles" and put them into a list
             readInputFiles();
             readLinesForScriptList();
-            scriptListMsgPanel.setText("");
-            messagePanel.add(scriptListMsgPanel);
+            scriptListMsgLabel.setText("");
+            messagePanel.add(scriptListMsgLabel);
             this.setVisible(true);
         });
 
@@ -560,11 +618,11 @@ public class Q_ScriptEditCall extends JFrame {
             messagePanel.removeAll();
             messagePanel.repaint();
 
-            scriptListMsgPanel.setText(script + scriptName + wasSavedTo + scriptOutPath.toString());
-            scriptListMsgPanel.setForeground(DIM_BLUE); // Dim blue
-            messagePanel.add(scriptListMsgPanel);
+            scriptListMsgLabel.setText(script + scriptName + wasSavedTo + scriptOutPath.toString());
+            scriptListMsgLabel.setForeground(DIM_BLUE); // Dim blue
+            messagePanel.add(scriptListMsgLabel);
 
-            scriptListMsgPanel.setText("");
+            scriptListMsgLabel.setText("");
             // System.out.println("Row Index List: " + rowIndexList);
             // If the list is not empty
             if (rowIndexList != null) {
@@ -576,20 +634,20 @@ public class Q_ScriptEditCall extends JFrame {
                     // Call export to AS/400 IFS directory directly - file name is known.
                     // It is not necessary to request the user for the exported file name.
                     String msg = Q_ExportOneToAS400.transferOneToAS400(selScriptFileName);
-                    scriptListMsgPanel.setText(msg);
-                    scriptListMsgPanel.setForeground(DIM_BLUE); // blue
-                    messagePanel.add(scriptListMsgPanel);
+                    scriptListMsgLabel.setText(msg);
+                    scriptListMsgLabel.setForeground(DIM_BLUE); // blue
+                    messagePanel.add(scriptListMsgLabel);
                     setVisible(true);
                 } else {
-                    scriptListMsgPanel.setText(noRowSav);
-                    scriptListMsgPanel.setForeground(DIM_RED); // red
-                    messagePanel.add(scriptListMsgPanel);
+                    scriptListMsgLabel.setText(noRowSav);
+                    scriptListMsgLabel.setForeground(DIM_RED); // red
+                    messagePanel.add(scriptListMsgLabel);
                     this.setVisible(true);
                 }
             } else {
-                scriptListMsgPanel.setText(noRowSav);
-                scriptListMsgPanel.setForeground(DIM_RED); // Dim red
-                messagePanel.add(scriptListMsgPanel);
+                scriptListMsgLabel.setText(noRowSav);
+                scriptListMsgLabel.setForeground(DIM_RED); // Dim red
+                messagePanel.add(scriptListMsgLabel);
                 this.setVisible(true);
             }
         });
@@ -598,9 +656,9 @@ public class Q_ScriptEditCall extends JFrame {
         // -------------------------------
         scriptListImportButton.addActionListener(a -> {
 
-            scriptListMsgPanel.setText("");
-            scriptListMsgPanel.setForeground(DIM_BLUE); // Dim blue
-            messagePanel.add(scriptListMsgPanel);
+            scriptListMsgLabel.setText("");
+            scriptListMsgLabel.setForeground(DIM_BLUE); // Dim blue
+            messagePanel.add(scriptListMsgLabel);
 
             // Clear message panel
             messagePanel.removeAll();
@@ -610,8 +668,8 @@ public class Q_ScriptEditCall extends JFrame {
             // If the list is not empty
             if (rowIndexList != null) {
                 if (scriptListIndexSel >= 0) {
-                    // scriptListMsgPanel.setText("");
-                    messagePanel.add(scriptListMsgPanel);
+                    // scriptListMsgLabel.setText("");
+                    messagePanel.add(scriptListMsgLabel);
                     scriptListIndexSel = rowIndexList.getLeadSelectionIndex();
                     // Get script name and desctiption from the selected row
                     String selectedScript = (String) records[scriptListIndexSel][0];
@@ -621,8 +679,8 @@ public class Q_ScriptEditCall extends JFrame {
                     String[] retCode = importScript(selectedScript, scriptDescription);
                     // Handle messages
                     if (retCode[0].equals("runScript") && !retCode[1].isEmpty()) {
-                        scriptListMsgPanel.setText(retCode[1]);
-                        messagePanel.add(scriptListMsgPanel);
+                        scriptListMsgLabel.setText(retCode[1]);
+                        messagePanel.add(scriptListMsgLabel);
                         setVisible(true);
                     }
                 } // Row index of table line is negative - Prompt for script name to import
@@ -641,22 +699,20 @@ public class Q_ScriptEditCall extends JFrame {
         // Read script files from directory "scriptfiles" and puts data
         // in the tree map "scriptNames" (String, StringBuilder)
         msgText = readInputFiles();
-        scriptListMsgPanel.setText(msgText);
-        messagePanel.add(scriptListMsgPanel);
-        
+        scriptListMsgLabel.setText(msgText);
+        messagePanel.add(scriptListMsgLabel);
+
         if (msgText.isEmpty()) {
-//            scriptListMsg.setText(curDir + System.getProperty("user.dir"));
-            scriptListMsgPanel.setForeground(DIM_BLUE);
+            scriptListMsgLabel.setForeground(DIM_BLUE);
         } else {
-            scriptListMsgPanel.setText(msgText);
-            scriptListMsgPanel.setForeground(DIM_RED);
+            scriptListMsgLabel.setText(msgText);
+            scriptListMsgLabel.setForeground(DIM_RED);
         }
-        messagePanel.add(scriptListMsgPanel);
-        
+        messagePanel.add(scriptListMsgLabel);
+
         // Prepare scriptList table for display
         // ------------------------------------
-        // Read all records from the input file and put its data into
-        // the corresponding rows/columns.
+        // Read all records from the input file and put its data into the corresponding rows/columns.
         readLinesForScriptList();
 
 
@@ -674,85 +730,8 @@ public class Q_ScriptEditCall extends JFrame {
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
-    /**
-     * *************************************************************************
-     *
-     * Build data panel - entry type record fields in dataPanel
-     *
-     ****************************************************************************
-     */
-    // Text fields for dataPanel - Data panel.
-    JPanel dataPanel = new JPanel();
-    JScrollPane scrollPaneData;
     // Selected script file name
     String selScriptFileName;
-
-    JTextField[] txtFlds;
-    JLabel[] hdrLbls;
-    String[] txtFldLengths;
-    GridBagLayout gridBagLayout = new GridBagLayout();
-    GridBagConstraints gbc = new GridBagConstraints();
-
-    /**
-     * Builds data panel for inserting or updating data
-     */
-    protected void builddataPanel() {
-        GroupLayout layout = new GroupLayout(dataPanel);
-
-        JPanel titlePanel = new JPanel();
-
-        // Title of the panel
-        JLabel dataPanelTitle = new JLabel("Editace skriptu");
-        dataPanelTitle.setFont(new Font("Helvetica", Font.PLAIN, 20));
-
-        JPanel dataTitle = new JPanel();
-        dataTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
-        dataTitle.add(dataPanelTitle);
-        dataTitle.setMinimumSize(new Dimension(dataPanelTitle.getPreferredSize().width, 40));
-        dataTitle.setPreferredSize(new Dimension(dataPanelTitle.getPreferredSize().width, 40));
-        dataTitle.setMaximumSize(new Dimension(dataPanelTitle.getPreferredSize().width, 40));
-
-        titlePanel.add(dataTitle);
-
-        // Buttons
-        JButton saveAndReturnButton = new JButton("Save data and return");
-        saveAndReturnButton.setMinimumSize(new Dimension(160, 35));
-        saveAndReturnButton.setMaximumSize(new Dimension(160, 35));
-        saveAndReturnButton.setPreferredSize(new Dimension(160, 35));
-
-        JButton dataPanelReturnButton = new JButton("Return");
-        dataPanelReturnButton.setMinimumSize(new Dimension(80, 35));
-        dataPanelReturnButton.setMaximumSize(new Dimension(80, 35));
-        dataPanelReturnButton.setPreferredSize(new Dimension(80, 35));
-
-        // Button row
-        JPanel buttonRow = new JPanel();
-        buttonRow.setLayout(new BoxLayout(buttonRow, BoxLayout.LINE_AXIS));
-        buttonRow.setAlignmentX(Box.LEFT_ALIGNMENT);
-        buttonRow.add(Box.createRigidArea(new Dimension(10, 60)));
-        buttonRow.add(saveAndReturnButton);
-        buttonRow.add(Box.createRigidArea(new Dimension(10, 60)));
-        buttonRow.add(dataPanelReturnButton);
-
-        // Group layout
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-
-        layout.setHorizontalGroup(
-                layout.createSequentialGroup().addGroup(layout.createParallelGroup(LEADING)
-                        .addComponent(titlePanel).addComponent(buttonRow).addComponent(messagePanel)));
-        layout.setVerticalGroup(layout.createSequentialGroup().addGroup(layout.createSequentialGroup()
-                .addComponent(titlePanel).addComponent(buttonRow).addComponent(messagePanel)));
-        dataPanel.setLayout(layout);
-
-        dataGlobalPanel = new JPanel();
-        dataGlobalPanel.add(dataPanel);
-
-        scrollPaneData = new JScrollPane(dataGlobalPanel);
-        scrollPaneData.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        scrollPaneData.setBackground(dataPanel.getBackground());
-
-    }
 
     /**
      * Imports the script from IBM i (IFS directory) to local directory "scriptfiles"
@@ -765,11 +744,11 @@ public class Q_ScriptEditCall extends JFrame {
         // Call transfer of file
         String[] retCode = Q_ImportOneFromAS400.transferOneFromAS400(selectedScript);
         String errMsg = retCode[1];
-        scriptListMsgPanel.setText(errMsg);
+        scriptListMsgLabel.setText(errMsg);
         if (retCode[0].equals("ERROR")) {
-            scriptListMsgPanel.setForeground(DIM_RED); // Dim red
+            scriptListMsgLabel.setForeground(DIM_RED); // Dim red
         } else {
-            scriptListMsgPanel.setForeground(DIM_BLUE); // Dim blue
+            scriptListMsgLabel.setForeground(DIM_BLUE); // Dim blue
         }
         setVisible(true);
         return retCode;
@@ -787,8 +766,7 @@ public class Q_ScriptEditCall extends JFrame {
         // Array of rows and columns with values for the script list table
         records = new Object[nbrOfRows][2];
 
-        // If scriptNames TreeMap is not empty, fill the list with these
-        // scriptNames
+        // If scriptNames TreeMap is not empty, fill the list with these scriptNames
         if (!scriptNames.isEmpty()) {
             rows = 0;
 
@@ -814,34 +792,41 @@ public class Q_ScriptEditCall extends JFrame {
     /**
      * Reads script files from directory "" and puts data in a tree map "scriptNames" (String,
      * StringBuilder)
-     * @return 
+     *
+     * @return
      */
     String fileName;
+
     protected String readInputFiles() {
-        // Prepare list of queries from script files placed in directory
-        // "scriptfiles"
+        // Prepare list (tree map) of queries from script files placed in directory "scriptfiles"
         try {
-            // Read script file names from the directory "scriptfiles"
-            // in the window list of queries
+            // Read script file names from the directory "scriptfiles" in the window list of queries
             if (Files.isDirectory(scriptDirectoryPath)) {
                 String[] fileNames = scriptDirectoryPath.toFile().list();
                 if (fileNames != null) {
                     nbrOfRows = 0;
                     scriptNames.clear();
+                    searchText = searchField.getText().toUpperCase();
+
+                    // Prepare wild card with * and ? for searching files
+                    searchPattern = searchText;
+                    if (searchText.isEmpty()) {
+                        searchPattern = "*";
+                    }
+                    searchWildCard = searchPattern.replace("*", ".*");
+                    searchWildCard = searchWildCard.replace("?", ".");
+
                     // Process list of script files
                     for (String file_name : fileNames) {
-                        // Get only files that conform to the search text
-//                         - file name greater or equal to the search text.
-//                        if (fileName.compareToIgnoreCase(searchField.getText()) >= 0) {
-                        if (file_name.toUpperCase().contains(searchField.getText().toUpperCase())) {                    
+                        // Get only files that conform to the search text.
+                        if (file_name.toUpperCase().matches(searchWildCard)) {
                             // Create path to the script file
                             scriptIn = Paths.get(System.getProperty("user.dir"), "scriptfiles", file_name);
 
                             // Open the script file
                             infileScript = Files.newBufferedReader(scriptIn, Charset.forName("UTF-8"));
 
-                            // If the first line is a simple comment beginning with "--"
-                            // in the first position, and it is not "--;",
+                            // If the first line is a simple comment beginning with "--" in the first position, and it is not "--;",
                             // the description is the text following the -- characters.
                             // Otherwise the description is empty.
                             String scriptLine = infileScript.readLine();
@@ -864,6 +849,7 @@ public class Q_ScriptEditCall extends JFrame {
 
                             // Close the script file
                             infileScript.close();
+                            // Put the file name in the tree map
                             scriptNames.put(file_name, scriptDescription);
                             nbrOfRows++;
                         }
@@ -874,8 +860,9 @@ public class Q_ScriptEditCall extends JFrame {
             return "";
         } catch (IOException exc) {
             exc.printStackTrace();
-            System.out.println("IOException readInputFiles: " + exc.getLocalizedMessage() + ", after the file " + fileName);
-            return inputError + fileName;
+            String message = inputError + fileName;
+            System.out.println(message);
+            return message;
         }
     }
 
@@ -930,12 +917,34 @@ public class Q_ScriptEditCall extends JFrame {
     }
 
     /**
-     * Main method for testing
-     *
-     * @param strings not used
+     * Launch script editor on double click
      */
-    public static void main(String... strings) {
-        // new Q_ScriptEditCall(menu);
-        new Q_ScriptEditCall();
+    class ScriptTableMouseAdapter extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            // On double click on a table row - call Q_ScriptEdit for the selected file
+            if (mouseEvent.getClickCount() == 2) {
+                // Call script editing program
+                JTextArea textArea = new JTextArea();
+                JTextArea textArea2 = new JTextArea();
+                scriptEdit = new Q_ScriptEdit(Q_ScriptEditCall.this, textArea, textArea2, selScriptFileName, "rewritePcFile");
+            }
+        }
+    }
+
+    /**
+     * Window adapter closes the Q_ScriptEdit and also this window.
+     */
+    class WindowScriptEditCallAdapter extends WindowAdapter {
+
+        @Override
+        public void windowClosing(WindowEvent we) {
+            if (scriptEdit != null) {
+                scriptEdit.dispose();
+                scriptEdit = null;
+            }
+            Q_ScriptEditCall.this.dispose();
+        }
     }
 }

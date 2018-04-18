@@ -2,6 +2,7 @@ package queries;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -21,6 +22,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -36,7 +38,7 @@ import javax.swing.SwingConstants;
  * @author Vladimír Župka 2016
  *
  */
-public class Q_ParametersEdit extends JFrame {
+public class Q_ParametersEdit extends JDialog {
 
     static final long serialVersionUID = 1L;
 
@@ -141,6 +143,8 @@ public class Q_ParametersEdit extends JFrame {
      * Constructor creates the window with application parameters
      */
     Q_ParametersEdit(boolean fullMenu) {
+        this.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+
         this.fullMenu = fullMenu;
 
         if (!Files.exists(parPath)) {
@@ -283,7 +287,7 @@ public class Q_ParametersEdit extends JFrame {
             czechButton.setSelected(false);
             language = "en-US";
             System.out.println(ae.getActionCommand());
-            System.out.println(language);
+            //System.out.println(language);
         });
 
         // Set on Czech, set off English
@@ -292,7 +296,7 @@ public class Q_ParametersEdit extends JFrame {
             englishButton.setSelected(false);
             language = "cs-CZ";
             System.out.println(ae.getActionCommand());
-            System.out.println(language);
+            //System.out.println(language);
         });
 
         // Select or deselect automatic window size
@@ -469,7 +473,7 @@ public class Q_ParametersEdit extends JFrame {
         cont.add(globalPanel);
 
         setSize(760, 550);
-        setLocation(200, 40);
+        setLocation(200, 50);
         pack();
         setVisible(true);
     }

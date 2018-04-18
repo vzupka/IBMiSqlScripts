@@ -9,7 +9,7 @@
 
 SELECT EMPNO, 
    FIRSTNME, 
---   MIDINIT, 
+--   MIDINIT,
    LASTNAME, 
 --   WORKDEPT, 
 --   PHONENO,       
@@ -17,7 +17,7 @@ SELECT EMPNO,
 --   JOB, 
 --   EDLEVEL, 
 --   SEX, 
-   BIRTHDATE, 
+   BIRTHDATE,
    SALARY, 
 --   BONUS, 
    COMM 

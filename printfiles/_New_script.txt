@@ -1,7 +1,7 @@
 
 Sumarizace zboží (CENY4) podle skladů a závodů - UTF-8
 
-Neděle, 15. dubna 2018 11:14:12
+Neděle, 15. dubna 2018 11:14:49
 
   §§§ Závod 4x:    01, 01, 01, 01.              §§§ 
   §§§ Název zboží: Koňak Gruzínský                                ,  Sklad: 01. §§§ 

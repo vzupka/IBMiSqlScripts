@@ -1,58 +1,58 @@
 
 Sumarizace zboží (CENY) podle skladů a závodů, závod na nové stránce
 
-Tuesday, April 3, 2018 4:15:20 PM
+Neděle, 15. dubna 2018 13:47:59
 
 Zav  Skl  Č.zboží  Název zboží             Cena/j.     Množství     Cena celkem  
 ===  ===  =======  ===========             =======     ========     ===========  
                                                                                  
-01   01   00001    PIŠKOTY OPAVIA             8.99    1,579.444      14,199.202  
+01   01   00001    PIŠKOTY OPAVIA             8,99     1 579,44        14 199,2  
           00002    Zubní pasta Kal             459            1             459  
-          00010    Koňak Gruzínský           6,500           -7         -45,500  
+          00010    Koňak Gruzínský           6 500           -7         -45 500  
 
    .Sklad  01 01 
-                                                     Součet         -30,841.798  
+                                                     Součet           -30 841,8  
                                                       Počet                   3  
 
-     02   00003    Prádelní šňůra             1.25           19           23.75  
-          00009    Whisky Balantin             250         1.08             270  
-          00010    Koňak Gruzínský           6,500            3          19,500  
+     02   00003    Prádelní šňůra             1,25           19           23,75  
+          00009    Whisky Balantin             250         1,08             270  
+          00010    Koňak Gruzínský           6 500            3          19 500  
 
    .Sklad  01 02 
-                                                     Součet           19,793.75  
+                                                     Součet           19 793,75  
                                                       Počet                   3  
 
-     03   00003    Prádelní šňůra             1.25            1            1.25  
+     03   00003    Prádelní šňůra             1,25            1            1,25  
 
    .Sklad  01 03 
-                                                     Součet                1.25  
+                                                     Součet                1,25  
                                                       Počet                   1  
 
    .Závod  01 
-                                                     Součet         -11,046.798  
+                                                     Součet           -11 046,8  
                                                       Počet                   7  
 
 02   01   00005    Tričko bílé                 120            2             240  
-          00006    Ponožky pánské            10.55            2            21.1  
-          00008    Kalhoty džínové           1,700            2           3,400  
+          00006    Ponožky pánské            10,55            2            21,1  
+          00008    Kalhoty džínové           1 700            2           3 400  
 
    .Sklad  02 01 
-                                                     Součet             3,661.1  
+                                                     Součet             3 661,1  
                                                       Počet                   3  
 
      02   00009    Whisky Balantin             250            2             500  
           00011    Taška sportovní             159            2             318  
-          00014    Sako tvídové, n           3,500            2           7,000  
+          00014    Sako tvídové, n           3 500            2           7 000  
           00018    Husí sádlo v ko              56            2             112  
 
    .Sklad  02 02 
-                                                     Součet               7,930  
+                                                     Součet               7 930  
                                                       Počet                   4  
 
    .Závod  02 
-                                                     Součet            11,591.1  
+                                                     Součet            11 591,1  
                                                       Počet                   7  
 
    .CELKEM ZA PODNIK
-                                                     Součet             544.302  
+                                                     Součet               544,3  
                                                       Počet                  14  

@@ -51,13 +51,15 @@ public class L_TitleLabelBundle_cs_CZ extends ListResourceBundle {
                + "zapište nebo přikopírujte text a stiskněte Uložit nebo Spustit skript." },  
          { "EditScrN", "Upravte SQL skript a stiskněte Uložit nebo Spustit skript." },  
          {"EditFontSize", "Velikost písma:"},
+         {"Highlight", "Zvýraznit / nezvýraznit hlavní prvky jazyka SQL."},
          // Q_ScriptEditCall
          { "ScriptNam", "Název skriptu" },
          { "ScriptDes", "Popis skriptu" },         
          { "TitEdit", "Údržba skriptů SQL" }, 
-         { "SearchScript", "Vyhledat skript. Napište část jména a stiskněte tlačítko \"Obnovit zobrazení\"." }, 
+         { "SearchScript", "Vybrat skripty. Napište vyhledávací vzorek (se znaky * nebo ?) a stiskněte klávesu Enter nebo tlačítko \"Obnovit zobrazení\"." }, 
          // Q_ScriptRunCall
          { "TitRun", "Spouštění skriptů SQL" }, 
+         { "SearchScriptRun",  "Vybrat skripty. Napište část jména a stiskněte klávesu Enter nebo tlačítko \"Obnovit zobrazení\"." }, 
          // SQL properties
          { "DecSeparator", "," }, 
          { "SortLanguage", "CSY" },};

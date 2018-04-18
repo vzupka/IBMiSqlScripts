@@ -255,6 +255,11 @@ public class Q_ScriptRun {
      * @return String[] Return code as array
      *
      */
+    
+    
+    
+    
+    
     @SuppressWarnings({"CallToPrintStackTrace", "null", "UnusedAssignment"})
     public String[] runScript(Connection conn, String scriptName, String stmtDescription,
             String statement, ArrayList<String[]> markerArrayLst, ArrayList<String[]> headerArrayLst,
@@ -744,7 +749,7 @@ public class Q_ScriptRun {
                         }
                         // Spaces after. May have form An. Defaults to 0.
                         if (totalValues[1].isEmpty()) {
-                            stringSpaces = "";                        
+                            stringSpaces = "";
                         } else if (totalValues[1].substring(0, 1).toUpperCase().equals("A")) {
                             stringSpaces = totalValues[1].substring(1);
                         } else {
@@ -765,8 +770,7 @@ public class Q_ScriptRun {
                             if (totalValues[3].isEmpty()) {
                                 // Default from Parameters
                                 stringSpaces = colSepSpaces;
-                            }
-                            else if (totalValues[3].substring(0, 1).toUpperCase().equals("S")) {
+                            } else if (totalValues[3].substring(0, 1).toUpperCase().equals("S")) {
                                 stringSpaces = totalValues[3].substring(1);
                             } else {
                                 stringSpaces = totalValues[3];
@@ -1156,7 +1160,7 @@ public class Q_ScriptRun {
 
         } catch (IllegalArgumentException iae) {
             // Catching error in decimal number
-            retCode[1] = numParError + iae.getClass() + ", " + iae.getLocalizedMessage() + "\n\n";
+            retCode[1] = numParError + iae.getClass() + ", " + iae.toString() + "\n\n";
             retCode[0] += "PARAMETER_ERROR";
             // System.out.println("IllegalArgument retCode[1]: " + retCode[1]);
             iae.printStackTrace();
@@ -1166,7 +1170,7 @@ public class Q_ScriptRun {
         } // Catching SQL errors
         catch (SQLException sqle) {
             // Error in SQL statement
-            retCode[1] = sqlError + sqle.getSQLState() + "  " + sqle.getLocalizedMessage() + "\n\n";
+            retCode[1] = sqlError + sqle.getSQLState() + "  " + sqle.toString() + "\n\n";
             retCode[0] += "SQL_ERROR";
             // System.out.println("SQL error retCode[1]: " + retCode[1]);
             sqle.printStackTrace();
@@ -1175,7 +1179,7 @@ public class Q_ScriptRun {
 
             // Catching all other errors
         } catch (Exception e) {
-            retCode[1] = otherError + e.getClass() + ", " + e.getLocalizedMessage();
+            retCode[1] = otherError + " -  " + e.toString();
             retCode[0] += "OTHER_ERROR";
             // System.out.println("Other error runScript(): " + retCode[1]);
             e.printStackTrace();
@@ -2482,32 +2486,40 @@ public class Q_ScriptRun {
         levelBreakNames = new ArrayList<>();
         levelBreakValues = new ArrayList<>();
         lastNonNulllevelBreakValues = new ArrayList<>();
-        for (int level = 0; level < levelArrayList.size(); level++) {
-            levelValues = levelArrayList.get(level);
-            // Find column name matching the break level name from the
-            // parameter
-            for (int colNameIndex = 0; colNameIndex < allColNames.size(); colNameIndex++) {
-                // If the control level name equals an existing column name
-                // get the name and its value for comparison to array lists.
-                // Level L0 must not contain a column name!
-                if (levelValues[2].equals(allColNames.get(colNameIndex)) && !levelValues[0].equals("0")) {
-                    // Column name is at index 2
-                    // - after 0 (level number), 1 (level text) in the array of values
-                    // System.out.println("FIRST BREAK rs.getObject(colNameIndex + 1): " + rs.getObject(colNameIndex + 1));
-                    if (rs.getObject(colNameIndex + 1) != null) {
-                        levelBreakNames.add(allColNames.get(colNameIndex));
-                        levelBreakValues.add(rs.getObject(colNameIndex + 1).toString());
-                        lastNonNulllevelBreakValues.add(rs.getObject(colNameIndex + 1).toString());
-                        break; // Do not compare again if one matched
-                    } else {
-                        levelBreakValues.add(lastNonNulllevelBreakValues.set(level, rs.getObject(colNameIndex + 1).toString()));
-                        break;
+        int colNameIndex = 0;
+        try {
+            for (int level = 0; level < levelArrayList.size(); level++) {
+                levelValues = levelArrayList.get(level);
+                // Find column name matching the break level name from the parameter
+
+                for (colNameIndex = 0; colNameIndex < allColNames.size(); colNameIndex++) {
+                    // If the control level name equals an existing column name
+                    // get the name and its value for comparison to array lists.
+                    // Level L0 must not contain a column name!
+                    if (levelValues[2].equals(allColNames.get(colNameIndex)) && !levelValues[0].equals("0")) {
+                        // Column name is at index 2
+                        // - after 0 (level number), 1 (level text) in the array of values
+                        //System.out.println("FIRST BREAK rs.getObject(colNameIndex + 1): " + rs.getObject(colNameIndex + 1));
+                        if (rs.getObject(colNameIndex + 1) != null) {
+                            levelBreakNames.add(allColNames.get(colNameIndex));
+                            levelBreakValues.add(rs.getObject(colNameIndex + 1).toString());
+                            lastNonNulllevelBreakValues.add(rs.getObject(colNameIndex + 1).toString());
+                            break; // Do not compare again if one matched
+                        } else {
+                            levelBreakValues.set(level, nullPrintMark);
+                            break;
+                        }
+                    }
+                    if (levelValues[3].toUpperCase().equals("NP")) {
+                        // no operation
                     }
                 }
-                if (levelValues[3].toUpperCase().equals("NP")) {
-                    // no operation
-                }
             }
+
+        } catch (Exception exc) {
+            System.out.println("Error: Column " + allColNames.get(colNameIndex) + " level " + level 
+                    + " has no value. System message: " + exc.toString());
+            exc.printStackTrace();
         }
     }
 
@@ -2743,11 +2755,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for DATE column                    
                         colData = decAccumulators[level][summ][aggType].toString();
                     } else // Normal editing for DATE type
-                     if (datAccumulators[level][summ][aggType] != null) {
-                            colData = datAccumulators[level][summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (datAccumulators[level][summ][aggType] != null) {
+                        colData = datAccumulators[level][summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                 } else {
                     colData = "";
                     // Place for SUM and AVG is cleared
@@ -2764,11 +2776,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for TIME column                    
                         colData = decAccumulators[level][summ][aggType].toString();
                     } else // Normal editing for TIME type
-                     if (timAccumulators[level][summ][aggType] != null) {
-                            colData = timAccumulators[level][summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (timAccumulators[level][summ][aggType] != null) {
+                        colData = timAccumulators[level][summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                 } else {
                     colData = "";
                     // Place for SUM and AVG is cleared
@@ -2785,11 +2797,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for TIMESTAMP column                    
                         colData = decAccumulators[level][summ][aggType].toString();
                     } else // Normal editing for TIME type
-                     if (timstAccumulators[level][summ][aggType] != null) {
-                            colData = timstAccumulators[level][summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (timstAccumulators[level][summ][aggType] != null) {
+                        colData = timstAccumulators[level][summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                 } else {
                     colData = "";
                     // Place for SUM and AVG is cleared
@@ -2864,11 +2876,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for DATE column                    
                         colData = decTotalAccumulators[summ][aggType].toString();
                     } else // Normal editing for DATE type
-                     if (datTotalAccumulators[summ][aggType] != null) {
-                            colData = datTotalAccumulators[summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (datTotalAccumulators[summ][aggType] != null) {
+                        colData = datTotalAccumulators[summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                     adjustAndInsertToPrintLine(printLine, summ, aggType);
                 } else {
                     colData = "";
@@ -2885,11 +2897,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for TIME column                    
                         colData = decTotalAccumulators[summ][aggType].toString();
                     } else // Normal editing for TIME type
-                     if (timTotalAccumulators[summ][aggType] != null) {
-                            colData = timTotalAccumulators[summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (timTotalAccumulators[summ][aggType] != null) {
+                        colData = timTotalAccumulators[summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                 } else {
                     colData = "";
                     // Place for SUM and AVG is cleared
@@ -2905,11 +2917,11 @@ public class Q_ScriptRun {
                         // Do not edit accumulated DECIMAL count for TIMESTAMP column                    
                         colData = decTotalAccumulators[summ][aggType].toString();
                     } else // Normal editing for TIME type
-                     if (timstTotalAccumulators[summ][aggType] != null) {
-                            colData = timstTotalAccumulators[summ][aggType].toString();
-                        } else {
-                            colData = nullPrintMark;
-                        }
+                    if (timstTotalAccumulators[summ][aggType] != null) {
+                        colData = timstTotalAccumulators[summ][aggType].toString();
+                    } else {
+                        colData = nullPrintMark;
+                    }
                 } else {
                     colData = "";
                     // Place for SUM and AVG is cleared

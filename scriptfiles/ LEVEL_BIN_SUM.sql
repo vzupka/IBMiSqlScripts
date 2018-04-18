@@ -10,7 +10,7 @@
 
 --;T 1; 1; - ; 2 
 
---;O ZAVOD
+
  --;O NAZ; 
 
 --;S SKLAD   ; M; m; C
@@ -25,7 +25,7 @@
 --;L ;   .Závod =====&ZAVOD ==========; ZAVOD
 --;L ;   .Sklad -----&zavod --&sklad ------; SKLAD
 
-   --;L3;  .Číslo zboží &czbozi ^^^^^^^; CZBOZI
+--;L3;  .Číslo zboží &czbozi ^^^^^^^; CZBOZI
 
 --;P a4; fs12; P; 10; 10; 10; 10
 

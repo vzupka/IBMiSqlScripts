@@ -52,13 +52,16 @@ public class L_TitleLabelBundle_en_US extends ListResourceBundle {
             + "write or copy the text and press Save or Run script."},
         {"EditScrN", "Edit the SQL script and press Save or Run script."},
         {"EditFontSize", "Font size:"},
+        {"Highlight", "Highlight / not hihglight main SQL language elements."},
         // Q_ScriptEditCall
         {"ScriptNam", "Script name"},
         {"ScriptDes", "Script description"},
         {"TitEdit", "Maintenance of SQL scripts"},
-        { "SearchScript", "Find script. Enter part of the name and press \"Refresh\" button." }, 
+        { "SearchScript", "Select scripts. Enter a search pattern (with * or ?) and press Enter key or \"Refresh\" button." }, 
         // Q_ScriptRunCall
         {"TitRun", "Running SQL scripts"},
+        { "SearchScriptRun", "Select scripts. Enter part of the name and press Enter key or \"Refresh\" button." }, 
+        
         // SQL properties
         {"DecSeparator", "."},
         {"SortLanguage", "ENU"},};

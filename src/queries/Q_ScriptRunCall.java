@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -52,7 +54,7 @@ public class Q_ScriptRunCall extends JFrame {
 
     String language;
     ResourceBundle titles;
-    String titRun, scriptNam, scriptDes, searchScript;
+    String titRun, scriptNam, scriptDes, searchScriptRun;
     ResourceBundle buttons;
     String exit, run_sel, refresh, imp_script;
     ResourceBundle locMessages;
@@ -77,7 +79,7 @@ public class Q_ScriptRunCall extends JFrame {
     final Integer scriptListWidth = scriptListPanelWidth;
     final Integer scriptListHeight = scriptListPanelHeight;
     final Integer xLocation = 400;
-    final Integer yLocation = 40;
+    final Integer yLocation = 50;
 
     final Integer tableRowHeight = 24;
     final Integer firstTableColumnWidth = 200;
@@ -87,6 +89,7 @@ public class Q_ScriptRunCall extends JFrame {
 
     // List (table) of filter records for a specific entry type
     JTable scriptList;
+    ScriptTableMouseAdapter scriptTableMouseAdapter;
 
     // Data model for the table
     DefaultTableModel tableModel;
@@ -233,14 +236,13 @@ public class Q_ScriptRunCall extends JFrame {
     /**
      * Builds script list in scriptListPanel
      *
-     * @param menu
      */
-    public void buildScriptList(Q_Menu menu) {
+    public void buildScriptList() {
         // Localized titles
         titRun = titles.getString("TitRun");
         scriptNam = titles.getString("ScriptNam");
         scriptDes = titles.getString("ScriptDes");
-        searchScript = titles.getString("SearchScript");
+        searchScriptRun = titles.getString("SearchScriptRun");
 
         // Localized button labels
         exit = buttons.getString("Exit");
@@ -253,6 +255,8 @@ public class Q_ScriptRunCall extends JFrame {
         noRowSel = locMessages.getString("NoRowSel");
         inputError = locMessages.getString("InputError");
 
+        scriptTableMouseAdapter = new ScriptTableMouseAdapter();
+
         conn = getConnectionDB2();
 
         // Create a new table model
@@ -262,7 +266,7 @@ public class Q_ScriptRunCall extends JFrame {
         scriptListTitlePanel = new JPanel();
         scriptListPanel = new JPanel();
         searchField = new JTextField("");
-        searchLabel = new JLabel(searchScript);
+        searchLabel = new JLabel(searchScriptRun);
         searchLabel.setForeground(DIM_BLUE); // Dim blue
 
         scrollPane = new JScrollPane();
@@ -298,6 +302,7 @@ public class Q_ScriptRunCall extends JFrame {
 
         // Empty table scriptList with data model
         scriptList = new JTable(tableModel);
+        scriptList.addMouseListener(scriptTableMouseAdapter);
 
         // Attributes of the filter list table
         scriptList.setFont(new Font("Helvetica", Font.PLAIN, 13));
@@ -433,48 +438,21 @@ public class Q_ScriptRunCall extends JFrame {
         // Set Run button activity (on mouse click)
         // ----------------------------------------
         scriptListRunButton.addActionListener(a -> {
-            scriptListMsg.setForeground(DIM_BLUE); // Dim blue
-            scriptListMsgPanel.removeAll();
-            if (rowIndexList != null) { // row index not empty
-                // A table row was selected
-                if (scriptListIndexSel >= 0) {
-                    scriptListMsg.setText("");
-                    scriptListMsgPanel.add(scriptListMsg);
-
-                    scriptListIndexSel = rowIndexList.getLeadSelectionIndex();
-                    // Get script name and desctiption from the selected row
-                    selectedScript = (String) records[scriptListIndexSel][0];
-                    scriptDescription = (String) records[scriptListIndexSel][1];
-                    // Perform the script
-                    retCode = performScript(selectedScript, scriptDescription);
-                    // Handle messages
-                    scriptListMsg.setText("");
-                    if (!retCode[1].equals("")) {
-                        scriptListMsg.setText(retCode[1]);
-                        scriptListMsgPanel.add(scriptListMsg);
-                        if (!retCode[0].contains("ERROR")) {
-                            scriptListMsg.setForeground(DIM_BLUE); // blue
-                        }
-                        if (retCode[0].contains("ERROR")) {
-                            scriptListMsg.setForeground(DIM_RED); // red
-                        }
-                    }
-                    repaint();
-                    setVisible(true);
-                } // Selected row index is negative (-1)
-                else {
-                    scriptListMsg.setText(noRowSel);
-                    scriptListMsg.setForeground(DIM_RED); // red
-                    scriptListMsgPanel.add(scriptListMsg);
-                    setVisible(true);
-                }
-            } // Row index list is empty
-            else {
-                scriptListMsg.setText(noRowSel);
-                scriptListMsg.setForeground(DIM_RED); // red
-                scriptListMsgPanel.add(scriptListMsg);
-                setVisible(true);
-            }
+            String[] retCode = runScript();
+            scriptListMsg.setText(retCode[1]);
+            scriptListMsgPanel.add(scriptListMsg);
+            this.setVisible(true);
+        });
+        
+        // Set Search field activity
+        // ---------------------------
+        searchField.addActionListener(a -> {
+            // Read scripts and put it into a list
+            msgText = readInputFiles();
+            scriptListMsg.setText(msgText);
+            scriptListMsgPanel.add(scriptListMsg);
+            readLinesForScriptList();
+            this.setVisible(true);
         });
 
         // Set Refresh button activity
@@ -623,9 +601,7 @@ public class Q_ScriptRunCall extends JFrame {
                 nbrOfRows = 0;
                 // Process list of script files
                 for (String file_name : fileNames) {
-                    // Get only files that conform to the search text
-//                     - file name greater or equal to the search text.
-//                    if (fileName.compareToIgnoreCase(searchField.getText()) >= 0) {                    
+                    // Get only files that contain the search text
                     if (file_name.toUpperCase().contains(searchField.getText().toUpperCase())) {
                         // Create path to the script file
                         scriptIn = Paths.get(System.getProperty("user.dir"), "scriptfiles", file_name);
@@ -678,6 +654,51 @@ public class Q_ScriptRunCall extends JFrame {
         }
     }
 
+    protected String[] runScript() {
+        scriptListMsg.setForeground(DIM_BLUE); // Dim blue
+        scriptListMsgPanel.removeAll();
+        if (rowIndexList != null) { // row index not empty
+            // A table row was selected
+            if (scriptListIndexSel >= 0) {
+                scriptListMsg.setText("");
+                scriptListMsgPanel.add(scriptListMsg);
+
+                scriptListIndexSel = rowIndexList.getLeadSelectionIndex();
+                // Get script name and desctiption from the selected row
+                selectedScript = (String) records[scriptListIndexSel][0];
+                scriptDescription = (String) records[scriptListIndexSel][1];
+                // Perform the script
+                retCode = performScript(selectedScript, scriptDescription);
+                // Handle messages
+                scriptListMsg.setText("");
+                if (!retCode[1].equals("")) {
+                    scriptListMsg.setText(retCode[1]);
+                    scriptListMsgPanel.add(scriptListMsg);
+                    if (!retCode[0].contains("ERROR")) {
+                        scriptListMsg.setForeground(DIM_BLUE); // blue
+                    }
+                    if (retCode[0].contains("ERROR")) {
+                        scriptListMsg.setForeground(DIM_RED); // red
+                    }
+                }
+                repaint();
+                setVisible(true);
+            } // Selected row index is negative (-1)
+            else {
+                scriptListMsg.setText(noRowSel);
+                scriptListMsg.setForeground(DIM_RED); // red
+                scriptListMsgPanel.add(scriptListMsg);
+                setVisible(true);
+            }
+        } // Row index list is empty
+        else {
+            scriptListMsg.setText(noRowSel);
+            scriptListMsg.setForeground(DIM_RED); // red
+            scriptListMsgPanel.add(scriptListMsg);
+            setVisible(true);
+        }
+        return retCode;
+    }
     /**
      * Perform the selected script ("QUERY" or "UPDATE")
      *
@@ -700,13 +721,15 @@ public class Q_ScriptRunCall extends JFrame {
                 messageText = Q_ConnectDB.msg;
                 retCode[0] += "ERROR";
                 retCode[1] = messageText;
-                messages.add(messageText);
+                scriptListMsg.setText(messageText);
+                scriptListMsgPanel.add(scriptListMsg);
+scriptListMsg.setForeground(DIM_RED);
+                //messages.add(messageText);
                 System.out.println(messageText);
             } else {
                 connOk = locMessages.getString("ConnOk");
                 currentLocale = Locale.forLanguageTag(language);
-                DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.FULL,
-                        DateFormat.DEFAULT, currentLocale);
+                DateFormat formatter = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.DEFAULT, currentLocale);
                 Date date = new Date();
                 String dateStr = formatter.format(date);
                 messageText = connOk + host + " - " + dateStr;
@@ -1405,8 +1428,17 @@ public class Q_ScriptRunCall extends JFrame {
         }
     }
 
-    public static void main(String... strings) {
-        new Q_ScriptRunCall();
+    /**
+     * Run script on double click
+     */
+    class ScriptTableMouseAdapter extends MouseAdapter {
 
+        @Override
+        public void mouseClicked(MouseEvent mouseEvent) {
+            // On double click on a table row - run script for the selected file
+            if (mouseEvent.getClickCount() == 2) {
+                runScript();
+            }
+        }
     }
 }

@@ -34,6 +34,8 @@ public class L_ButtonBundle_en_US extends ListResourceBundle{
        {"Cancel", "Exit"},      
        {"Save", "Save script"},     
        {"RunScript", "Run script"},      
+       {"ShortCaretText", "Short caret"},      
+       {"LongCaretText", "Long caret"},      
        // Q_ScriptEditCall
        {"New_script", "Create new script"},       
        {"Edit_sel", "Edit selected"},       
