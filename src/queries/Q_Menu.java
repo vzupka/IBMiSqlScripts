@@ -3,12 +3,14 @@ package queries;
 import java.awt.*;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -47,6 +49,11 @@ public class Q_Menu extends JFrame {
     JPanel buttonPanel = new JPanel();
     JPanel messagePanel = new JPanel();
     JPanel globalPanel = new JPanel();
+
+    JMenuBar menuBar;
+    JMenu helpMenu;
+    JMenuItem helpMenuItemEN;
+    JMenuItem helpMenuItemCZ;
 
     JTextArea title;
 
@@ -91,15 +98,17 @@ public class Q_Menu extends JFrame {
      * @param fullMenu
      */
     public void createQ_Menu(boolean fullMenu) {
-        /*
-       * try { // Set System L&F
-       * System.out.println(UIManager.getSystemLookAndFeelClassName());
-       * UIManager.setLookAndFeel( UIManager.getSystemLookAndFeelClassName());
-       * 
-       * } catch (UnsupportedLookAndFeelException | ClassNotFoundException |
-       * InstantiationException | IllegalAccessException e) {
-       * e.printStackTrace(); }
-         */
+        
+
+        // Get or set application properties
+        // ---------------------------------
+        Properties sysProp = System.getProperties();
+        
+        // Menu bar in Mac operating system will be in the system menu bar
+        if (sysProp.get("os.name").toString().toUpperCase().contains("MAC")) {
+            System.setProperty("apple.laf.useScreenMenuBar", "true");
+        }
+        
         try {
             // If "paramfiles" directory doesn't exist, create one
             Path paramfilesPath = Paths.get(System.getProperty("user.dir"), "paramfiles");
@@ -189,6 +198,17 @@ public class Q_Menu extends JFrame {
         title.setBackground(titlePanel.getBackground());
         title.setEditable(false);
 
+        menuBar = new JMenuBar();
+        helpMenu = new JMenu("Help");
+        helpMenuItemEN = new JMenuItem("Help English");
+        helpMenuItemCZ = new JMenuItem("Nápověda česky");
+
+        helpMenu.add(helpMenuItemEN);
+        helpMenu.add(helpMenuItemCZ);
+        menuBar.add(helpMenu);
+
+        setJMenuBar(menuBar); // In macOS on the main system menu bar above, in Windows on the window menu bar
+
         // Colors of labels at buttons same as panel color
         selectQueryLbl.setBackground(buttonPanel.getBackground());
         parametersLbl.setBackground(buttonPanel.getBackground());
@@ -249,6 +269,47 @@ public class Q_Menu extends JFrame {
             gbc.gridy++;
             buttonPanel.add(fromAS400Button, gbc);
         }
+        
+        
+        // Register HelpWindow menu item listener
+        helpMenuItemEN.addActionListener(ae -> {
+            String command = ae.getActionCommand();
+            if (command.equals("Help English")) {
+                if (Desktop.isDesktopSupported()) {
+                    String uri = Paths
+                            .get(System.getProperty("user.dir"), "helpfiles", "IBMiSqlScriptsUserDocEn.pdf").toString();
+                    // Replace backslashes by forward slashes in Windows
+                    uri = uri.replace('\\', '/');
+                    uri = uri.replace(" ", "%20");
+                    try {
+                        // Invoke the standard browser in the operating system
+                        Desktop.getDesktop().browse(new URI("file://" + uri));
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            }
+        });
+        // Register HelpWindow menu item listener
+        helpMenuItemCZ.addActionListener(ae -> {
+            String command = ae.getActionCommand();
+            if (command.equals("Nápověda česky")) {
+                if (Desktop.isDesktopSupported()) {
+                    String uri = Paths
+                            .get(System.getProperty("user.dir"), "helpfiles", "IBMiSqlScriptsUserDocCz.pdf").toString();
+                    // Replace backslashes by forward slashes in Windows
+                    uri = uri.replace('\\', '/');
+                    uri = uri.replace(" ", "%20");
+                    try {
+                        // Invoke the standard browser in the operating system
+                        Desktop.getDesktop().browse(new URI("file://" + uri));
+                    } catch (Exception exc) {
+                        exc.printStackTrace();
+                    }
+                }
+            }
+        });
+
         // Button actions
         // --------------
         // Create list of queries from script files and process queries
