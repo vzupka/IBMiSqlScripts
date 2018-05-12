@@ -1,0 +1,11 @@
+
+select 
+      CISLO_ZBOZI,    
+      CENA_ZA_JEDNOTK,
+      NAZEV_ZBOZI     
+ from CENY
+OrDeR by NAZEV_ZBOZI.
+
+
+Chyba v příkazu:
+42601  com.ibm.as400.access.AS400JDBCSQLSyntaxErrorException: [SQL0104] Token <END-OF-STATEMENT> was not valid. Valid tokens: DAY LAG RID RRN CAST CHAR DATE DAYS.

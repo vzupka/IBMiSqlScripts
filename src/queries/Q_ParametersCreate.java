@@ -17,8 +17,7 @@ import java.util.Properties;
 public class Q_ParametersCreate {
    final static String PROP_COMMENT = "SqlScripts for IBM i, © Vladimír Župka 2015";
 
-   static Path outPath = Paths.get(System.getProperty("user.dir"), "paramfiles",
-         "Q_Parameters.txt");
+   static Path outPath = Paths.get(System.getProperty("user.dir"), "paramfiles", "Q_Parameters.txt");
    static String encoding = System.getProperty("file.encoding");
    /**
     * Main method. Sets parameter properties and writes (stores) them
@@ -30,7 +29,7 @@ public class Q_ParametersCreate {
       properties.setProperty("LANGUAGE", "cs-CZ");
       properties.setProperty("HOST", "193.179.195.133");
       properties.setProperty("USER_NAME", "VZUPKA");
-      properties.setProperty("LIBRARY", "KOLEKCE, VZSQL, VZTOOL, CORPDATA");
+      properties.setProperty("LIBRARY_LIST", "KOLEKCE, VZSQL, VZTOOL, CORPDATA");
       properties.setProperty("IFS_DIRECTORY", "/home/vzupka/");
       properties.setProperty("AUTO_WINDOW_SIZE", "Y");
       properties.setProperty("RESULT_WINDOW_WIDTH", "450");

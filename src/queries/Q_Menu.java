@@ -70,6 +70,8 @@ public class Q_Menu extends JFrame {
     JTextArea toAS400Lbl;
     JTextArea fromAS400Lbl;
 
+    JLabel emptyLabel = new JLabel();
+    
     // Empty array list with elements of type String
     ArrayList<String> msgArrList = new ArrayList();
     //    JList<String> msgList = new JList();
@@ -98,17 +100,17 @@ public class Q_Menu extends JFrame {
      * @param fullMenu
      */
     public void createQ_Menu(boolean fullMenu) {
-        
+
 
         // Get or set application properties
         // ---------------------------------
         Properties sysProp = System.getProperties();
-        
+
         // Menu bar in Mac operating system will be in the system menu bar
         if (sysProp.get("os.name").toString().toUpperCase().contains("MAC")) {
             System.setProperty("apple.laf.useScreenMenuBar", "true");
         }
-        
+
         try {
             // If "paramfiles" directory doesn't exist, create one
             Path paramfilesPath = Paths.get(System.getProperty("user.dir"), "paramfiles");
@@ -258,19 +260,25 @@ public class Q_Menu extends JFrame {
         gbc.anchor = GridBagConstraints.WEST;
 
         gbc.gridy = 1; // column 0, line 1
-        buttonPanel.add(selectQueryButton, gbc);
-        gbc.gridy++;
-        buttonPanel.add(parametersButton, gbc);
+        if (!fullMenu) {
+            buttonPanel.add(selectQueryButton, gbc);
+        }
         if (fullMenu) {
-            gbc.gridy++;
-            buttonPanel.add(editScriptButton, gbc);
             gbc.gridy++;
             buttonPanel.add(toAS400Button, gbc);
             gbc.gridy++;
             buttonPanel.add(fromAS400Button, gbc);
         }
-        
-        
+        gbc.gridy++;
+        buttonPanel.add(parametersButton, gbc);
+        gbc.gridy++;
+        buttonPanel.add(emptyLabel, gbc);
+        if (fullMenu) {
+            gbc.gridy++;
+            buttonPanel.add(editScriptButton, gbc);
+        }
+
+
         // Register HelpWindow menu item listener
         helpMenuItemEN.addActionListener(ae -> {
             String command = ae.getActionCommand();
@@ -314,7 +322,7 @@ public class Q_Menu extends JFrame {
         // --------------
         // Create list of queries from script files and process queries
         selectQueryButton.addActionListener(ctb -> {
-            Q_ScriptRunCall scriptRun = new Q_ScriptRunCall();
+            Q_ScriptRunCall scriptRun = new Q_ScriptRunCall(null);
             scriptRun.buildScriptList();
         });
         // Edit parameters for application
@@ -356,16 +364,22 @@ public class Q_Menu extends JFrame {
 
         gbc.gridx = 1;
         gbc.gridy = 1;
-        buttonPanel.add(selectQueryLbl, gbc);
-        gbc.gridy++;
-        buttonPanel.add(parametersLbl, gbc);
+        if (!fullMenu) {
+            buttonPanel.add(selectQueryLbl, gbc);
+        }
         if (fullMenu) {
-            gbc.gridy++;
-            buttonPanel.add(editScriptLbl, gbc);
             gbc.gridy++;
             buttonPanel.add(toAS400Lbl, gbc);
             gbc.gridy++;
             buttonPanel.add(fromAS400Lbl, gbc);
+        }
+        gbc.gridy++;
+        buttonPanel.add(parametersLbl, gbc);
+        gbc.gridy++;
+        buttonPanel.add(emptyLabel, gbc);
+        if (fullMenu) {
+            gbc.gridy++;
+            buttonPanel.add(editScriptLbl, gbc);
         }
         // Place message area in message panel
         messagePanel.setBorder(BorderFactory.createLineBorder(DIM_BLUE)); // Dim blue

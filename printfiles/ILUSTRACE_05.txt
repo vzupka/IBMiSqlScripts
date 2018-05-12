@@ -1,7 +1,10 @@
 
+﻿set = "KOLEKCE" 
+Chyba v příkazu:
+42601  com.ibm.as400.access.AS400JDBCSQLSyntaxErrorException: [SQL0104] Token = was not valid. Valid tokens: SQL PATH OPTION RESULT SCHEMA CURRENT SESSION CONNECTION.
 Sumarizace zboží (CENY) podle skladů a závodů, závod na nové stránce
 
-Neděle, 15. dubna 2018 13:47:59
+Pondělí, 7. května 2018 18:23:45
 
 Zav  Skl  Č.zboží  Název zboží             Cena/j.     Množství     Cena celkem  
 ===  ===  =======  ===========             =======     ========     ===========  

@@ -254,12 +254,7 @@ public class Q_ScriptRun {
      *
      * @return String[] Return code as array
      *
-     */
-    
-    
-    
-    
-    
+     */    
     @SuppressWarnings({"CallToPrintStackTrace", "null", "UnusedAssignment"})
     public String[] runScript(Connection conn, String scriptName, String stmtDescription,
             String statement, ArrayList<String[]> markerArrayLst, ArrayList<String[]> headerArrayLst,
@@ -1191,7 +1186,7 @@ public class Q_ScriptRun {
     }
 
     /**
-     * Common error message reporting for "catch" blocks
+     * Common error message reported from "catch" blocks; display and save the statement result into files.
      *
      * @param resultTextArea
      * @param msg
@@ -1200,7 +1195,7 @@ public class Q_ScriptRun {
         // Text of the SQL statement and the error message is displayed
         resultTextArea.append(statement);
         resultTextArea.append(msg);
-        // Display and print the query result if at least one message is non-empty
+        // Display and print the query result if the message is non-empty
         if (!msg.equals("")) {
             new Q_PrintOneFile(scriptName, resultTextArea, nbrHdrLines, headerArrayList, printArrayList, columnHeaders);
 

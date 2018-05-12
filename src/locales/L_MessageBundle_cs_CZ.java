@@ -29,7 +29,7 @@ public class L_MessageBundle_cs_CZ extends ListResourceBundle {
          { "NoRowUpd", "Není vybrán žádný řádek. Vyberte jeden k úpravě." },
          { "NoRowDel", "Není vybrán žádný řádek. Vyberte jeden ke zrušení." },
          { "NoRowSav", "Není vybrán žádný řádek. Vyberte jeden k uložení do serveru." },
-         { "File", "Soubor " },
+         { "File", "Soubor  " },
          { "WasDelLoc", " byl smazán z adresáře \"scriptfiles.\" " },
          { "WasDel", " byl smazán z adresáře " },
          { "NotInDir", " neexistuje v adresáři " },
@@ -56,17 +56,17 @@ public class L_MessageBundle_cs_CZ extends ListResourceBundle {
          { "MissingSummaryColumn", "Chybí součtovací sloupec. Nic se nesumarizuje." },
          { "InvalidColumn", "Vynechávaný sloupec nelze sumarizovat: " },
          // Q_ScriptEdit
-         { "IOError", "Chyba vstupu/výstupu: " },
+         { "IOError", "Chyba vstupu/výstupu:  " },
          { "NonAscii", "Jméno skriptu obsahuje nepovolený znak." },
          // Q_ExportOneToAS400
-         { "WasExported", " byl EXPORTOVÁN do adresáře " },
-         { "NoFiles", "Nejsou žádné soubory k přenosu z adresáře " },
-         { "Directory", "Adresář " },
-         { "NotFound", " nenalezen. Systémová zpráva:  " },
+         { "WasExported", "  byl EXPORTOVÁN do adresáře  " },
+         { "NoFiles", "Nejsou žádné soubory k přenosu z adresáře  " },
+         { "Directory", "Adresář  " },
+         { "NotFound", "  nenalezen. Systémová zpráva:  " },
          // Q_ImportAllFromAS400
-         { "WasImported", " byl IMPORTOVÁN z adresáře " },
-         { "ToDir", " do adresáře \"scriptfiles\"." },
-         { "NotFoundInDir", " nebyl nalezen v adresáři " },
+         { "WasImported", "  byl IMPORTOVÁN z adresáře  " },
+         { "ToDir", "  do adresáře \"scriptfiles\"." },
+         { "NotFoundInDir", "  nebyl nalezen v adresáři  " },
 
    };
 }

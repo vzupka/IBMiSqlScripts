@@ -27,7 +27,7 @@ public class Q_ConnectDB {
     String sortLanguage;
 
     String host;
-    String library;
+    String libraryList;
     String userName;
     String password;
     String language;
@@ -45,7 +45,7 @@ public class Q_ConnectDB {
         Q_Properties prop = new Q_Properties();
         host = prop.getProperty("HOST");
         userName = prop.getProperty("USER_NAME");
-        library = prop.getProperty("LIBRARY"); // library list
+        libraryList = prop.getProperty("LIBRARY_LIST"); // library list
         language = prop.getProperty("LANGUAGE");
 
         Locale currentLocale = Locale.forLanguageTag(language);
@@ -85,7 +85,7 @@ public class Q_ConnectDB {
             // sort by language (or "hex" or "table")
             conprop.put("sort", "language");
             // library list
-            conprop.put("libraries", library);
+            conprop.put("libraries", libraryList);
             // date format ISO (or "mdy" "dmy" "ymd" "usa" "eur" "jis"
             // "julian")
             conprop.put("date format", "iso");

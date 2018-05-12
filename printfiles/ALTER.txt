@@ -1,0 +1,4 @@
+
+
+Chyba v příkazu:
+43617  java.sql.SQLException: A string parameter value with zero length was detected.

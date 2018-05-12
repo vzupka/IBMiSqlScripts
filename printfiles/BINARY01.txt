@@ -1,8 +1,7 @@
 
 --Drop, Create, Alter
 DROP TABLE VZTOOL.BINARY01  
-Error in the statement:
-42704  [SQL0204] BINARY01 in VZTOOL type *FILE not found.
+Statement executed.
 --Create table
 CREATE TABLE VZTOOL.BINARY01 ( 
    ID INT,
@@ -10,6 +9,48 @@ CREATE TABLE VZTOOL.BINARY01 (
    VARBINARKA VARBINARY (50) )
  
 Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; aabbcc;
+--;? 02; VARBINARY; Hexa 2; aabbccddeeff;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(1, ?, ?)  
+Statement executed.
+--;? 01; BINARY; Hexa 1; 000102;
+--;? 02; VARBINARY; Hexa 2; 00;
+insert into BINARY01 (ID, BINARKA, VARBINARKA) values(2, ?, ?)  
+Statement executed.
 
 
-Tuesday, April 3, 2018 5:44:51 PM
+Monday, May 7, 2018 2:48:45 PM
+
+         ID BINARKA VARBINARKA                                         
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          2 000102  00                                                 

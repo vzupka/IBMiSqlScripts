@@ -29,7 +29,7 @@ public class L_MessageBundle_en_US extends ListResourceBundle {
          { "NoRowUpd", "No row was selected. Select one to edit." },
          { "NoRowDel", "No row was selected. Select one to delete." },
          { "NoRowSav", "No row was selected. Select one to save to the server." },
-         { "File", "File " },
+         { "File", "File  " },
          { "WasDelLoc", " was deleted from directory \"scriptfiles.\" " },
          { "WasDel", " was deleted from directory " },
          { "NotInDir", " does not exist in directory " },
@@ -59,14 +59,14 @@ public class L_MessageBundle_en_US extends ListResourceBundle {
          { "IOError", "I/O error: " },
          { "NonAscii", "Script name contains an invalid character." },
          // Q_ExportOneToAS400
-         { "WasExported", " was EXPORTED to directory " },
-         { "NoFiles", "No files to transfer from directory " },
-         { "Directory", "Directory " },
-         { "NotFound", " not found. System message:  " },
+         { "WasExported", "  was EXPORTED to directory  " },
+         { "NoFiles", "No files to transfer from directory  " },
+         { "Directory", "Directory  " },
+         { "NotFound", "  not found. System message:  " },
          // Q_ImportAllFromAS400
-         { "WasImported", " was IMPORTED from directory " },
-         { "ToDir", " to directory \"scriptfiles\"." },
-         { "NotFoundInDir", " not found in directory " },
+         { "WasImported", "  was IMPORTED from directory  " },
+         { "ToDir", "  to directory \"scriptfiles\"." },
+         { "NotFoundInDir", "  not found in directory  " },
 
    };
 }

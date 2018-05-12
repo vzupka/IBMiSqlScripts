@@ -42,7 +42,7 @@ public class Q_Properties {
    }
    
    /**
-    * Delivers a specific property given a name: "LIBRARY" "IFS_DIRECTORY"
+    * Delivers a specific property given a name: "LIBRARY_LIST" "IFS_DIRECTORY"
     * "HOST" etc.
     * 
     * @param key

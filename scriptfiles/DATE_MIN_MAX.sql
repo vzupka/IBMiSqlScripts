@@ -24,4 +24,4 @@
      join CENYD  as C on  D.CDOD    = C.CDOD                        
                      and  D.CZBOZID = C.CZBOZID                     
                                      
-     order by D.CZBOZID 
+     order by D.CZBOZID

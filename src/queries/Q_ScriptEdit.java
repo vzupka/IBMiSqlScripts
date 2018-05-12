@@ -114,7 +114,7 @@ public final class Q_ScriptEdit extends JFrame {
     TextAreaMouseListener textAreaMouseListener;
     TextArea2MouseListener textArea2MouseListener;
 
-    WindowEditFileAdapter windowEditFileListener;
+    WindowEditAdapter windowEditListener;
 
     static Color originalButtonBackground;
     static Color originalButtonForeground;
@@ -124,8 +124,10 @@ public final class Q_ScriptEdit extends JFrame {
     static final Color VERY_LIGHT_PINK = Color.getHSBColor(0.025f, 0.008f, 0.99f);
 
     static final Color WARNING_COLOR = new Color(255, 200, 200);
-    static final Color DIM_BLUE = Color.getHSBColor(0.60f, 0.2f, 0.5f); // blue little saturated dim (gray)
-    static final Color DIM_RED = Color.getHSBColor(0.00f, 0.2f, 0.98f); // red little saturated bright
+    //static final Color DIM_BLUE = Color.getHSBColor(0.60f, 0.2f, 0.5f); // blue little saturated dim (gray)
+    //static final Color DIM_RED = Color.getHSBColor(0.00f, 0.2f, 0.98f);Q_ScriptRunCall // red little saturated bright
+    static final Color DIM_BLUE = new Color(50, 60, 160);
+    static final Color DIM_RED = new Color(190, 60, 50);
     static final Color VERY_LIGHT_GRAY = Color.getHSBColor(0.50f, 0.01f, 0.90f);
 
     static final Color DARK_RED = Color.getHSBColor(0.95f, 0.95f, 0.60f);
@@ -186,6 +188,8 @@ public final class Q_ScriptEdit extends JFrame {
 
     Q_FindWindow findWindow;
 
+    Q_ColumnLists columnLists;
+
     JButton saveButton = new JButton("Save");
 
     JButton undoButton = new JButton("Undo");
@@ -209,6 +213,7 @@ public final class Q_ScriptEdit extends JFrame {
 
     JButton splitUnsplitButton;
     JButton findButton;
+    JButton columnListButton;
 
     JScrollPane scrollPaneUpper;
     JScrollPane scrollPaneLower;
@@ -217,12 +222,12 @@ public final class Q_ScriptEdit extends JFrame {
     BoxLayout globalPanelBoxLayout;
 
     JPanel globalPanel;
-    JPanel rowPanel1;
+    JPanel rowPanel2;
     JPanel colPanel1;
     JPanel colPanel2;
     JPanel colPanel21;
     JPanel colPanel22;
-    JPanel rowPanel2;
+    JPanel rowPanel1;
     JPanel topPanel;
 
     HighlightListener highlightListener = new HighlightListener();
@@ -332,7 +337,7 @@ public final class Q_ScriptEdit extends JFrame {
     JScrollPane scrollPane;
 
     // Constructor parameters
-    Q_ScriptEditCall mainWindow;
+    Q_ScriptEditCall scriptEditCall;
     String filePathString;
     String methodName;
     String sourceType;
@@ -348,19 +353,22 @@ public final class Q_ScriptEdit extends JFrame {
     /**
      * Constructor
      *
-     * @param mainWindow
+     * @param scriptEditCall
      * @param textArea
      * @param textArea2
      * @param filePathString
      * @param methodName
      */
-    public Q_ScriptEdit(Q_ScriptEditCall mainWindow,
+    public Q_ScriptEdit(Q_ScriptEditCall scriptEditCall,
             JTextArea textArea, JTextArea textArea2, String filePathString, String methodName) {
-        this.mainWindow = mainWindow;
+        this.scriptEditCall = scriptEditCall;
         this.textArea = textArea;
         this.textArea2 = textArea2;
         this.filePathString = filePathString;
         this.methodName = methodName;
+
+        // Create object of 
+////        columnLists = new Q_ColumnLists(this);
 
         // Create object of FindWindow class 
         findWindow = new Q_FindWindow(this, filePathString);
@@ -407,9 +415,6 @@ public final class Q_ScriptEdit extends JFrame {
 
         isError = false;
 
-        // Get text from the file and set it to the textArea
-        displayPcFile();
-
         // Create window if there was no error in rewriting the file.
         // -------------
         if (!isError) {
@@ -423,8 +428,8 @@ public final class Q_ScriptEdit extends JFrame {
         textArea.requestFocus();
 
         // Prepare editing in primary text area.
-        scrollPane.setBackground(VERY_LIGHT_PINK);
-        textArea.setBackground(VERY_LIGHT_PINK);
+        //scrollPane.setBackground(VERY_LIGHT_PINK);
+        //textArea.setBackground(VERY_LIGHT_PINK);
         // Prepare editing and make editor visible
         prepareEditingAndShow();
 
@@ -435,16 +440,19 @@ public final class Q_ScriptEdit extends JFrame {
      */
     protected void createWindow() {
 
+        // Get text from the file and set it to the textArea
+        displayPcFile();
+
         Toolkit kit = Toolkit.getDefaultToolkit();
         Dimension screenSize = kit.getScreenSize();
 
         screenWidth = screenSize.width;
         screenHeight = screenSize.height;
         windowWidth = 850;
-        windowHeight = screenHeight;
+        windowHeight = screenHeight - 100;
 
         windowX = screenWidth / 2 - windowWidth / 2;
-        windowY = 0;
+        windowY = 50;
 
         menuBar = new JMenuBar();
         helpMenu = new JMenu("Help");
@@ -494,7 +502,7 @@ public final class Q_ScriptEdit extends JFrame {
         saveButton.setMinimumSize(new Dimension(80, 20));
         saveButton.setMaximumSize(new Dimension(80, 20));
         saveButton.setToolTipText("Also Ctrl+S (Cmd+S in macOS).");
-        saveButton.setFont(saveButton.getFont().deriveFont(Font.BOLD, 12));
+        saveButton.setFont(saveButton.getFont().deriveFont(Font.PLAIN, 12));
 
         // Save button will have the original black color.
         textChanged = false;
@@ -524,7 +532,7 @@ public final class Q_ScriptEdit extends JFrame {
         runScriptButton.setMinimumSize(new Dimension(100, 20));
         runScriptButton.setMaximumSize(new Dimension(100, 20));
         runScriptButton.setFont(runScriptButton.getFont().deriveFont(Font.BOLD, 12));
-        runScriptButton.setToolTipText("Run script.");
+        runScriptButton.setToolTipText("Run the script. (Saves edited text before running.)");
 
         fontComboBox.setPreferredSize(new Dimension(140, 20));
         fontComboBox.setMaximumSize(new Dimension(140, 20));
@@ -610,6 +618,13 @@ public final class Q_ScriptEdit extends JFrame {
         redoButton.setMinimumSize(new Dimension(20, 20));
         redoButton.setMaximumSize(new Dimension(20, 20));
 
+        // Column list button
+        columnListButton = new JButton("Column lists");
+        columnListButton.setPreferredSize(new Dimension(100, 20));
+        columnListButton.setMinimumSize(new Dimension(100, 20));
+        columnListButton.setMaximumSize(new Dimension(100, 20));
+        columnListButton.setToolTipText("Get column lists for schemas and tables.");
+
         // Split pane (divided by horizontal line) containing two scroll panes
         splitVerticalPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 
@@ -670,29 +685,8 @@ public final class Q_ScriptEdit extends JFrame {
         }
 
         rowPanel1 = new JPanel();
-        rowPanel1.setLayout(new BoxLayout(rowPanel1, BoxLayout.X_AXIS));
-        rowPanel1.add(caretButton);
-        rowPanel1.add(Box.createHorizontalStrut(10));
-        rowPanel1.add(selectionModeButton);
-        rowPanel1.add(Box.createHorizontalStrut(10));
-        // rowPanel1.add(shiftLabel);
-        rowPanel1.add(leftShiftButton);
-        rowPanel1.add(Box.createHorizontalStrut(10));
-        rowPanel1.add(rightShiftButton);
-        rowPanel1.add(Box.createHorizontalStrut(20));
-        rowPanel1.add(undoButton);
-        rowPanel1.add(Box.createHorizontalStrut(10));
-        rowPanel1.add(redoButton);
-        rowPanel1.add(Box.createHorizontalStrut(20));
-        rowPanel1.add(saveButton);
-        rowPanel1.add(Box.createHorizontalStrut(20));
-        rowPanel1.add(runScriptButton);
-
-//        saveButton.setSelected(true);
-
-        rowPanel2 = new JPanel();
-        GroupLayout rowPanel2Layout = new GroupLayout(rowPanel2);
-        rowPanel2Layout.setHorizontalGroup(rowPanel2Layout.createSequentialGroup()
+        GroupLayout rowPanel1Layout = new GroupLayout(rowPanel1);
+        rowPanel1Layout.setHorizontalGroup(rowPanel1Layout.createSequentialGroup()
                 .addGap(0)
                 .addComponent(splitUnsplitButton)
                 .addGap(20)
@@ -702,28 +696,48 @@ public final class Q_ScriptEdit extends JFrame {
                 .addComponent(languageComboBox)
                 .addGap(40)
                 .addComponent(findButton)
-                .addGap(60)
         );
-        rowPanel2Layout.setVerticalGroup(rowPanel2Layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+        rowPanel1Layout.setVerticalGroup(rowPanel1Layout.createParallelGroup(GroupLayout.Alignment.CENTER)
                 .addComponent(splitUnsplitButton)
                 .addComponent(fontComboBox)
                 .addComponent(fontSizeField)
                 .addComponent(languageComboBox)
                 .addComponent(findButton)
         );
-        rowPanel2.setLayout(rowPanel2Layout);
+        rowPanel1.setLayout(rowPanel1Layout);
+
+        rowPanel2 = new JPanel();
+        rowPanel2.setLayout(new BoxLayout(rowPanel2, BoxLayout.X_AXIS));
+        rowPanel2.add(caretButton);
+        rowPanel2.add(Box.createHorizontalStrut(10));
+        rowPanel2.add(selectionModeButton);
+        rowPanel2.add(Box.createHorizontalStrut(10));
+        // rowPanel2.add(shiftLabel);
+        rowPanel2.add(leftShiftButton);
+        rowPanel2.add(Box.createHorizontalStrut(10));
+        rowPanel2.add(rightShiftButton);
+        rowPanel2.add(Box.createHorizontalStrut(20));
+        rowPanel2.add(undoButton);
+        rowPanel2.add(Box.createHorizontalStrut(10));
+        rowPanel2.add(redoButton);
+        rowPanel2.add(Box.createHorizontalStrut(20));
+        rowPanel2.add(saveButton);
+        rowPanel2.add(Box.createHorizontalStrut(20));
+        rowPanel2.add(columnListButton);
+        rowPanel2.add(Box.createHorizontalStrut(20));
+        rowPanel2.add(runScriptButton);
 
         globalPanel = new JPanel();
         GroupLayout topPanelLayout = new GroupLayout(globalPanel);
         topPanelLayout.setHorizontalGroup(topPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(rowPanel2)
                 .addComponent(rowPanel1)
+                .addComponent(rowPanel2)
                 .addComponent(scrollPane)
         );
         topPanelLayout.setVerticalGroup(topPanelLayout.createSequentialGroup()
-                .addComponent(rowPanel2)
-                .addGap(2)
                 .addComponent(rowPanel1)
+                .addGap(2)
+                .addComponent(rowPanel2)
                 .addGap(4)
                 .addComponent(scrollPane)
         );
@@ -892,9 +906,15 @@ public final class Q_ScriptEdit extends JFrame {
 
         // Selection mode listeners
         // ========================
+
+        // Selection mode button listener
+        // ------------------------------
         selectionModeButton.addActionListener(ae -> {
             changeSelectionMode();
         });
+
+        // Popup menu selection mode item listener
+        // ---------------------------------------
         changeSelMode.addActionListener(ae -> {
             changeSelectionMode();
         });
@@ -916,6 +936,16 @@ public final class Q_ScriptEdit extends JFrame {
                 textAreaIsSplit = false;
             }
         });
+
+        // Column list button listener
+        // ---------------------------
+        columnListButton.addActionListener(ae -> {
+            columnLists = new Q_ColumnLists(this);
+            columnLists.createWindow();
+        });
+
+        // Inner class listeners
+        // =====================
 
         // Undo button listener and menu item listener
         undoAction = new UndoAction();
@@ -968,8 +998,15 @@ public final class Q_ScriptEdit extends JFrame {
         rightShiftButton.addActionListener(arrowRight);
 
         // Run script button listener
-        // --------------------------
+        // ==========================
         runScriptButton.addActionListener(ae -> {
+            // Save edited data from text area back to the member
+            // Rewrite the changed file
+            rewritePcFile();
+
+            textChanged = false; // Save button gets the original color
+            checkTextChanged();
+
             String scriptName = filePathString;
             String scriptLine;
             String scriptDescription = "";
@@ -1006,21 +1043,29 @@ public final class Q_ScriptEdit extends JFrame {
             }
 
             // Perform the script
-            Q_ScriptRunCall src = new Q_ScriptRunCall();
+            // ==================
+            Q_ScriptRunCall src = new Q_ScriptRunCall(filePathString);
             src.retCode = src.performScript(scriptName, scriptDescription);
             // Handle messages
-            mainWindow.messagePanel.removeAll();
-            JLabel msg;
+            JLabel msg = new JLabel();
+            scriptEditCall.scriptListMsgPanel.removeAll();
             if (!src.retCode[1].isEmpty()) {
-                msg = new JLabel(src.retCode[1]);
-                mainWindow.messagePanel.add(msg);
-                msg.setForeground(mainWindow.DIM_BLUE); // blue
                 if (src.retCode[0].contains("ERROR")) {
+                    msg.setText(src.retCode[1]);
+                    scriptEditCall.scriptListMsgPanel.add(msg);
                     msg.setForeground(DIM_RED); // red
+                    scriptEditCall.repaint(); // Previous removed message made invisible
+                    scriptEditCall.setVisible(true); // This message made visible in Q_ScriptEditCall window
+                    this.toFront(); // Brings editor window to the front and may make it the focused window
                 }
+            } else {
+                msg.setText("Script was successful.");
+                scriptEditCall.scriptListMsgPanel.add(msg);
+                msg.setForeground(DIM_BLUE); // blue
+                scriptEditCall.repaint(); // Previous removed message made invisible in Q_ScriptEditCall window
+                scriptEditCall.setVisible(true); // This message made visible
+                this.toFront(); // Brings editor window to the front and may make it the focused window
             }
-            mainWindow.repaint();
-            mainWindow.setVisible(true);
         });
 
         // Keyboard key listeners
@@ -1125,10 +1170,11 @@ public final class Q_ScriptEdit extends JFrame {
         textArea2MouseListener = new TextArea2MouseListener();
         textArea2.addMouseListener(textArea2MouseListener);
 
-        // Register window listener
-        // ------------------------
-        windowEditFileListener = new WindowEditFileAdapter();
-        this.addWindowListener(windowEditFileListener);
+        // Window listener
+        // ---------------
+        windowEditListener = new WindowEditAdapter();
+        this.addWindowListener(windowEditListener);
+
 
         {
             // IMPORTANT: This block must be run AFTER MOUSE LISTENER REGISTRATION
@@ -1179,15 +1225,27 @@ public final class Q_ScriptEdit extends JFrame {
      */
     protected void displayPcFile() {
 
-        this.setTitle("Edit PC file  '" + filePathString + "'");
+        this.setTitle("Edit PC file   " + filePathString);
 
+        Path filePath = Paths.get("scriptfiles", filePathString);
         try {
-            Path filePath = Paths.get("scriptfiles", filePathString);
+            BufferedReader bufReader = Files.newBufferedReader(filePath, Charset.forName("UTF-8"));
+            textArea.setText("");
+            String text = "";
+            String line = bufReader.readLine();
+            while (line != null) {
+                text += line + NEW_LINE;
+                line = bufReader.readLine();
+            }
+            bufReader.close();
+            textArea.setText(text);
+
+            /*
             if (Files.exists(filePath)) {
                 // Use PC charset parameter for conversion
                 list = Files.readAllLines(filePath, Charset.forName("UTF-8"));
                 if (list != null) {
-                    // Concatenate all text lines from the list obtained from the file
+                    // Concatenate all text lines from the list obtained from the script file
                     textArea.setText("");
                     Object[] obj = (Object[]) list.stream().toArray();
                     for (int idx = 0; idx < obj.length; idx++) {
@@ -1196,15 +1254,17 @@ public final class Q_ScriptEdit extends JFrame {
                     }
                 }
             }
-            if (list != null) {
-                // Concatenate all text lines from the list obtained from the file
-                textArea.setText("");
-                Object[] obj = (Object[]) list.stream().toArray();
-                for (int idx = 0; idx < obj.length; idx++) {
-                    String text = obj[idx].toString();
-                    textArea.append(text + NEW_LINE);
+             */
+ /*
+            if (Files.exists(filePath)) {
+                list = Files.readAllLines(filePath, Charset.forName("UTF-8"));
+                if (list != null) {
+                    // Concatenate all text lines from the list obtained from the script file
+                    String text = list.stream().reduce("", (a, b) -> a + b + "\n");
+                    textArea.setText(text);
                 }
             }
+             */
         } catch (Exception exc) {
             isError = true;
             exc.printStackTrace();
@@ -1217,7 +1277,6 @@ public final class Q_ScriptEdit extends JFrame {
     /**
      * Rewrite PC file with edited text area.
      *
-     * @return
      */
     protected void rewritePcFile() {
 
@@ -1231,14 +1290,14 @@ public final class Q_ScriptEdit extends JFrame {
             outputFile.write(textArea.getText());
             // Close file
             outputFile.close();
-            mainWindow.scriptListMsgLabel.setText("Comp: PC file  " + filePathString + "  was saved.");
-            mainWindow.setForeground(DIM_BLUE); // blue
-            mainWindow.messagePanel.add(mainWindow.scriptListMsgLabel);
+//            scriptEditCall.scriptListMsgLabel.setText("Comp: PC file  " + filePathString + "  was saved.");
+//            scriptEditCall.setForeground(DIM_BLUE); // blue
+//            scriptEditCall.scriptListMessagePanel.add(scriptEditCall.scriptListMsgLabel);
         } catch (Exception exc) {
             exc.printStackTrace();
-            mainWindow.scriptListMsgLabel.setText("Error in rewriting PC file: " + exc.toString());
-            mainWindow.setForeground(DIM_RED); // red
-            mainWindow.messagePanel.add(mainWindow.scriptListMsgLabel);
+            scriptEditCall.scriptListMsgLabel.setText("Error in rewriting PC file: " + exc.toString());
+            scriptEditCall.setForeground(DIM_RED); // red
+            scriptEditCall.scriptListMsgPanel.add(scriptEditCall.scriptListMsgLabel);
         }
     }
 
@@ -1411,6 +1470,17 @@ public final class Q_ScriptEdit extends JFrame {
      * @param textArea
      */
     protected void highlightBlocks(JTextArea textArea) {
+        /**
+         * This new-line is necessary for prevention of a never ending loop.
+         * Without it the never ending loop would occur when BLOCK HIGHLIGHTING is specified
+         * and the user writes some character(s) after the END of the text area
+         * and then the user presses a mouse button.
+         *
+         * This produces an invisible effect of appending an empty new line
+         * each time the user clicks the mouse button anywhere in the text area.
+         */
+//????        textArea.append("\n");
+
         stmtsBeg.clear();
         stmtsEnd.clear();
 
@@ -1889,7 +1959,7 @@ public final class Q_ScriptEdit extends JFrame {
 
         // Find and highlight ending block statements
         stmtsEnd.forEach(stmtEnd -> {
-            highlightBlockStmt(textArea, stmtEnd, false); // false is tested as !beg
+            highlightBlockStmt(textArea, stmtEnd, false); // false is tested as !beg (NOT beg)
         });
     }
 
@@ -2212,22 +2282,29 @@ public final class Q_ScriptEdit extends JFrame {
         // Inspect each line separately for ONE occurrence of the block statement.
         // Highlight only the block statement that is outside of a comment, if it is not too complex.
 
-        String text;
+        String textToHighlight;
 
-        text = textArea.getText().toUpperCase();
-
+        textToHighlight = textArea.getText().toUpperCase();
+        int textLength = textToHighlight.length();
         int startOfLine = 0;
         int endOfLine = 0;
         try {
-            endOfLine = text.indexOf(NEW_LINE, startOfLine);
-
-            // Process all lines in the text area
-            while (startOfLine > -1 && startOfLine < text.length()) {
-                // (not empty text and inside the text before the last NEW_LINE)
+            // Find the first new-line character in the textToHighlight.
+            // Index of the first new-line character is the first end of line.
+            // May be -1 if no end-of-line character exists in the text area.
+            endOfLine = textToHighlight.indexOf(NEW_LINE, startOfLine);
+            //System.out.println("endOfLine first: " + endOfLine);
+            // Process all lines in the textToHighlight area
+            while ( // "textToHighlight" is not empty  
+                    // and the block statement is inside the whole textToHighlight (before the last NEW_LINE)
+                    // and at the end of line exists at least one new-line character.
+                    startOfLine > -1
+                    && startOfLine < textLength
+                    && endOfLine != -1) {
 
                 if (endOfLine - startOfLine > 0) {
                     // The line has at least one character
-                    int startOfBlockStmt = text.indexOf(blockStmt, startOfLine);
+                    int startOfBlockStmt = textToHighlight.indexOf(blockStmt, startOfLine);
                     int endOfBlockStmt = startOfBlockStmt + blockStmt.length();
 
                     if (startOfBlockStmt >= startOfLine && startOfBlockStmt <= endOfLine - blockStmt.length()) {
@@ -2242,12 +2319,12 @@ public final class Q_ScriptEdit extends JFrame {
                             case "RPG **FREE": {
                                 // Before block statement: All spaces or empty
                                 // After block statement: A space or semicolon or new line
-                                if ((text.substring(startOfLine, startOfBlockStmt).equals(fixedLengthSpaces(startOfBlockStmt
+                                if ((textToHighlight.substring(startOfLine, startOfBlockStmt).equals(fixedLengthSpaces(startOfBlockStmt
                                         - startOfLine))
-                                        || text.substring(startOfLine, startOfBlockStmt).isEmpty())
-                                        && (text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(" ")
-                                        || text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(";")
-                                        || text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(NEW_LINE))) {
+                                        || textToHighlight.substring(startOfLine, startOfBlockStmt).isEmpty())
+                                        && (textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(" ")
+                                        || textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(";")
+                                        || textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(NEW_LINE))) {
                                     blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
                                 }
                                 break;
@@ -2257,14 +2334,14 @@ public final class Q_ScriptEdit extends JFrame {
                                 // Before block statement: at least 7 spaces
                                 // After block statement: A space or new line or semicolon
                                 // No asterisk comment (* in column 7)
-                                if (text.length() >= 7) {
-                                    if ((text.substring(startOfLine + 7, startOfBlockStmt).equals(fixedLengthSpaces(startOfBlockStmt
+                                if (textLength >= 7) {
+                                    if ((textToHighlight.substring(startOfLine + 7, startOfBlockStmt).equals(fixedLengthSpaces(startOfBlockStmt
                                             - (startOfLine + 7)))
-                                            || text.substring(startOfLine, startOfBlockStmt).isEmpty())
-                                            && (text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(" ")
-                                            || text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(NEW_LINE)
-                                            || text.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(";"))
-                                            && !text.substring(startOfLine + 6, startOfLine + 7).equals("*")) {
+                                            || textToHighlight.substring(startOfLine, startOfBlockStmt).isEmpty())
+                                            && (textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(" ")
+                                            || textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(NEW_LINE)
+                                            || textToHighlight.substring(endOfBlockStmt, endOfBlockStmt + 1).equals(";"))
+                                            && !textToHighlight.substring(startOfLine + 6, startOfLine + 7).equals("*")) {
                                         blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
                                     }
                                 }
@@ -2273,9 +2350,9 @@ public final class Q_ScriptEdit extends JFrame {
 
                             case "RPG IV fixed": {
                                 // C in column 6 and no asterisk comment (* in column 7) and block statement in column 26 (Opcode)
-                                if (text.length() >= 5) {
-                                    if (text.substring(startOfLine + 5, startOfLine + 6).equals("C")
-                                            && !text.substring(startOfLine + 6, startOfLine + 7).equals("*")
+                                if (textLength >= 5) {
+                                    if (textToHighlight.substring(startOfLine + 5, startOfLine + 6).equals("C")
+                                            && !textToHighlight.substring(startOfLine + 6, startOfLine + 7).equals("*")
                                             && startOfBlockStmt - startOfLine == 25) {
                                         blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
                                     }
@@ -2285,9 +2362,9 @@ public final class Q_ScriptEdit extends JFrame {
 
                             case "RPG III": {
                                 // C in column 6 and no asterisk comment (* in column 7) and block statement in column 28 (Opcode)
-                                if (text.length() >= 5) {
-                                    if (text.substring(startOfLine + 5, startOfLine + 6).equals("C")
-                                            && !text.substring(startOfLine + 6, startOfLine + 7).equals("*")
+                                if (textLength >= 5) {
+                                    if (textToHighlight.substring(startOfLine + 5, startOfLine + 6).equals("C")
+                                            && !textToHighlight.substring(startOfLine + 6, startOfLine + 7).equals("*")
                                             && startOfBlockStmt - startOfLine == 27) {
                                         blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
                                     }
@@ -2296,7 +2373,7 @@ public final class Q_ScriptEdit extends JFrame {
                             } // End of case RPG RPG III
 
                             case "CL": {
-                                String line = text.substring(startOfLine, endOfLine);
+                                String line = textToHighlight.substring(startOfLine, endOfLine);
                                 int commentLeftPos = line.indexOf("/*");
                                 int commentRightPos = line.indexOf("*/");
                                 // One comment exists in the line and the block statement is outside
@@ -2316,9 +2393,9 @@ public final class Q_ScriptEdit extends JFrame {
                             case "COBOL": {
                                 // No asterisk or slash comment (* or / in column 7)
                                 // and the block statement is in columns 12 to 72
-                                if (text.length() >= 7) {
-                                    if (!text.substring(startOfLine + 6, startOfLine + 7).equals("*")
-                                            && !text.substring(startOfLine + 6, startOfLine + 7).equals("/")
+                                if (textLength >= 7) {
+                                    if (!textToHighlight.substring(startOfLine + 6, startOfLine + 7).equals("*")
+                                            && !textToHighlight.substring(startOfLine + 6, startOfLine + 7).equals("/")
                                             //&& startOfBlockStmt - startOfLine >= 11
                                             && endOfBlockStmt - startOfLine <= 72) {
                                         blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
@@ -2328,7 +2405,7 @@ public final class Q_ScriptEdit extends JFrame {
                             } // End of case COBOL
 
                             case "C": {
-                                String line = text.substring(startOfLine, endOfLine);
+                                String line = textToHighlight.substring(startOfLine, endOfLine);
                                 int doubleSlashPos = line.indexOf("//");
                                 int commentLeftPos = line.indexOf("/*");
                                 int commentRightPos = line.indexOf("*/");
@@ -2351,7 +2428,7 @@ public final class Q_ScriptEdit extends JFrame {
                             } // End of case C
 
                             case "C++": {
-                                String line = text.substring(startOfLine, endOfLine);
+                                String line = textToHighlight.substring(startOfLine, endOfLine);
                                 int doubleSlashPos = line.indexOf("//");
                                 int commentLeftPos = line.indexOf("/*");
                                 int commentRightPos = line.indexOf("*/");
@@ -2374,7 +2451,7 @@ public final class Q_ScriptEdit extends JFrame {
                             } // End of case C++
 
                             case "SQL": {
-                                String line = text.substring(startOfLine, endOfLine);
+                                String line = textToHighlight.substring(startOfLine, endOfLine);
                                 int specialCommentPos = line.indexOf("--;"); // Trigraph - special SQL line comment
                                 int dashCommentPos = line.indexOf("--"); // // Double dash - ordinary SQL line comment
                                 if ((blockStmt.equals("--;")) && specialCommentPos == 0) {
@@ -2385,7 +2462,7 @@ public final class Q_ScriptEdit extends JFrame {
                                     // Highlight block statements other than special comment (--; trigraph) or dash comment (--). 
                                     // These block statements (SELECT, FROM, ...) are highlighted.
                                     blockHighlighter.addHighlight(startOfBlockStmt, endOfBlockStmt, blockPainter);
-                                    // All question marks are highlighted in the whole text area
+                                    // All question marks are highlighted in the whole textToHighlight area
                                     highlightSqlQuestionMarks();
                                 }
                                 break;
@@ -2395,9 +2472,11 @@ public final class Q_ScriptEdit extends JFrame {
                     }
                 }
                 // Get next line
-                startOfLine = text.indexOf(NEW_LINE, startOfLine) + NEW_LINE.length();
-                endOfLine = text.indexOf(NEW_LINE, startOfLine);
+                startOfLine = textToHighlight.indexOf(NEW_LINE, startOfLine) + NEW_LINE.length();
+                endOfLine = textToHighlight.indexOf(NEW_LINE, startOfLine);
             }
+            // Preserve current caret position
+            textArea.setCaretPosition(textArea.getCaretPosition());
         } catch (Exception exc) {
             exc.printStackTrace();
         }
@@ -2608,11 +2687,7 @@ public final class Q_ScriptEdit extends JFrame {
         textArea2.setText(textArea.getText());
 
         // Set background for secondary text area
-        if (methodName.equals("rewritePcFile")) {
-            textArea2.setBackground(VERY_LIGHT_PINK);
-        } else {
-            textArea2.setBackground(VERY_LIGHT_BLUE);
-        }
+        textArea2.setBackground(VERY_LIGHT_BLUE);
 
         // Set caret shapes for selection modes in the secondary text area
         if (selectionModeButton.getText().equals(HORIZONTAL_SELECTION)) {
@@ -2662,14 +2737,14 @@ public final class Q_ScriptEdit extends JFrame {
         // Renew global panel layout
         GroupLayout topPanelLayout = new GroupLayout(globalPanel);
         topPanelLayout.setHorizontalGroup(topPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(rowPanel2)
                 .addComponent(rowPanel1)
+                .addComponent(rowPanel2)
                 .addComponent(splitVerticalPane)
         );
         topPanelLayout.setVerticalGroup(topPanelLayout.createSequentialGroup()
-                .addComponent(rowPanel2)
-                .addGap(2)
                 .addComponent(rowPanel1)
+                .addGap(2)
+                .addComponent(rowPanel2)
                 .addGap(4)
                 .addComponent(splitVerticalPane)
         );
@@ -2729,14 +2804,14 @@ public final class Q_ScriptEdit extends JFrame {
         globalPanel = new JPanel();
         GroupLayout topPanelLayout = new GroupLayout(globalPanel);
         topPanelLayout.setHorizontalGroup(topPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                .addComponent(rowPanel2)
                 .addComponent(rowPanel1)
+                .addComponent(rowPanel2)
                 .addComponent(scrollPane)
         );
         topPanelLayout.setVerticalGroup(topPanelLayout.createSequentialGroup()
-                .addComponent(rowPanel2)
-                .addGap(2)
                 .addComponent(rowPanel1)
+                .addGap(2)
+                .addComponent(rowPanel2)
                 .addGap(4)
                 .addComponent(scrollPane)
         );
@@ -3879,19 +3954,15 @@ public final class Q_ScriptEdit extends JFrame {
     }
 
     /**
-     * Check if text was changed; if so, color Save button text dark red,
-     * if not, color Save button text with original button color.
+     * Check if text was changed; if so, color the Save button text with dark red,
+     * if not, color the Save button text with original button color.
      */
     protected void checkTextChanged() {
         if (textChanged) {
-            saveButton.setText("Save!");
             saveButton.setForeground(DARK_RED);
-            saveButton.setToolTipText("Save text before compiling.");
         } else {
             saveButton.setForeground(originalButtonForeground);
-            saveButton.setText("Save");
         }
-//        saveButton.setSelected(true);
     }
 
     /**
@@ -4020,13 +4091,14 @@ public final class Q_ScriptEdit extends JFrame {
             if (!progLanguage.equals("*NONE")) {
                 highlightBlocks(textArea);
             }
-
+            /*
             // On right click show popup menu with commands.
             if ((mouseEvent.getButton() == MouseEvent.BUTTON3)) {
                 preparePopupMenu();
                 // Show the menu
                 textAreaPopupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
             }
+             */
         }
     }
 
@@ -4042,7 +4114,7 @@ public final class Q_ScriptEdit extends JFrame {
             Point pt = new Point(mouseEvent.getX(), mouseEvent.getY());
             curPos2 = textArea2.getUI().viewToModel(textArea2, pt);
             // Every click sets current highlight depending on the direction
-            changeHighlight2();
+            changeHighlight2(); // Highlight search pattern
 
             // Highlight blocks if no pattern is in the findField
             blockHighlighter = textArea2.getHighlighter();
@@ -4050,19 +4122,21 @@ public final class Q_ScriptEdit extends JFrame {
             if (!progLanguage.equals("*NONE")) {
                 highlightBlocks(textArea2);
             }
-
+            /*
             // On right click change selection mode.
             if ((mouseEvent.getButton() == MouseEvent.BUTTON3)) {
                 preparePopupMenu();
                 // Show the menu
                 textAreaPopupMenu.show(mouseEvent.getComponent(), mouseEvent.getX(), mouseEvent.getY());
             }
+             */
         }
     }
 
     /**
      * Prepare popup menu for mouse listeners.
      */
+    /*
     protected void preparePopupMenu() {
         // Command "Change selection"
         String mode, shape;
@@ -4083,11 +4157,12 @@ public final class Q_ScriptEdit extends JFrame {
         toggleCaret.setText("Change caret to " + shape + ".");
         textAreaPopupMenu.add(toggleCaret);
     }
+     */
 
     /**
      * Window adapter closes the FindWindow and also this window.
      */
-    class WindowEditFileAdapter extends WindowAdapter {
+    class WindowEditAdapter extends WindowAdapter {
 
         @Override
         public void windowClosing(WindowEvent we) {

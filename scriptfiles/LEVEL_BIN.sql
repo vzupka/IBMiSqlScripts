@@ -8,6 +8,9 @@
 --;L 2 ; Součet za sklad č. &sklad     ; SKLAD; 
 
 
-select ZAVOD, SKLAD, CZBOZI, MNOZSTVI 
+select ZAVOD, SKLAD, CZBOZI, MNOZSTVI
 from ZBOZI_BIN
 order by ZAVOD, SKLAD, CZBOZI
+
+
+

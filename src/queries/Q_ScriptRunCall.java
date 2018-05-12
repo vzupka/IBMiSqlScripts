@@ -35,6 +35,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -218,10 +219,16 @@ public class Q_ScriptRunCall extends JFrame {
     final Color DIM_BLUE = new Color(50, 60, 160);
     final Color DIM_RED = new Color(190, 60, 50);
 
+    String filePathString;
+
     /**
      * Constructor
+     *
+     * @param filePathString
      */
-    public Q_ScriptRunCall() {
+    public Q_ScriptRunCall(String filePathString) {
+        this.filePathString = filePathString;
+        
         prop = new Q_Properties();
         host = prop.getProperty("HOST");
         language = prop.getProperty("LANGUAGE");
@@ -265,7 +272,11 @@ public class Q_ScriptRunCall extends JFrame {
         // Build the window
         scriptListTitlePanel = new JPanel();
         scriptListPanel = new JPanel();
-        searchField = new JTextField("");
+        if (filePathString == null) {
+            searchField = new JTextField("");
+        } else {
+            searchField = new JTextField(filePathString);
+        }
         searchLabel = new JLabel(searchScriptRun);
         searchLabel.setForeground(DIM_BLUE); // Dim blue
 
@@ -315,60 +326,33 @@ public class Q_ScriptRunCall extends JFrame {
         // Behavior at manual change of column width
         scriptList.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 
-        // Title panel in the filter list window
-        // Set title
-        BoxLayout boxLayoutY = new BoxLayout(scriptListTitlePanel, BoxLayout.Y_AXIS);
-        scriptListTitlePanel.setLayout(boxLayoutY);
-
+        // Title in the filter list window
         scriptListTitle.setText(titRun);
         scriptListTitle.setFont(new Font("Helvetica", Font.PLAIN, 20));
         scriptListTitle.setForeground(DIM_BLUE); // Dim blue
         scriptListTitle.setMinimumSize(new Dimension(scriptListWidth, 20));
         scriptListTitle.setPreferredSize(new Dimension(scriptListWidth, 20));
         scriptListTitle.setMaximumSize(new Dimension(scriptListWidth, 20));
-        scriptListTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
-        scriptListTitlePanel.add(scriptListTitle);
-        scriptListTitlePanel.add(Box.createRigidArea(new Dimension(10, 10)));
-
-        scriptListTitlePanel.add(scriptListPrompt);
-        scriptListTitlePanel.add(scriptListPrompt2);
-
-        scriptListTitle.setAlignmentX(Box.LEFT_ALIGNMENT);
-        scriptListTitlePanel.add(scriptListTitle);
-
-        searchLabel.setAlignmentX(Box.LEFT_ALIGNMENT);
-        scriptListTitlePanel.add(searchLabel);
 
         searchField.setMaximumSize(new Dimension(200, 25));
         searchField.setPreferredSize(new Dimension(200, 25));
         searchField.setMinimumSize(new Dimension(200, 25));
-        searchField.setAlignmentX(Box.LEFT_ALIGNMENT);
-        scriptListTitlePanel.add(searchField);
-
-        // Align the title panel
-        scriptListTitlePanel.setAlignmentX(Box.CENTER_ALIGNMENT);
 
         // Scroll pane contains the scriptList table inside
         scrollPane = new JScrollPane(scriptList);
-        scrollPane.setMaximumSize(new Dimension(scriptListWidth, scriptListPanelHeight));
-        scrollPane.setMinimumSize(new Dimension(scriptListWidth, scriptListPanelHeight));
-        scrollPane.setPreferredSize(new Dimension(scriptListWidth, scriptListPanelHeight));
+        scrollPane.setMaximumSize(new Dimension(scriptListWidth - 20, scriptListPanelHeight));
+        scrollPane.setMinimumSize(new Dimension(scriptListWidth - 20, scriptListPanelHeight));
+        scrollPane.setPreferredSize(new Dimension(scriptListWidth - 20, scriptListPanelHeight));
         scrollPane.setBackground(scriptListPanel.getBackground());
         scrollPane.setBorder(BorderFactory.createLineBorder(Color.WHITE));
-
-        scriptListPanel.add(scrollPane);
-        scriptListPanel.setMinimumSize(new Dimension(scriptListWidth, scriptListPanelHeight));
-        scriptListPanel.setPreferredSize(new Dimension(scriptListWidth, scriptListPanelHeight));
-        scriptListPanel.setMaximumSize(new Dimension(scriptListWidth, scriptListPanelHeight));
-        // scriptListPanel.setBorder(BorderFactory.createLineBorder(Color.red));
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
         // Message panel in the list window
-        scriptListMsgPanel.setMinimumSize(new Dimension(scriptListWidth, 30));
+        scriptListMsgPanel.setMinimumSize(new Dimension(0, 30));
         scriptListMsgPanel.setPreferredSize(new Dimension(scriptListWidth, 30));
-        scriptListMsgPanel.setMaximumSize(new Dimension(scriptListWidth, 30));
+        scriptListMsgPanel.setMaximumSize(new Dimension(3000, 30));
         BoxLayout msgLayoutX = new BoxLayout(scriptListMsgPanel, BoxLayout.X_AXIS);
         scriptListMsgPanel.setLayout(msgLayoutX);
-        scriptListMsgPanel.setAlignmentX(Box.CENTER_ALIGNMENT);
 
         // Button panel in the list window
         BoxLayout buttonLayoutX = new BoxLayout(scriptListButtonPanel, BoxLayout.X_AXIS);
@@ -387,14 +371,30 @@ public class Q_ScriptRunCall extends JFrame {
 
         // Set contents of the global panel in the list window
         scriptListGlobalPanel = new JPanel();
-        BoxLayout globBoxLayoutY = new BoxLayout(scriptListGlobalPanel, BoxLayout.Y_AXIS);
-        scriptListGlobalPanel.setLayout(globBoxLayoutY);
-        scriptListGlobalPanel.add(Box.createRigidArea(new Dimension(1, 25)));
-        scriptListGlobalPanel.add(scriptListTitlePanel);
-        scriptListGlobalPanel.add(scriptListPanel);
-        scriptListGlobalPanel.add(scriptListMsgPanel);
-        scriptListGlobalPanel.add(scriptListButtonPanel);
-        scriptListGlobalPanel.add(Box.createRigidArea(new Dimension(1, 50)));
+
+        // Set contents of the global panel in the list window
+        scriptListGlobalPanel = new JPanel();
+        GroupLayout scriptListGlobalPanelLayout = new GroupLayout(scriptListGlobalPanel);
+        scriptListGlobalPanelLayout.setVerticalGroup(scriptListGlobalPanelLayout.createSequentialGroup()
+                .addGap(5)
+                .addComponent(scriptListTitle)
+                .addGap(5)
+                .addComponent(searchLabel)
+                .addComponent(searchField)
+                .addGap(5)
+                .addComponent(scrollPane)
+                .addComponent(scriptListButtonPanel)
+                .addComponent(scriptListMsgPanel)
+        );
+        scriptListGlobalPanelLayout.setHorizontalGroup(scriptListGlobalPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING, true)
+                .addComponent(scriptListTitle)
+                .addComponent(searchLabel)
+                .addComponent(searchField)
+                .addComponent(scrollPane)
+                .addComponent(scriptListButtonPanel)
+                .addComponent(scriptListMsgPanel)
+        );
+        scriptListGlobalPanel.setLayout(scriptListGlobalPanelLayout);
 
         // Column headings with text
         tableModel.addColumn(scriptNam);
@@ -403,10 +403,12 @@ public class Q_ScriptRunCall extends JFrame {
         // Properties of table columns
         // ---------------------------
         colscriptName = scriptList.getColumnModel().getColumn(0);
-        colscriptName.setMaxWidth(firstTableColumnWidth);
-        colscriptName.setMinWidth(firstTableColumnWidth);
+        //colscriptName.setMaxWidth(firstTableColumnWidth);
+        //colscriptName.setMinWidth(firstTableColumnWidth);
         colscriptName.setPreferredWidth(firstTableColumnWidth);
         colQueryDesc = scriptList.getColumnModel().getColumn(1);
+        //colQueryDesc.setMaxWidth(secondTableColumnWidth);
+        //colQueryDesc.setMinWidth(secondTableColumnWidth);
         colQueryDesc.setPreferredWidth(secondTableColumnWidth);
 
         // Row selection model (selection of single row)
@@ -425,7 +427,6 @@ public class Q_ScriptRunCall extends JFrame {
             } else { // No row was selected
                 scriptListIndexSel = -1;
             }
-
         });
 
         // Set Return button activity (return to type code list)
@@ -438,12 +439,12 @@ public class Q_ScriptRunCall extends JFrame {
         // Set Run button activity (on mouse click)
         // ----------------------------------------
         scriptListRunButton.addActionListener(a -> {
-            String[] retCode = runScript();
+            retCode = runScript();
             scriptListMsg.setText(retCode[1]);
             scriptListMsgPanel.add(scriptListMsg);
             this.setVisible(true);
         });
-        
+
         // Set Search field activity
         // ---------------------------
         searchField.addActionListener(a -> {
@@ -546,7 +547,7 @@ public class Q_ScriptRunCall extends JFrame {
 
         setSize(scriptListGlobalWidth, scriptListGlobalHeight);
         setLocation(xLocation, yLocation);
-        pack();
+        //pack();
         setVisible(true);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -590,8 +591,7 @@ public class Q_ScriptRunCall extends JFrame {
      * @return
      */
     protected String readInputFiles() {
-        // Prepare list of queries from script files placed in directory
-        // "scriptfiles"
+        // Prepare list of queries from script files placed in directory "scriptfiles"
         scriptNames.clear();
         try {
             // Read script file names from the directory "scriptfiles"
@@ -719,12 +719,14 @@ public class Q_ScriptRunCall extends JFrame {
             conn = new Q_ConnectDB().connect();
             if (conn == null) {
                 messageText = Q_ConnectDB.msg;
+                System.out.println("Q_ConnectDB.msg: " + Q_ConnectDB.msg);
+                System.out.println("messageText: " + messageText);
                 retCode[0] += "ERROR";
                 retCode[1] = messageText;
                 scriptListMsg.setText(messageText);
                 scriptListMsgPanel.add(scriptListMsg);
-scriptListMsg.setForeground(DIM_RED);
-                //messages.add(messageText);
+                scriptListMsg.setForeground(DIM_RED);
+                messages.add(messageText);
                 System.out.println(messageText);
             } else {
                 connOk = locMessages.getString("ConnOk");

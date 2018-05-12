@@ -1,3 +1,4 @@
+﻿set = "KOLEKCE";
 --Sumarizace zboží (CENY) podle skladů a závodů, závod na nové stránce
 
 --;HZav;Skl;Č.zboží;Název zboží;Cena/j.;Množství;   Cena celkem;
@@ -7,7 +8,6 @@
 --;T 1; 1; - ; 2; ZAVOD; SKLAD
 
 --;S CELKEM  ; S ; C
-
 --;s Součet ; Průměr ; Maximum ; Minimum ;  Počet 
 
 --;L0;   .CELKEM ZA PODNIK

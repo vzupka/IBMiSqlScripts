@@ -1,8 +1,9 @@
 package locales;
 
 import java.util.ListResourceBundle;
+
 /**
- * 
+ *
  * @author Vladimír Župka 2016
  */
 public class L_TitleLabelBundle_en_US extends ListResourceBundle {
@@ -43,7 +44,7 @@ public class L_TitleLabelBundle_en_US extends ListResourceBundle {
         // Q_PromptParameters   
         {"ScrName", "\nScript name: "},
         {"DefSelVals", "\nEnter parameter values"},
-         // Q_PromptForScriptName
+        // Q_PromptForScriptName
         {"ImpScript", "\nImport script from the directory in IBM i"},
         {"DefFileScr", "\nEnter file name - script name with suffix .sql"},
         // Q_ScriptEdit
@@ -57,12 +58,26 @@ public class L_TitleLabelBundle_en_US extends ListResourceBundle {
         {"ScriptNam", "Script name"},
         {"ScriptDes", "Script description"},
         {"TitEdit", "Maintenance of SQL scripts"},
-        { "SearchScript", "Select scripts. Enter a search pattern (with * or ?) and press Enter key or \"Refresh\" button." }, 
+        {"SearchScript", "Select scripts. Enter a search pattern (with * or ?) and press Enter key or \"Refresh\" button."},
         // Q_ScriptRunCall
         {"TitRun", "Running SQL scripts"},
-        { "SearchScriptRun", "Select scripts. Enter part of the name and press Enter key or \"Refresh\" button." }, 
-        
+        {"SearchScriptRun", "Select scripts. Enter part of the name and press Enter key or \"Refresh\" button."},
         // SQL properties
         {"DecSeparator", "."},
-        {"SortLanguage", "ENU"},};
+        {"SortLanguage", "ENU"},
+        // U_ColumnJList
+        {"TitleCol", "Building column lists"},
+        {"SchemaLabel", "Select or enter a schema name."},
+        {"TableLabel", "Select a table or a view."},
+        {"DragNames", "Select column names on the left and drag them to the right."},
+        {"BuildColsItem", "Build column list"},
+        {"RemoveSelCols", "Remove selected items"},
+        {"SelAllItems", "Select all items"},
+        {"TitleResCol", "Resulting column list"},
+        {"CopyToEditor", "Select the list and copy to the editor."},
+        {"Horiz", "In a line"},
+        {"Append", "Append at the end"},
+        {"HorizTip", "The column list will be built in a single line."},
+        {"AppendTip", "The new column list will be appended to that already existing."},
+    };
 }

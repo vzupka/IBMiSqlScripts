@@ -23,7 +23,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -58,7 +57,7 @@ public class Q_ParametersEdit extends JDialog {
     final String LANGUAGE = "LANGUAGE";
     final String HOST = "HOST";
     final String USER_NAME = "USER_NAME";
-    final String LIBRARY = "LIBRARY";
+    final String LIBRARY_LIST = "LIBRARY_LIST";
     final String IFS_DIRECTORY = "IFS_DIRECTORY";
     final String AUTO_WINDOW_SIZE = "AUTO_WINDOW_SIZE";
     final String RESULT_WINDOW_WIDTH = "RESULT_WINDOW_WIDTH";
@@ -326,7 +325,7 @@ public class Q_ParametersEdit extends JDialog {
         // The following parameters are editable
         hostTf.setText(prop.getProperty(HOST));
         userNameTf.setText(prop.getProperty(USER_NAME));
-        librariesTf.setText(prop.getProperty(LIBRARY));
+        librariesTf.setText(prop.getProperty(LIBRARY_LIST));
         ifsDirectoryTf.setText(prop.getProperty(IFS_DIRECTORY));
         // String "Y" or "N"
         autoWindowSize = prop.getProperty(AUTO_WINDOW_SIZE);
@@ -506,7 +505,7 @@ public class Q_ParametersEdit extends JDialog {
         prop.setProperty(LANGUAGE, language);
         prop.setProperty(HOST, hostTf.getText());
         prop.setProperty(USER_NAME, userNameTf.getText());
-        prop.setProperty(LIBRARY, librariesTf.getText());
+        prop.setProperty(LIBRARY_LIST, librariesTf.getText());
         prop.setProperty(IFS_DIRECTORY, ifsDirectoryTf.getText());
         prop.setProperty(AUTO_WINDOW_SIZE, autoWindowSize);
         prop.setProperty(RESULT_WINDOW_WIDTH, windowWidth);

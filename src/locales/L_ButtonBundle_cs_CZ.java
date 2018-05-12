@@ -46,5 +46,8 @@ public class L_ButtonBundle_cs_CZ extends ListResourceBundle{
        // Q_ScriptRunCall
        {"Run_sel", "Spustit vybraný"},       
        {"Imp_script", "Importovat skript"},  
+       // Q_FilePrompt
+       {"RemoveSelCols", "Odstranit vybrané sloupce"},       
+       {"BuildColList", "Sestavit seznam sloupců"},       
     };
 }

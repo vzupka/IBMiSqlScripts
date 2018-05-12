@@ -46,5 +46,8 @@ public class L_ButtonBundle_en_US extends ListResourceBundle{
        // Q_ScriptRunCall
        {"Run_sel", "Run selected"},       
        {"Imp_script", "Import script"},       
+       // Q_FilePrompt
+       {"RemoveSelCols", "Remove selected columns"},       
+       {"BuildColList", "Build column list"},       
     };
 }
