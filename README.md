@@ -29,7 +29,7 @@ Version 01.02
 - Editor was completely redesigned and is similar to that in the project IBMiProgTool. Text in messages, titles, etc. is kept in English.
 - SQL keywords and special comments can be highlighted by colors.
 
-Version 02.01
+Version 02.00
 
 - The application was slightly redesigned to improve orientation. 
 - The editor enables inclusion of column lists into the script by providing schemas and tables.
@@ -60,7 +60,7 @@ Version 01.02
 - Editor byl kompletně přepracován a je podobný tomu v projektu IBMiProgTool. Text zpráv, titulků atd. je ponechán v angličtině.
 - Klíčová slova SQL a speciální komentáře lze barevně zvýraznit.
 
-Version 02.01
+Version 02.00
 
 - Aplikace byla mírně přepracována pro lepší orientaci.
 - Editor umožňuje zařazení seznamů sloupců do skriptu zadáním schemat a tabulek.
