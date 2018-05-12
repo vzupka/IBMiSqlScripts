@@ -32,7 +32,7 @@ Version 01.02
 Version 02.00
 
 - The application was slightly redesigned to improve orientation. 
-- The editor enables inclusion of column lists into the script by providing schemas and tables.
+- The editor enables inclusion of column lists into the script by providing schemas and tables. 
 
 - - - - - - - - - - 
 
@@ -63,4 +63,4 @@ Version 01.02
 Version 02.00
 
 - Aplikace byla mírně přepracována pro lepší orientaci.
-- Editor umožňuje zařazení seznamů sloupců do skriptu zadáním schemat a tabulek.
+- Editor umožňuje zařazení seznamů sloupců do skriptu zadáním schemat a tabulek. 
