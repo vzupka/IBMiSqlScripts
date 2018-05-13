@@ -67,7 +67,7 @@ public class Q_ConnectDB {
             conprop.put("user", userName);
 
             // ???? password
-// conprop.put("password", "ZUP047");
+// conprop.put("password", "????");
 
             // decimal separator LOCALIZED
             conprop.put("decimal separator", decSeparator);

@@ -1,0 +1,30 @@
+
+Výpis kusovníku SOUCASTI
+
+Neděle, 13. května 2018 19:38:18
+
+SOUCAST PODSOUCAST  POCET 
+A       B               3 
+A       C               3 
+B       E               2 
+E       C               2 
+E       D               3 
+E       F               5 
+C       D               4 
+C       F               4 
+A       B               3 
+A       C               3 
+B       E               2 
+E       C               2 
+E       D               3 
+E       F               5 
+C       D               4 
+C       F               4 
+A       B               3 
+A       C               3 
+B       E               2 
+E       C               2 
+E       D               3 
+E       F               5 
+C       D               4 
+C       F               4 

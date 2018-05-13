@@ -1,5 +1,5 @@
 #Copy files between IBM i and PC, edit and compile.
-#Fri May 11 18:12:27 CEST 2018
+#Sun May 13 19:38:31 CEST 2018
 CARET=Long caret
 COLUMN_SEPARATING_SPACES=1
 LANGUAGE=cs-CZ

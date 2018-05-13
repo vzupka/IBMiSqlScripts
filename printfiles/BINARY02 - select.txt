@@ -1,4 +1,14 @@
 
 Select all
 
-Neděle, 15. dubna 2018 11:11:52
+Neděle, 13. května 2018 19:11:48
+
+         ID BINARKA VARBINARKA                                         
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          1 aabbcc  aabbccddeeff                                       
+          2 000102  00                                                 

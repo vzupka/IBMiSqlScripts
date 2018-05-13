@@ -1932,6 +1932,7 @@ public final class Q_ScriptEdit extends JFrame {
 
                 // Data definition
                 stmtsBeg.add("CREATE");
+                stmtsBeg.add("REPLACE");
                 stmtsBeg.add("INSERT");
                 stmtsBeg.add("UPDATE");
                 stmtsBeg.add("ALTER");
@@ -2130,6 +2131,8 @@ public final class Q_ScriptEdit extends JFrame {
         } else if (beg && blockStmt.equals("{")) {
             // in C, C++
             blockPainter = curlyBracketsLighter;
+
+            // SQL has only "beginning" statements (no blocks)
         } else if (beg && blockStmt.equals("SELECT") && progLanguage.equals("SQL")) {
             // in SQL
             blockPainter = blockBlueLighter;
@@ -2203,6 +2206,9 @@ public final class Q_ScriptEdit extends JFrame {
             // in SQL
             blockPainter = blockBrownLighter;
         } else if (beg && blockStmt.equals("CREATE")) {
+            // in SQL
+            blockPainter = blockBrownLighter;
+        } else if (beg && blockStmt.equals("REPLACE")) {
             // in SQL
             blockPainter = blockBrownLighter;
         } else if (beg && blockStmt.equals("INSERT")) {

@@ -254,7 +254,7 @@ public class Q_ScriptRun {
      *
      * @return String[] Return code as array
      *
-     */    
+     */
     @SuppressWarnings({"CallToPrintStackTrace", "null", "UnusedAssignment"})
     public String[] runScript(Connection conn, String scriptName, String stmtDescription,
             String statement, ArrayList<String[]> markerArrayLst, ArrayList<String[]> headerArrayLst,
@@ -275,9 +275,6 @@ public class Q_ScriptRun {
         this.summaryIndArrayList = summaryIndArrayLst;
         this.omitArrayList = omitArrayLst;
         this.statement = statement;
-
-        // try to connect database
-        conn = new Q_ConnectDB().connect();
 
         // Get application properties
         Q_Properties prop = new Q_Properties();
@@ -335,21 +332,29 @@ public class Q_ScriptRun {
 
             resultTextArea = new JTextArea();
 
+            // Try to connect database for the first time
+            conn = new Q_ConnectDB().connect();
             // If no connection to database exists report the error
             // "No connection to the server."
             if (conn == null) {
                 String msg = noConn;
                 reportError(resultTextArea, msg);
             }
-
             if (!markerArrayList.isEmpty()) {
                 // Definitions --;? = marker array list.
                 // ----------------
                 // If marker array list contains entries process the definition lines
                 String[] markerValues;
                 // Prepare SQL statement from script
-                pstmt = conn.prepareCall(statement, ResultSet.TYPE_SCROLL_SENSITIVE,
-                        ResultSet.CONCUR_READ_ONLY);
+                pstmt = conn.prepareCall(statement, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                // If no connection to database exists report the error
+                // "No connection to the server."
+                if (conn == null) {
+                    if (conn == null) {
+                        String msg = noConn;
+                        reportError(resultTextArea, msg);
+                    }
+                }
                 // Process marker values - set values to SQL marker positions
                 for (int idx = 0; idx < markerArrayList.size(); idx++) {
                     markerValues = markerArrayList.get(idx);
@@ -403,6 +408,12 @@ public class Q_ScriptRun {
                 // --------------------
                 // If marker array list is empty make decision if STATEMENT is QUERY or UPDATE
                 stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                // If no connection to database exists report the error
+                // "No connection to the server."
+                if (conn == null) {
+                    String msg = noConn;
+                    reportError(resultTextArea, msg);
+                }
                 boolean isQuery = stmt.execute(statement);
                 if (isQuery) {
                     rs = stmt.getResultSet();
@@ -2512,7 +2523,7 @@ public class Q_ScriptRun {
             }
 
         } catch (Exception exc) {
-            System.out.println("Error: Column " + allColNames.get(colNameIndex) + " level " + level 
+            System.out.println("Error: Column " + allColNames.get(colNameIndex) + " level " + level
                     + " has no value. System message: " + exc.toString());
             exc.printStackTrace();
         }
