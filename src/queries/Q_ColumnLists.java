@@ -741,7 +741,7 @@ public class Q_ColumnLists extends JFrame {
         @Override
         public void actionPerformed(ActionEvent ae) {
             setColNamesToLeftList();
-            listRightModel.removeAllElements();
+            //listRightModel.removeAllElements();
         }
     }
 
