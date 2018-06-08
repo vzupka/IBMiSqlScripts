@@ -1,4 +1,4 @@
---Insert CENY2 VZTOOLS - yASSIST
+--Insert CENY2 VZTOOLS - pASSIST
 INSERT INTO CENY2 values ('00006', 1.00, 'Zboží ěščřďťňó ĚŠČŘŽÝÁÍÉĎŤŇÓ')
 --INSERT INTO CENY2 values ('00002', 1.00, 'Zboží ěščřďťňó')
 --INSERT INTO CENY2 values ('00003', 1.00, 'Zboží ěščřďťňó')

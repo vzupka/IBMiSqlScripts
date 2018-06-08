@@ -1,13 +1,29 @@
 
---EMPLOYEE selected list
+EMPLOYEE selected list
 
---;? 1 ; DATE ; From date: ; 1925-01-01 ;
---;? 2 ; DATE ; To date  : ; 1940-01-01 ;
---;? 3 ; DEC ; Salary does not reach ; 30000.00
+Sobota, 26. května 2018 19:58:31
 
-SELECT * FROM EMPLOYEE
-WHERE BIRTHDATE BETWEEN ? AND ?
-      AND SALARY <= ?
+EMPNO  FIRSTNME     MIDINIT LASTNAME        WORKDEPT PHONENO HIREDATE   JOB      EDLEVEL SEX BIRTHDATE       SALARY       BONUS        COMM 
+000130 DELORES      M       QUINTANA        C01      4578    1971-07-28 ANALYST       16 F   1925-09-15      23 800         500       1 904 
+000230 JAMES        J       JEFFERSON       D21      2094    1966-11-21 CLERK         14 M   1935-05-30      22 180         400       1 774 
+000250 DANIEL       S       SMITH           D21      0961    1969-10-30 CLERK         15 M   1939-11-12      19 180         400       1 534 
+000260 SYBIL        P       JOHNSON         D21      8953    1975-09-11 CLERK         16 F   1936-10-05      17 250         300       1 380 
+000280 ETHEL        R       SCHNEIDER       E11      8997    1967-03-24 OPERATOR      17 F   1936-03-28      26 250         500       2 100 
+000300 PHILIP       X       SMITH           E11      2095    1972-06-19 OPERATOR      14 M   1936-10-27      17 750         400       1 420 
+000310 MAUDE        F       SETRIGHT        E11      3332    1964-09-12 OPERATOR      12 F   1931-04-21      15 900         300       1 272 
+000320 RAMLAL       V       MEHTA           E21      9990    1965-07-07 FIELDREP      16 M   1932-08-11      19 950         400       1 596 
+000340 JASON        R       GOUNOT          E21      5698    1947-05-05 FIELDREP      16 M   1926-05-17      23 840         500       1 907 
+200280 EILEEN       R       SCHWARTZ        E11      8997    1967-03-24 OPERATOR      17 F   1936-03-28      26 250         500       2 100 
+200310 MICHELLE     F       SPRINGER        E11      3332    1964-09-12 OPERATOR      12 F   1931-04-21      15 900         300       1 272 
+200340 ROY          R       ALONZO          E21      5698    1947-05-05 FIELDREP      16 M   1926-05-17      23 840         500       1 907 
+EMPLOYEE selected list
 
-Chyba v příkazu:
-HY105  java.sql.SQLException: Parameter type not valid.
+Sobota, 26. května 2018 19:58:54
+
+EMPNO  FIRSTNME     MIDINIT LASTNAME        WORKDEPT PHONENO HIREDATE   JOB      EDLEVEL SEX BIRTHDATE       SALARY       BONUS        COMM 
+000130 DELORES      M       QUINTANA        C01      4578    1971-07-28 ANALYST       16 F   1925-09-15      23 800         500       1 904 
+000310 MAUDE        F       SETRIGHT        E11      3332    1964-09-12 OPERATOR      12 F   1931-04-21      15 900         300       1 272 
+000320 RAMLAL       V       MEHTA           E21      9990    1965-07-07 FIELDREP      16 M   1932-08-11      19 950         400       1 596 
+000340 JASON        R       GOUNOT          E21      5698    1947-05-05 FIELDREP      16 M   1926-05-17      23 840         500       1 907 
+200310 MICHELLE     F       SPRINGER        E11      3332    1964-09-12 OPERATOR      12 F   1931-04-21      15 900         300       1 272 
+200340 ROY          R       ALONZO          E21      5698    1947-05-05 FIELDREP      16 M   1926-05-17      23 840         500       1 907 

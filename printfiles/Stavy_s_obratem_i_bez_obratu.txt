@@ -1,0 +1,17 @@
+
+Vybírá řádky jako INNER JOIN a přidává řádky z levé tabulky, které nemají v pravé tabulce párový řádek. 
+
+Sobota, 26. května 2018 19:55:03
+
+CZBOZI NAZZBO                         CZBOZI Z_OBRATU 
+00014  Sako tvídové, nadměr           00014  -        
+00008  Kalhoty džínové                00008  -        
+00010  Koňak Gruzínský                00010  00010    
+00011  Taška sportovní                00011  -        
+00003  Prádelní šňůra                 00003  00003    
+00006  Ponožky pánské bílé, nové      00006  -        
+00001  PIŠKOTY OPAVIA                 00001  00001    
+00005  Tričko bílé                    00005  -        
+00009  Whisky Balantine               00009  00009    
+00018  Husí sádlo v konzervě          00018  -        
+00002  Zubní pasta Kalodont           00002  -        
